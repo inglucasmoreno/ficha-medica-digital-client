@@ -1,0 +1,274 @@
+<!-- Modal: Crear / Editar ficha -->
+<app-modal [showModal]="showModalFicha">
+  <div (keyup.enter)="estadoFormulario === 'crear' ? nuevaFicha() : actualizarFicha()">
+      <div class="flex items-center justify-between bg-primary-800 rounded-t px-2 py-1">
+          <h1 class=" text-white px-2 py-1 rounded-t text-xl"> {{ estadoFormulario == 'crear' ? 'Creando ficha medica' : 'Editando ficha medica' }} </h1>
+          <svg (click)="showModalFicha = false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer feather feather-x text-white mr-2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </div>
+      <div class="p-4">
+        <div class="xl:flex items-center">
+            <div class="xl:w-1/2">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Nro de afiliado </p>
+                <input [(ngModel)]="dataFicha.nro_afiliado" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 2365401" type="text">     
+            </div>
+            <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0"></div>
+        </div>  
+        <div class="xl:flex items-center mt-4">
+            <div class="xl:w-1/2">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Apellido </p>
+                <input [(ngModel)]="dataFicha.apellido" class="py-2 uppercase mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Moreno" type="text">     
+            </div>
+            <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Nombre </p>
+                <input [(ngModel)]="dataFicha.nombre" class="py-2 uppercase mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Lucas Omar" type="text">     
+            </div>
+        </div>
+        <div class="xl:flex items-center mt-4">
+            <div class="xl:w-1/2">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> DNI </p>
+                <input [(ngModel)]="dataFicha.dni" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 34060398" type="text">                   
+            </div>
+            <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Fecha de nacimiento </p>
+                <input [(ngModel)]="dataFicha.fecha_nacimiento" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 34060398" type="date">     
+            </div>
+        </div>    
+        <div class="xl:flex items-center mt-4">
+            <div class="xl:w-1/2">
+                <p class="font-semibold text-sm"> Grupo sanguineo </p>
+                <select class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor outline-none w-full text-gray-800" [(ngModel)]="dataFicha.grupo_sanguineo">
+                    <option value=""> Sin datos </option>
+                    <option value="A"> A </option>
+                    <option value="O"> O </option>
+                    <option value="AO"> AO </option>
+                    <option value="B"> B </option>
+                </select>
+            </div>
+            <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+                <p class="font-semibold text-sm"> RH </p>
+                <select class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor outline-none w-full text-gray-800" [(ngModel)]="dataFicha.rh">
+                    <option value=""> Sin datos </option>
+                    <option value="+"> Positivo (+) </option>
+                    <option value="-"> Negativo (-) </option>
+                </select>
+            </div>
+        </div> 
+        <div *ngIf="ficha && estadoFormulario === 'editar'" class="xl:flex items-center mt-4">
+            <div class="xl:w-1/2">
+                <p class="font-semibold text-sm"> Fecha de alta </p>
+                <div class="border text-sm mt-2 border-gray-300 rounded p-2 bg-gray-100">
+                    {{ ficha.createdAt | fecha }}
+                </div>
+            </div>
+            <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+                <p class="font-semibold text-sm"> Usuario creador </p>
+                <div class="border text-sm capitalize mt-2 border-gray-300 rounded p-2 bg-gray-100">
+                    {{ ficha.creatorUser.apellido.toLowerCase() }} {{ ficha.creatorUser.nombre.toLowerCase() }}
+                </div>
+            </div>
+        </div>        
+        <div class="mt-2">
+            <button *ngIf="estadoFormulario == 'crear'" (click)="nuevaFicha()" class="bg-gray-100 text-sm focus:outline-none hover:text-secondaryColor shadow text-gray-800 w-full border border-gray-300 font-semibold p-2 rounded mt-4"> Crear ficha </button>
+            <button *ngIf="estadoFormulario == 'editar'" (click)="actualizarFicha()" class="bg-gray-100 text-sm focus:outline-none hover:text-secondaryColor shadow text-gray-800 w-full border border-gray-300 font-semibold p-2 rounded mt-4"> Actualizar ficha </button>
+        </div>
+      </div>
+  </div>
+</app-modal>
+
+<!-- Listado de fichas -->
+<app-tarjeta-lista>
+  <div class="container mx-auto">
+      <div>
+          <div class="flex items-center justify-between bg-primary-800 text-white px-4 py-3 rounded-t">
+              <div class="ml-2">
+                  <h2 class="text-2xl leading-tight">
+                      Listado de fichas
+                  </h2>
+                  <p> Total de fichas: {{ fichas.length }} </p>
+              </div>
+              <app-boton-generico title="Nueva ficha" (click)="abrirModal('crear')">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                  </svg>
+              </app-boton-generico>
+          </div>
+          <div class="md:flex md:items-center md:justify-between px-4 py-2">
+              <div class="my-2 flex sm:flex-row flex-col">
+                  <div class="flex flex-row mb-1 sm:mb-0">
+                      <div class="relative">
+                          <select #txtActivo (change)="filtrarActivos(txtActivo.value)" class="h-full rounded-r border-t border-l rounded-l sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
+                              <option value='true'> Activos </option>
+                              <option value='false'> Inactivos </option>
+                              <option value=''> Todos </option>
+                          </select>
+                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                              <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+                                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                              </svg>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="block relative">
+                      <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                          <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500 cursor-pointer hover:text-secondary-500">
+                              <path
+                                  d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                              </path>
+                          </svg>
+                      </span>
+                      <input #txtParametro placeholder="Buscar" (keyup)="filtrarParametro(txtParametro.value)" class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+                      />
+                  </div>
+                  <select (change)="paginaActual = 1" class="bg-white focus:outline-none outline-none px-2 py-2 md:py-0 md:ml-2 mt-2 md:mt-0 border text-gray-600 border-gray-400 rounded" [(ngModel)]="cantidadItems">
+                      <option value="10"> 10 elementos </option>
+                      <option value="20"> 20 elementos </option>
+                      <option value="50"> 50 elementos </option>
+                      <option value="100"> 100 elementos </option>
+                  </select>
+              </div>
+          </div>
+          <div class="px-4 py-2 overflow-x-auto">
+              <div class="inline-block max-h-screen overflow-y-auto min-w-full shadow rounded-lg overflow-hidden border border-gray-200">
+                  <table class="min-w-full leading-normal">
+                      <thead>
+                          <tr>
+                              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                  <div (click)="ordenarPorColumna('apeliido')" class="cursor-pointer flex items-center focus:outline-none">
+                                      <span> Apellido </span>
+                                      <span class="ml-2 text-gray-600">    
+                                          <svg *ngIf="ordenar.columna == 'apeliido' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                          <svg *ngIf="ordenar.columna == 'apeliido' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                          <svg *ngIf="ordenar.columna != 'apeliido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                      </span>
+                                  </div>
+                              </th>
+                              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                <div (click)="ordenarPorColumna('nombre')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> Nombre </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columna == 'nombre' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columna == 'nombre' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columna != 'nombre'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                <div (click)="ordenarPorColumna('nro_afiliado')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> N° de afiliado </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columna == 'nro_afiliado' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columna == 'nro_afiliado' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columna != 'nro_afiliado'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                <div (click)="ordenarPorColumna('dni')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> DNI </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columna == 'dni' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columna == 'dni' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columna != 'dni'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                <div (click)="ordenarPorColumna('grupo_sanguineo')" class="cursor-pointer w-max flex items-center justify-center focus:outline-none">
+                                    <span>
+                                        G. sanguineo                                              
+                                    </span>
+                                    <span class="ml-2">
+                                        <svg *ngIf="ordenar.columna == 'grupo_sanguineo' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columna == 'grupo_sanguineo' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columna != 'grupo_sanguineo'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                <div (click)="ordenarPorColumna('rh')" class="cursor-pointer w-max flex items-center justify-center focus:outline-none">
+                                    <span>
+                                        RH                                              
+                                    </span>
+                                    <span class="ml-2">
+                                        <svg *ngIf="ordenar.columna == 'rh' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columna == 'rh' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columna != 'rh'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                  <div (click)="ordenarPorColumna('activo')" class="cursor-pointer flex items-center focus:outline-none">
+                                      <span>
+                                          Estado                                               
+                                      </span>
+                                      <span class="ml-2">
+                                          <svg *ngIf="ordenar.columna == 'activo' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                          <svg *ngIf="ordenar.columna == 'activo' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                          <svg *ngIf="ordenar.columna != 'activo'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                      </span>
+                                  </div>
+                              </th>
+                              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                  Acción
+                              </th>
+                          </tr>
+                      </thead>
+                      <tbody *ngIf="fichas">
+                          <tr class="animate__animated animate__fadeIn" *ngFor="let ficha of fichas | filtroFichas:filtro.parametro:filtro.activo | paginate: {itemsPerPage: cantidadItems, currentPage: paginaActual}">
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                  <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                      {{ ficha.apellido.toLowerCase() }}
+                                  </p>
+                              </td>
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                    {{ ficha.nombre.toLowerCase() }}
+                                </p>
+                              </td>
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                    {{ ficha.nro_afiliado }}
+                                </p>
+                              </td>
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                    {{ ficha.dni }}
+                                </p>
+                              </td>
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ ficha.grupo_sanguineo.trim() === '' ? 'Sin datos' : ficha.grupo_sanguineo }}
+                                </p>
+                              </td>
+                              <td class="px-5 py-2 border-b border-gray-200">
+                                <p *ngIf="ficha.rh.trim() === ''" class="text-gray-900 whitespace-no-wrap text-xs">
+                                    Sin datos
+                                </p>                                
+                                <p *ngIf="ficha.rh.trim() !== ''" class="text-gray-900 whitespace-no-wrap text-xs">
+                                    {{ ficha.rh.trim() === '+' ? 'Positivo (+)' : 'Negativo (-)' }}
+                                </p>
+                              </td>
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                  <app-pastilla-estado  [activo]=ficha.activo (click)="actualizarEstado(ficha)"></app-pastilla-estado>
+                              </td>
+                              <td class="px-5 py-2 flex items-center justify-center border-b border-gray-200 text-xs text-center">
+                                    <p class="flex items-center ml-2 justify-center text-gray-900 whitespace-no-wrap">
+                                        <app-boton-tabla (click)="abrirModal('editar', ficha)" title="Editar ficha">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                            </svg>
+                                        </app-boton-tabla>
+                                    </p>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      <div class="px-5 py-5 mt-4 bg-white border-t flex shadow flex-col xs:flex-row items-center xs:justify-between">
+          <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="paginaActual = $event"></pagination-controls>
+      </div>
+  </div>
+</app-tarjeta-lista>
+

@@ -13,6 +13,7 @@ import { NuevoUsuarioComponent } from './usuarios/nuevo-usuario.component';
 import { EditarUsuarioComponent } from './usuarios/editar/editar-usuario.component';
 import { EditarPasswordComponent } from './usuarios/editar/editar-password.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { FichasComponent } from './fichas/fichas.component';
 
 const routes: Routes = [
     {
@@ -33,6 +34,10 @@ const routes: Routes = [
             { path: 'usuarios/editar/:id', data: { permisos: 'USUARIOS_NAV' }, canActivate: [PermisosGuard], component: EditarUsuarioComponent },
             { path: 'usuarios/password/:id', data: { permisos: 'USUARIOS_NAV' }, canActivate: [PermisosGuard], component: EditarPasswordComponent },
             
+            // Fichas
+            { path: 'fichas', data: { permisos: 'FICHAS_NAV' }, canActivate: [PermisosGuard], component: FichasComponent },
+            
+
         ]
     }
 ];
