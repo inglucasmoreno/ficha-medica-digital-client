@@ -4,6 +4,9 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { FichasService } from 'src/app/services/fichas.service';
+import { environment } from 'src/environments/environment';
+
+const base_url = environment.base_url;
 
 @Component({
   selector: 'app-fichas',
@@ -271,6 +274,20 @@ export class FichasComponent implements OnInit {
       creatorUser: '',
       updatorUser: '',  
     }
+  }
+
+  // Imprimir reporte
+  imprimirReporte(): void {
+    this.alertService.loading();
+    this.fichasService.reportesFichas(this.fichas).subscribe({
+      next: () => {
+        window.open(`${base_url}/pdf/reporte_fichas_medicas.pdf`, '_blank');  
+        this.alertService.close();
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error.message);
+      }
+    })
   }
 
   // Filtrar Activo/Inactivo

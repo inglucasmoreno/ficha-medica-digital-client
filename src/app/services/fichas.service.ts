@@ -52,5 +52,14 @@ export class FichasService {
     })
   }
 
+  // Generar reporte de fichas medicas
+  reportesFichas(data: any): Observable<any>{
+    return this.http.post(`${base_url}/fichas/pdf/reporte`, data, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    })  
+  }
+
 
 }
