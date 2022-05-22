@@ -20,6 +20,7 @@ export class LoaderComponent implements OnInit {
         this.show = true;
       }else if(event instanceof NavigationEnd){ // Finaliza la navegacion
         window.scrollTo(0,0);  // Vista en la parte superior de la aplicacion 
+        this.dataService.showMenu = false;
         this.show = false;
       }
     });
