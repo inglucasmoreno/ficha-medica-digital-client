@@ -14,6 +14,7 @@ import { EditarUsuarioComponent } from './usuarios/editar/editar-usuario.compone
 import { EditarPasswordComponent } from './usuarios/editar/editar-password.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { FichasComponent } from './fichas/fichas.component';
+import { FichaDetallesComponent } from './fichas/ficha-detalles.component';
 
 const routes: Routes = [
     {
@@ -36,7 +37,7 @@ const routes: Routes = [
             
             // Fichas
             { path: 'fichas', data: { permisos: 'FICHAS_NAV' }, canActivate: [PermisosGuard], component: FichasComponent },
-            
+            { path: 'fichas/detalles/:id', data: { permisos: 'FICHA_DETALLES_NAV' }, canActivate: [PermisosGuard], component: FichaDetallesComponent },
 
         ]
     }

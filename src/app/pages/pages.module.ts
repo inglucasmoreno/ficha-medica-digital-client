@@ -15,6 +15,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { DirectivesModule } from '../directives/directives.module';
 import { PerfilComponent } from './perfil/perfil.component';
 import { FichasComponent } from './fichas/fichas.component';
+import { FichaDetallesComponent } from './fichas/ficha-detalles.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { FichasComponent } from './fichas/fichas.component';
     EditarPasswordComponent,
     PerfilComponent,
     FichasComponent,
+    FichaDetallesComponent,
   ],
   imports: [
     CommonModule,

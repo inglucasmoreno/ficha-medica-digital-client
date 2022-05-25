@@ -1,0 +1,86 @@
+<div *ngIf="ficha" class="border border-gray-300 shadow p-4 m-4">
+  <div class="flex items-center justify-between">
+    <div class="">
+      <p class="text-3xl font-semibold"> {{ ficha?.apellido }} {{ ficha?.nombre }} </p>
+      <p class="text-gray-500 text-sm"> Afiliado N° {{ ficha.nro_afiliado }}  </p>
+      <div class="flex items-center">
+        <div class="mt-4">
+          <p> <span class="font-semibold"> DNI: </span> {{ ficha?.dni }} </p>
+          <p *ngIf="ficha.grupo_sanguineo && ficha.rh"> <span class="font-semibold"> Grupo sanguineo: </span> {{ ficha.grupo_sanguineo }} {{ ficha.rh }} </p>
+          <p *ngIf="!ficha.grupo_sanguineo && !ficha.rh"> <span class="font-semibold"> Grupo sanguineo: </span> No especificado </p>
+        </div>
+        <div class="mt-4 ml-10">
+          <p> <span class="font-semibold"> Fecha de nacimiento: </span> {{ ficha?.fecha_nacimiento | fecha }} </p>
+          <p> <span class="font-semibold"> Edad: </span> 33 años </p>
+        </div>
+      </div>
+    </div>
+    <img class="w-40 mr-2" src="assets/img/fichas/avatar.svg" alt="Avatar">
+  </div>
+  <div class="mt-4 rounded-t">
+    <h1 class="border-gray-300 font-semibold text-xl text-gray-800 rounded-t py-2"> Consultas médicas - Notas del profesional </h1>
+    <p *ngIf="notasConsulta.length === 0" class="text-xl py-2 text-gray-600 border-t border-gray-300"> No se encontraron notas de consulta </p>  
+    <div *ngIf="notasConsulta.length > 0" class="py-2 overflow-x-auto">
+      <div class="inline-block max-h-screen overflow-y-auto min-w-full shadow rounded-lg overflow-hidden border border-gray-200">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr>
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            <div (click)="ordenarPorColumna('createdAt')" class="cursor-pointer flex items-center focus:outline-none">
+                                <span> Fecha de consulta </span>
+                                <span class="ml-2 text-gray-600">    
+                                    <svg *ngIf="ordenar.columna == 'createdAt' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                    <svg *ngIf="ordenar.columna == 'createdAt' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                    <svg *ngIf="ordenar.columna != 'createdAt'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                          <div (click)="ordenarPorColumna('descripcion')" class="cursor-pointer flex items-center focus:outline-none">
+                              <span> Descripción </span>
+                              <span class="ml-2 text-gray-600">    
+                                  <svg *ngIf="ordenar.columna == 'descripcion' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                  <svg *ngIf="ordenar.columna == 'descripcion' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                  <svg *ngIf="ordenar.columna != 'descripcion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                              </span>
+                          </div>
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                          <div (click)="ordenarPorColumna('creatorUser.apellido')" class="cursor-pointer flex items-center focus:outline-none">
+                              <span> Profesional </span>
+                              <span class="ml-2 text-gray-600">    
+                                  <svg *ngIf="ordenar.columna == 'creatorUser.apellido' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                  <svg *ngIf="ordenar.columna == 'creatorUser.apellido' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                  <svg *ngIf="ordenar.columna != 'creatorUser.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                              </span>
+                          </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="notasConsulta">
+                    <tr class="animate__animated animate__fadeIn" *ngFor="let nota of notasConsulta | filtroFichas:filtro.parametro:filtro.activo | paginate: {itemsPerPage: cantidadItems, currentPage: paginaActual}">
+                        <td class="px-5 py-4 border-b border-gray-200 text-xs">
+                            <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                {{ nota.createdAt | fecha }}
+                            </p>
+                        </td>
+                        <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                          <p class="text-gray-900 whitespace-no-wrap capitalize">
+                              {{ nota.descripcion }}
+                          </p>
+                        </td>
+                        <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                          <p class="text-gray-900 whitespace-no-wrap capitalize">
+                              {{ nota.creatorUser.apellido }} {{ nota.creatorUser.nombre }}
+                          </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+      </div>
+    </div>
+    <div *ngIf="notasConsulta.length > 0 && cantidadItems < notasConsulta.length" class="px-5 text-sm py-5 bg-white flex flex-col xs:flex-row items-center xs:justify-between">
+      <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="paginaActual = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
