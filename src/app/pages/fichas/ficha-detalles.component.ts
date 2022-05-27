@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { FichasService } from 'src/app/services/fichas.service';
 import { NotasConsultaService } from 'src/app/services/notas-consulta.service';
 
@@ -12,9 +13,16 @@ import { NotasConsultaService } from 'src/app/services/notas-consulta.service';
 })
 export class FichaDetallesComponent implements OnInit {
 
+  // Modals
+  public showModalNota = false;
+
+  // Ficha
   public idFicha: string;
   public ficha: any;
   public notasConsulta: any[];
+
+  // Formularios
+  public notaConsulta = '';
 
 	// Paginacion
 	public paginaActual: number = 1;
@@ -33,6 +41,7 @@ export class FichaDetallesComponent implements OnInit {
 	}
 
   constructor(private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
               private notasConsultaService: NotasConsultaService,
               private alertService: AlertService,
               private fichaService: FichasService) { }
@@ -69,6 +78,46 @@ export class FichaDetallesComponent implements OnInit {
         this.alertService.errorApi(error.message);
       }
     })
+  }
+
+  // Crear nueva nota de consulta
+  crearNotaConsulta(): void {
+    
+    if(this.notaConsulta.trim() === ''){
+      this.alertService.info('Debes colocarle contenido a la nota');
+      return;
+    }
+
+    this.alertService.loading();
+    
+    const data = {
+      ficha: this.idFicha,
+      descripcion: this.notaConsulta,
+      creatorUser: this.authService.usuario.userId,
+      updatorUser: this.authService.usuario.userId,
+    };
+    
+    this.notasConsultaService.nuevaNota(data).subscribe({
+      next: () => {
+        this.reiniciarFormularios()
+        this.showModalNota = false;
+        this.listarNotasConsulta();
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error.message)
+      }
+    })
+  
+  }
+
+  // Abrir modal - Nota de consulta
+  abrirModalNota(): void {
+    this.showModalNota = true;
+  }
+
+  // Reiniciar formularios
+  reiniciarFormularios(): void {
+    this.notaConsulta = '';  
   }
 
   // Filtrar Activo/Inactivo

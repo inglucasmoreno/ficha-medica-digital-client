@@ -1,3 +1,21 @@
+<!-- Nueva Nota de consulta -->
+<app-modal [showModal]="showModalNota">
+  <div class="bg-primary-800 p-2 rounded-t flex items-center text-white justify-between">
+    <h1 class="text-white"> Nueva nota de consulta </h1>
+    <svg (click)="showModalNota = false" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </div>
+  <div>
+    <div class="p-2">
+      <p class="font-semibold"> Descripción </p>  
+      <input (keyup.enter)="crearNotaConsulta()" [(ngModel)]="notaConsulta" placeholder="Contenido de la nota" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      <button (click)="crearNotaConsulta()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear nota </button>
+    </div>
+  </div>
+</app-modal>
+
+<!-- Pagina principal -->
 <div *ngIf="ficha" class="border border-gray-300 shadow p-4 m-4">
   <div class="flex items-center justify-between">
     <div class="">
@@ -18,10 +36,15 @@
     <img class="w-40 mr-2" src="assets/img/fichas/avatar.svg" alt="Avatar">
   </div>
   <div class="mt-4 rounded-t">
-    <h1 class="border-gray-300 font-semibold text-xl text-gray-800 rounded-t py-2"> Consultas médicas - Notas del profesional </h1>
-    <p *ngIf="notasConsulta.length === 0" class="text-xl py-2 text-gray-600 border-t border-gray-300"> No se encontraron notas de consulta </p>  
+    <div class="flex items-center justify-between mt-10">
+      <h1 class="border-gray-300 font-semibold text-xl text-gray-800 rounded-t py-2"> Consultas médicas - Notas del profesional </h1>
+      <button (click)="abrirModalNota()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+        Nueva nota
+      </button>
+    </div>
+    <p *ngIf="notasConsulta.length === 0" class="text-xl py-2 text-gray-600 border-gray-300"> No se encontraron notas de consulta </p>  
     <div *ngIf="notasConsulta.length > 0" class="py-2 overflow-x-auto">
-      <div class="inline-block max-h-screen overflow-y-auto min-w-full shadow rounded-lg overflow-hidden border border-gray-200">
+      <div class="inline-block max-h-56 overflow-y-auto min-w-full shadow rounded-lg overflow-hidden border border-gray-200">
             <table class="min-w-full leading-normal">
                 <thead>
                     <tr>
