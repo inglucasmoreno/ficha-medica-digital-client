@@ -8,22 +8,22 @@ const base_url = environment.base_url;
 @Injectable({
   providedIn: 'root'
 })
-export class NotasConsultaService {
+export class AntecedentesService {
 
   constructor(private http:HttpClient) {}
 
-  // Obtener notas de consulta por ID
-  getNota(id: string): Observable<any>{
-    return this.http.get(`${base_url}/notas-consulta/${id}`, {
+  // Obtener antecedente por ID
+  getAntecedente(id: string): Observable<any>{
+    return this.http.get(`${base_url}/antecedentes/${id}`, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }
     });
   }
   
-  // Obtener notas de consulta por ficha
-  getNotasPorFicha(id: string, direccion: number = -1, columna: string = 'createdAt'): Observable<any>{
-    return this.http.get(`${base_url}/notas-consulta/ficha/${id}`, {
+  // Obtener antecedentes por ficha
+  getAntecedentesPorFicha(id: string, direccion: number = -1, columna: string = 'createdAt'): Observable<any>{
+    return this.http.get(`${base_url}/antecedentes/ficha/${id}`, {
       params: {
         direccion,
         columna
@@ -34,9 +34,9 @@ export class NotasConsultaService {
     });
   }  
 
-  // Listado de notas de consulta
-  listarNotas( direccion : number = -1, columna: string = 'createdAt' ): Observable<any>{
-    return this.http.get(`${base_url}/notas-consulta`, {
+  // Listado de antecedentes
+  listarAntecedentes( direccion : number = -1, columna: string = 'createdAt' ): Observable<any>{
+    return this.http.get(`${base_url}/antecedentes`, {
       params: {
         direccion: String(direccion),
         columna
@@ -47,9 +47,9 @@ export class NotasConsultaService {
     });
   }
 
-  // Nueva nota de consulta
-  nuevaNota(data: any): Observable<any>{
-    return this.http.post(`${base_url}/notas-consulta`, data, {
+  // Nuevo antecedentes
+  nuevoAntecedente(data: any): Observable<any>{
+    return this.http.post(`${base_url}/antecedentes`, data, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }

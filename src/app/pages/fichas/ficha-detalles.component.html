@@ -1,7 +1,7 @@
 <!-- Nueva Nota de consulta -->
 <app-modal [showModal]="showModalNota">
   <div class="bg-primary-800 p-2 rounded-t flex items-center text-white justify-between">
-    <h1 class="text-white"> Nueva nota de consulta </h1>
+    <h1 class="text-white"> Resumen medico de la consulta </h1>
     <svg (click)="showModalNota = false" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>
@@ -15,12 +15,120 @@
   </div>
 </app-modal>
 
+<!-- Nuevo antecedente -->
+<app-modal [showModal]="showModalAntecedente">
+  <div class="bg-primary-800 p-2 rounded-t flex items-center text-white justify-between">
+    <h1 class="text-white"> Creando antecedente </h1>
+    <svg (click)="showModalAntecedente= false" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </div>
+  <div>
+    <div class="p-2">
+      <p class="font-semibold"> Descripción </p>  
+      <input (keyup.enter)="crearAntecedente()" [(ngModel)]="antecedente" placeholder="Contenido del antecedente" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      <button (click)="crearAntecedente()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear antecedente </button>
+    </div>
+  </div>
+</app-modal>
+
+<!-- Nueva alergia -->
+<app-modal [showModal]="showModalAlergia">
+  <div class="bg-primary-800 p-2 rounded-t flex items-center text-white justify-between">
+    <h1 class="text-white"> Datos de alergia </h1>
+    <svg (click)="showModalAlergia= false" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </div>
+  <div>
+    <div class="p-2">
+      <p class="font-semibold"> Tipo de alergia </p>  
+      <input (keyup.enter)="crearAlergia()" [(ngModel)]="alergia" placeholder="Contenido de alergia" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      <button (click)="crearAlergia()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear alergia </button>
+    </div>
+  </div>
+</app-modal>
+
+<!-- Nueva cirugia -->
+<app-modal [showModal]="showModalCirugia">
+  <div class="bg-primary-800 p-2 rounded-t flex items-center text-white justify-between">
+    <h1 class="text-white"> Datos de cirugia </h1>
+    <svg (click)="showModalCirugia= false" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </div>
+  <div>
+    <div class="p-2 flex">
+      <div class="w-1/2">
+        <p class="font-semibold"> Fecha de realización </p>  
+        <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia_fecha" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="date" >
+      </div>
+      <div class="w-1/2 ml-2">
+      </div>
+    </div>
+    <div class="p-2 flex">
+      <div class="w-1/2">
+        <p class="font-semibold"> Tipo de cirugia </p>  
+        <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia" placeholder="Contenido de cirugia" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      </div>
+      <div class="w-1/2 ml-2">
+        <p class="font-semibold"> Institución</p>  
+        <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia_institucion" placeholder="Descripción de institución" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      </div>
+    </div>
+    <div class="p-2">
+      <button (click)="crearCirugia()" class="p-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear cirugia </button>
+    </div>
+  </div>
+</app-modal>
+
+<!-- Nuevo estudio -->
+<app-modal [showModal]="showModalEstudio">
+  <div class="bg-primary-800 p-2 rounded-t flex items-center text-white justify-between">
+    <h1 class="text-white"> Datos del estudio </h1>
+    <svg (click)="showModalEstudio= false" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </div>
+  <div>
+    <div class="p-2">
+      <p class="font-semibold"> Descripción </p>  
+      <input (keyup.enter)="crearAlergia()" [(ngModel)]="estudio" placeholder="Información del estudio" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+    </div>
+    <div class="px-2">
+      <p class="font-semibold"> Laboratorio </p>  
+      <input (keyup.enter)="crearAlergia()" [(ngModel)]="laboratorio" placeholder="Descripción de laboratorio" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+    </div>
+    <div class="px-2 mt-1">
+      <button (click)="crearEstudio()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear estudio </button>
+    </div>
+  </div>
+</app-modal>
+
 <!-- Pagina principal -->
+
+<!-- Encabezado con informacion -->
 <div *ngIf="ficha" class="border border-gray-300 shadow p-4 m-4">
   <div class="flex items-center justify-between">
     <div class="">
-      <p class="text-3xl font-semibold"> {{ ficha?.apellido }} {{ ficha?.nombre }} </p>
-      <p class="text-gray-500 text-sm"> Afiliado N° {{ ficha.nro_afiliado }}  </p>
+      <div class="flex items-center">
+        <div title="Regresar" routerLink="/dashboard/fichas" class="p-2 border border-gray-300 shadow rounded cursor-pointer hover:text-secondaryColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>  
+        </div>
+        <div class="ml-2">
+          <div class="flex items-center">
+            <p class="text-3xl font-semibold"> {{ ficha?.apellido }} {{ ficha?.nombre }} </p>
+            <div class="cursor-pointer ml-2 p-2 text-gray-900 hover:text-secondaryColor">
+              <svg title="Editar ficha" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm"> Afiliado N° {{ ficha.nro_afiliado }}  </p>
+        </div>
+      </div>
       <div class="flex items-center">
         <div class="mt-4">
           <p> <span class="font-semibold"> DNI: </span> {{ ficha?.dni }} </p>
@@ -35,64 +143,68 @@
     </div>
     <img class="w-40 mr-2" src="assets/img/fichas/avatar.svg" alt="Avatar">
   </div>
-  <div class="mt-4 rounded-t">
+ 
+  <!-- Notas de consulta -->
+  <div class="mb-5 rounded-t">
     <div class="flex items-center justify-between mt-10">
       <h1 class="border-gray-300 font-semibold text-xl text-gray-800 rounded-t py-2"> Consultas médicas - Notas del profesional </h1>
-      <button (click)="abrirModalNota()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+      <button *ngIf="notasConsulta?.length > 0" (click)="abrirModalNota()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
         Nueva nota
       </button>
     </div>
-    <p *ngIf="notasConsulta.length === 0" class="text-xl py-2 text-gray-600 border-gray-300"> No se encontraron notas de consulta </p>  
-    <div *ngIf="notasConsulta.length > 0" class="py-2 overflow-x-auto">
-      <div class="inline-block max-h-56 overflow-y-auto min-w-full shadow rounded-lg overflow-hidden border border-gray-200">
+    <button *ngIf="notasConsulta?.length === 0" (click)="abrirModalNota()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+      Agregar nota de consulta
+    </button>  
+    <div *ngIf="notasConsulta?.length > 0" class="py-2 overflow-x-auto">
+      <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
             <table class="min-w-full leading-normal">
                 <thead>
                     <tr>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                            <div (click)="ordenarPorColumna('createdAt')" class="cursor-pointer flex items-center focus:outline-none">
+                        <th class="px-5 py-1 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                            <div (click)="ordenarPorColumnaNotas('createdAt')" class="cursor-pointer flex items-center focus:outline-none">
                                 <span> Fecha de consulta </span>
                                 <span class="ml-2 text-gray-600">    
-                                    <svg *ngIf="ordenar.columna == 'createdAt' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
-                                    <svg *ngIf="ordenar.columna == 'createdAt' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                                    <svg *ngIf="ordenar.columna != 'createdAt'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <svg *ngIf="ordenar.columnaNotas == 'createdAt' && ordenar.direccionNotas == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                    <svg *ngIf="ordenar.columnaNotas == 'createdAt' && ordenar.direccionNotas == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                    <svg *ngIf="ordenar.columnaNotas != 'createdAt'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                 </span>
                             </div>
                         </th>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          <div (click)="ordenarPorColumna('descripcion')" class="cursor-pointer flex items-center focus:outline-none">
+                        <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                          <div (click)="ordenarPorColumnaNotas('descripcion')" class="cursor-pointer flex items-center focus:outline-none">
                               <span> Descripción </span>
                               <span class="ml-2 text-gray-600">    
-                                  <svg *ngIf="ordenar.columna == 'descripcion' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
-                                  <svg *ngIf="ordenar.columna == 'descripcion' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                                  <svg *ngIf="ordenar.columna != 'descripcion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                  <svg *ngIf="ordenar.columnaNotas == 'descripcion' && ordenar.direccionNotas == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                  <svg *ngIf="ordenar.columnaNotas == 'descripcion' && ordenar.direccionNotas == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                  <svg *ngIf="ordenar.columnaNotas != 'descripcion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                               </span>
                           </div>
                         </th>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          <div (click)="ordenarPorColumna('creatorUser.apellido')" class="cursor-pointer flex items-center focus:outline-none">
+                        <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                          <div (click)="ordenarPorColumnaNotas('creatorUser.apellido')" class="cursor-pointer flex items-center focus:outline-none">
                               <span> Profesional </span>
                               <span class="ml-2 text-gray-600">    
-                                  <svg *ngIf="ordenar.columna == 'creatorUser.apellido' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
-                                  <svg *ngIf="ordenar.columna == 'creatorUser.apellido' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                                  <svg *ngIf="ordenar.columna != 'creatorUser.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                  <svg *ngIf="ordenar.columnaNotas == 'creatorUser.apellido' && ordenar.direccionNotas == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                  <svg *ngIf="ordenar.columnaNotas == 'creatorUser.apellido' && ordenar.direccionNotas == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                  <svg *ngIf="ordenar.columnaNotas != 'creatorUser.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                               </span>
                           </div>
                         </th>
                     </tr>
                 </thead>
                 <tbody *ngIf="notasConsulta">
-                    <tr class="animate__animated animate__fadeIn" *ngFor="let nota of notasConsulta | filtroFichas:filtro.parametro:filtro.activo | paginate: {itemsPerPage: cantidadItems, currentPage: paginaActual}">
-                        <td class="px-5 py-4 border-b border-gray-200 text-xs">
+                    <tr class="animate__animated animate__fadeIn" *ngFor="let nota of notasConsulta">
+                        <td class="px-5 py-2 border-b border-gray-200 text-xs">
                             <p class="text-gray-900 whitespace-no-wrap capitalize">
                                 {{ nota.createdAt | fecha }}
                             </p>
                         </td>
-                        <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                        <td class="px-5 border-b border-gray-200 text-xs">
                           <p class="text-gray-900 whitespace-no-wrap capitalize">
                               {{ nota.descripcion }}
                           </p>
                         </td>
-                        <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                        <td class="px-5 border-b border-gray-200 text-xs">
                           <p class="text-gray-900 whitespace-no-wrap capitalize">
                               {{ nota.creatorUser.apellido }} {{ nota.creatorUser.nombre }}
                           </p>
@@ -102,8 +214,318 @@
             </table>
       </div>
     </div>
-    <div *ngIf="notasConsulta.length > 0 && cantidadItems < notasConsulta.length" class="px-5 text-sm py-5 bg-white flex flex-col xs:flex-row items-center xs:justify-between">
-      <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="paginaActual = $event"></pagination-controls>
+  </div>
+
+  <div class="flex mt-5">
+    <div class="w-1/2">
+      <div class="flex items-center">
+        <button (click)="seccion = 'Antecedentes'" [ngClass]="{'bg-secondaryColor text-white': seccion === 'Antecedentes'}" class="border text-sm focus:outline-none border-gray-300 rounded-t p-2 font-semibold"> Antecendetes personales / Familiares </button>
+        <button (click)="seccion = 'Alergias'" [ngClass]="{'bg-secondaryColor text-white': seccion === 'Alergias'}" class="border text-sm focus:outline-none border-gray-300 rounded-t p-2 ml-1 font-semibold"> Alergias </button>
+        <button (click)="seccion = 'Cirugias'" [ngClass]="{'bg-secondaryColor text-white': seccion === 'Cirugias'}" class="border text-sm focus:outline-none border-gray-300 rounded-t p-2 ml-1 font-semibold"> Cirugias </button>
+      </div>
+      
+      <!-- Antecedentes -->
+      <div *ngIf="seccion === 'Antecedentes'" class="py-2 w-full">
+        <div class="rounded-t">
+          <div class="flex items-center justify-between">
+            <div></div>
+            <button *ngIf="antecedentes?.length > 0" (click)="abrirModalAntecedentes()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+              Nuevo antecedente
+            </button>
+          </div>
+          <button *ngIf="antecedentes?.length === 0" (click)="abrirModalAntecedentes()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+            Agregar primer antecedente
+          </button>  
+          <div *ngIf="antecedentes?.length > 0" class="py-2 mt-4 overflow-x-auto">
+            <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
+                  <table class="min-w-full leading-normal">
+                      <thead>
+                          <tr>
+                              <th class="px-5 border-b-2 py-1 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                  <div (click)="ordenarPorColumnaAntecedentes('createdAt')" class="cursor-pointer flex items-center focus:outline-none">
+                                      <span> Alta </span>
+                                      <span class="ml-2 text-gray-600">    
+                                          <svg *ngIf="ordenar.columnaAntecedentes == 'createdAt' && ordenar.direccionAntecedentes == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                          <svg *ngIf="ordenar.columnaAntecedentes == 'createdAt' && ordenar.direccionAntecedentes == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                          <svg *ngIf="ordenar.columnaAntecedentes != 'createdAt'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                      </span>
+                                  </div>
+                              </th>
+                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                <div (click)="ordenarPorColumnaAntecedentes('descripcion')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> Antecedente </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columnaAntecedentes == 'descripcion' && ordenar.direccionAntecedentes == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columnaAntecedentes == 'descripcion' && ordenar.direccionAntecedentes == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columnaAntecedentes != 'descripcion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                <div (click)="ordenarPorColumnaAntecedentes('creatorUser.apellido')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> Registra </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columnaAntecedentes == 'creatorUser.apellido' && ordenar.direccionAntecedentes == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columnaAntecedentes == 'creatorUser.apellido' && ordenar.direccionAntecedentes == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columnaAntecedentes != 'creatorUser.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                          </tr>
+                      </thead>
+                      <tbody *ngIf="notasConsulta">
+                          <tr class="animate__animated animate__fadeIn" *ngFor="let antecedente of antecedentes">
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                  <p class="text-gray-900 whitespace-no-wrap">
+                                      {{ antecedente.createdAt | fecha }}
+                                  </p>
+                              </td>
+                              <td class="px-5 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                    {{ antecedente.descripcion }}
+                                </p>
+                              </td>
+                              <td class="px-5 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                    {{ antecedente.creatorUser.apellido }} {{ antecedente.creatorUser.nombre }}
+                                </p>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>      
+      </div>
+
+      <!-- Alergias -->
+      <div *ngIf="seccion === 'Alergias'" class="py-2 w-full">
+        <div class="rounded-t">
+          <div class="flex items-center justify-between">
+            <div></div>
+            <button *ngIf="alergias?.length > 0" (click)="abrirModalAlergias()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+              Nueva alergia
+            </button>
+          </div>
+          <button *ngIf="alergias?.length === 0" (click)="abrirModalAlergias()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+            Agregar datos de alergia
+          </button>  
+          <div *ngIf="alergias?.length > 0" class="py-2 mt-4 overflow-x-auto">
+            <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
+                  <table class="min-w-full leading-normal">
+                      <thead>
+                          <tr>
+                              <th class="px-5 border-b-2 py-1 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                  <div (click)="ordenarPorColumnaAlergias('createdAt')" class="cursor-pointer flex items-center focus:outline-none">
+                                      <span> Alta </span>
+                                      <span class="ml-2 text-gray-600">    
+                                          <svg *ngIf="ordenar.columnaAlergias == 'createdAt' && ordenar.direccionAlergias == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                          <svg *ngIf="ordenar.columnaAlergias == 'createdAt' && ordenar.direccionAlergias == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                          <svg *ngIf="ordenar.columnaAlergias != 'createdAt'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                      </span>
+                                  </div>
+                              </th>
+                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                <div (click)="ordenarPorColumnaAlergias('tipo_alergia')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> Tipo de alergia </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columnaAlergias == 'tipo_alergia' && ordenar.direccionAlergias == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columnaAlergias == 'tipo_alergia' && ordenar.direccionAlergias == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columnaAlergias != 'tipo_alergia'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                <div (click)="ordenarPorColumnaAlergias('creatorUser.apellido')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> Registra </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columnaAlergias == 'creatorUser.apellido' && ordenar.direccionAlergias == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columnaAlergias == 'creatorUser.apellido' && ordenar.direccionAlergias == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columnaAlergias != 'creatorUser.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                          </tr>
+                      </thead>
+                      <tbody *ngIf="alergias">
+                          <tr class="animate__animated animate__fadeIn" *ngFor="let alergia of alergias">
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                  <p class="text-gray-900 whitespace-no-wrap">
+                                      {{ alergia.createdAt | fecha }}
+                                  </p>
+                              </td>
+                              <td class="px-5 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                    {{ alergia.tipo_alergia }}
+                                </p>
+                              </td>
+                              <td class="px-5 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                    {{ alergia.creatorUser.apellido }} {{ alergia.creatorUser.nombre }}
+                                </p>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>  
+      </div>
+
+      <!-- Cirugias -->
+      <div *ngIf="seccion === 'Cirugias'" class="py-2 w-full">
+        <div class="rounded-t">
+          <div class="flex items-center justify-between">
+            <div></div>
+            <button *ngIf="cirugias?.length > 0" (click)="abrirModalCirugias()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+              Nueva cirugia
+            </button>
+          </div>
+          <button *ngIf="cirugias?.length === 0" (click)="abrirModalCirugias()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+            Agregar datos de cirugia
+          </button>  
+          <div *ngIf="cirugias?.length > 0" class="py-2 mt-4 overflow-x-auto">
+            <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
+                  <table class="min-w-full leading-normal">
+                      <thead>
+                          <tr>
+                              <th class="px-5 border-b-2 py-1 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                  <div (click)="ordenarPorColumnaCirugias('fecha_realizacion')" class="cursor-pointer flex items-center focus:outline-none">
+                                      <span> Realización </span>
+                                      <span class="ml-2 text-gray-600">    
+                                          <svg *ngIf="ordenar.columnaCirugias == 'fecha_realizacion' && ordenar.direccionCirugias == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                          <svg *ngIf="ordenar.columnaCirugias == 'fecha_realizacion' && ordenar.direccionCirugias == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                          <svg *ngIf="ordenar.columnaCirugias != 'fecha_realizacion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                      </span>
+                                  </div>
+                              </th>
+                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                <div (click)="ordenarPorColumnaCirugias('tipo_alergia')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> Tipo de cirugia </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columnaCirugias == 'tipo_alergia' && ordenar.direccionCirugias == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columnaCirugias == 'tipo_alergia' && ordenar.direccionCirugias == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columnaCirugias != 'tipo_alergia'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                <div (click)="ordenarPorColumnaCirugias('institucion')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> Institución </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columnaCirugias == 'institucion' && ordenar.direccionCirugias == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columnaCirugias == 'institucion' && ordenar.direccionCirugias == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columnaCirugias != 'institucion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                          </tr>
+                      </thead>
+                      <tbody *ngIf="cirugias">
+                          <tr class="animate__animated animate__fadeIn" *ngFor="let cirugia of cirugias">
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                  <p class="text-gray-900 whitespace-no-wrap">
+                                      {{ cirugia.fecha_realizacion | fecha }}
+                                  </p>
+                              </td>
+                              <td class="px-5 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ cirugia.tipo_cirugia }}
+                                </p>
+                              </td>
+                              <td class="px-5 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ cirugia.institucion }}
+                                </p>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+
+    <!-- Estudios solicitados al paciente -->
+    <div class="w-1/2 ml-4 border-l-2 pl-4">
+      <div class="flex items-center">
+        <button class="border bg-secondaryColor text-sm focus:outline-none text-white border-gray-300 rounded-t p-2 font-semibold"> Estudios solicitados al paciente </button>
+      </div> 
+      <div class="py-2 w-full">
+        <div class="rounded-t">
+          <div class="flex items-center justify-between">
+            <div></div>
+            <button *ngIf="estudios?.length > 0" (click)="abrirModalEstudios()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+              Nuevo estudio
+            </button>
+          </div>
+          <button *ngIf="estudios?.length === 0" (click)="abrirModalEstudios()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+            Agregar datos de estudio
+          </button>  
+          <div *ngIf="cirugias?.length > 0" class="py-2 mt-4 overflow-x-auto">
+            <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
+                  <table class="min-w-full leading-normal">
+                      <thead>
+                          <tr>
+                              <th class="px-5 border-b-2 py-1 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                  <div (click)="ordenarPorColumnaEstudios('createdAt')" class="cursor-pointer flex items-center focus:outline-none">
+                                      <span> Alta </span>
+                                      <span class="ml-2 text-gray-600">    
+                                          <svg *ngIf="ordenar.columnaEstudios == 'createdAt' && ordenar.direccionEstudios == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                          <svg *ngIf="ordenar.columnaEstudios == 'createdAt' && ordenar.direccionEstudios == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                          <svg *ngIf="ordenar.columnaEstudios != 'createdAt'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                      </span>
+                                  </div>
+                              </th>
+                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                <div (click)="ordenarPorColumnaEstudios('descripcion')" class="cursor-pointer flex items-center w-max focus:outline-none">
+                                    <span> Estudio </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columnaEstudios == 'descripcion' && ordenar.direccionEstudios == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columnaEstudios == 'descripcion' && ordenar.direccionEstudios == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columnaEstudios != 'descripcion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                <div (click)="ordenarPorColumnaEstudios('laboratorio')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> Laboratorio </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenar.columnaEstudios == 'laboratorio' && ordenar.direccionEstudios == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenar.columnaEstudios == 'laboratorio' && ordenar.direccionEstudios == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenar.columnaEstudios != 'laboratorio'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                              </th>
+                          </tr>
+                      </thead>
+                      <tbody *ngIf="estudios">
+                          <tr class="animate__animated animate__fadeIn" *ngFor="let estudio of estudios">
+                              <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                  <p class="text-gray-900 whitespace-no-wrap">
+                                      {{ estudio.createdAt | fecha }}
+                                  </p>
+                              </td>
+                              <td class="px-5 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ estudio.descripcion }}
+                                </p>
+                              </td>
+                              <td class="px-5 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ estudio.laboratorio.trim() !== '' ? estudio.laboratorio : 'Sin especificar' }}
+                                </p>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div> 
     </div>
   </div>
+
+
 </div>

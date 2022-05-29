@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 
 const base_url = environment.base_url;
@@ -8,22 +8,22 @@ const base_url = environment.base_url;
 @Injectable({
   providedIn: 'root'
 })
-export class NotasConsultaService {
+export class EstudiosService {
 
   constructor(private http:HttpClient) {}
 
-  // Obtener notas de consulta por ID
-  getNota(id: string): Observable<any>{
-    return this.http.get(`${base_url}/notas-consulta/${id}`, {
+  // Obtener estudios por ID
+  getEstudio(id: string): Observable<any>{
+    return this.http.get(`${base_url}/estudios/${id}`, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }
     });
   }
   
-  // Obtener notas de consulta por ficha
-  getNotasPorFicha(id: string, direccion: number = -1, columna: string = 'createdAt'): Observable<any>{
-    return this.http.get(`${base_url}/notas-consulta/ficha/${id}`, {
+  // Obtener estudios por ficha
+  getEstudiosPorFicha(id: string, direccion: number = -1, columna: string = 'createdAt'): Observable<any>{
+    return this.http.get(`${base_url}/estudios/ficha/${id}`, {
       params: {
         direccion,
         columna
@@ -34,9 +34,9 @@ export class NotasConsultaService {
     });
   }  
 
-  // Listado de notas de consulta
-  listarNotas( direccion : number = -1, columna: string = 'createdAt' ): Observable<any>{
-    return this.http.get(`${base_url}/notas-consulta`, {
+  // Listado de estudios
+  listarEstudios( direccion : number = -1, columna: string = 'createdAt' ): Observable<any>{
+    return this.http.get(`${base_url}/estudios`, {
       params: {
         direccion: String(direccion),
         columna
@@ -47,9 +47,9 @@ export class NotasConsultaService {
     });
   }
 
-  // Nueva nota de consulta
-  nuevaNota(data: any): Observable<any>{
-    return this.http.post(`${base_url}/notas-consulta`, data, {
+  // Nuevo estudio
+  nuevoEstudio(data: any): Observable<any>{
+    return this.http.post(`${base_url}/estudios`, data, {
       headers: {
         'Authorization': localStorage.getItem('token')
       }
