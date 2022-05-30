@@ -16,6 +16,7 @@ import { DirectivesModule } from '../directives/directives.module';
 import { PerfilComponent } from './perfil/perfil.component';
 import { FichasComponent } from './fichas/fichas.component';
 import { FichaDetallesComponent } from './fichas/ficha-detalles.component';
+import { BuscarFichaComponent } from './buscar-ficha/buscar-ficha.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { FichaDetallesComponent } from './fichas/ficha-detalles.component';
     PerfilComponent,
     FichasComponent,
     FichaDetallesComponent,
+    BuscarFichaComponent,
   ],
   imports: [
     CommonModule,

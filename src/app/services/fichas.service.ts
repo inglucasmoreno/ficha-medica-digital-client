@@ -21,6 +21,15 @@ export class FichasService {
     })
   } 
 
+  // Ficha por ID
+  getFichaPorDNI(dni: string): Observable<any>{
+    return this.http.get(`${base_url}/fichas/dni/${dni}`, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    })
+  } 
+
   // Listar fichas
   listarFichas( direccion : number = 1, columna: string = 'apellido' ): Observable<any>{
     return this.http.get(`${base_url}/fichas`, {
