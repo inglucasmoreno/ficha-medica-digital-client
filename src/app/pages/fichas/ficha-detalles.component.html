@@ -1,3 +1,94 @@
+
+<!-- Datos de ficha -->
+<app-modal [showModal]="showModalFicha">
+  <div (keyup.enter)="actualizarFicha()">
+    <div class="flex items-center justify-between bg-primary-800 rounded-t px-2 py-1">
+        <h1 class=" text-white px-2 py-1 rounded-t text-xl"> Actualizando datos de ficha </h1>
+        <svg (click)="showModalFicha = false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer feather feather-x text-white mr-2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </div>
+    <div class="p-4">
+      <div class="xl:flex items-center">
+          <div class="xl:w-1/2">
+              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Nro de afiliado </p>
+              <input [(ngModel)]="dataFicha.nro_afiliado" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 2365401" type="text">     
+          </div>
+          <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0"></div>
+      </div>  
+      <div class="xl:flex items-center mt-4">
+          <div class="xl:w-1/2">
+              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Apellido </p>
+              <input [(ngModel)]="dataFicha.apellido" class="py-2 uppercase mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Moreno" type="text">     
+          </div>
+          <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Nombre </p>
+              <input [(ngModel)]="dataFicha.nombre" class="py-2 uppercase mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Lucas Omar" type="text">     
+          </div>
+      </div>
+      <div class="xl:flex items-center mt-4">
+          <div class="xl:w-1/2">
+              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> DNI </p>
+              <input [(ngModel)]="dataFicha.dni" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 34060398" type="text">                   
+          </div>
+          <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Fecha de nacimiento </p>
+              <input [(ngModel)]="dataFicha.fecha_nacimiento" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:text-secondaryColor focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 34060398" type="date">     
+          </div>
+      </div>    
+      <div class="xl:flex items-center mt-4">
+          <div class="xl:w-1/2">
+              <p class="font-semibold text-sm"> Grupo sanguineo </p>
+              <select class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor outline-none w-full text-gray-800" [(ngModel)]="dataFicha.grupo_sanguineo">
+                  <option value=""> Sin datos </option>
+                  <option value="A"> A </option>
+                  <option value="O"> O </option>
+                  <option value="AO"> AO </option>
+                  <option value="B"> B </option>
+              </select>
+          </div>
+          <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+              <p class="font-semibold text-sm"> RH </p>
+              <select class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor outline-none w-full text-gray-800" [(ngModel)]="dataFicha.rh">
+                  <option value=""> Sin datos </option>
+                  <option value="+"> Positivo (+) </option>
+                  <option value="-"> Negativo (-) </option>
+              </select>
+          </div>
+      </div> 
+      <div *ngIf="ficha" class="xl:flex items-center mt-4">
+          <div class="xl:w-1/2">
+              <p class="font-semibold text-sm"> Fecha de alta </p>
+              <div class="border text-sm mt-2 border-gray-300 rounded p-2 bg-gray-100">
+                  {{ ficha.createdAt | fecha }}
+              </div>
+          </div>
+          <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+              <p class="font-semibold text-sm"> Usuario creador </p>
+              <div class="border text-sm capitalize mt-2 border-gray-300 rounded p-2 bg-gray-100">
+                  {{ ficha.creatorUser.apellido.toLowerCase() }} {{ ficha.creatorUser.nombre.toLowerCase() }}
+              </div>
+          </div>
+      </div>   
+      <div *ngIf="ficha" class="xl:flex items-center mt-4">
+        <div class="xl:w-1/2">
+            <p class="font-semibold text-sm"> Ultima modificación </p>
+            <div class="border text-sm mt-2 border-gray-300 rounded p-2 bg-gray-100">
+                {{ ficha.updatedAt | fecha }}
+            </div>
+        </div>
+        <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+            <p class="font-semibold text-sm"> Usuario ultima actualización </p>
+            <div class="border text-sm capitalize mt-2 border-gray-300 rounded p-2 bg-gray-100">
+                {{ ficha.updatorUser.apellido.toLowerCase() }} {{ ficha.updatorUser.nombre.toLowerCase() }}
+            </div>
+        </div>
+      </div>   
+      <div class="mt-2">
+          <button (click)="actualizarFicha()" class="bg-gray-100 text-sm focus:outline-none hover:text-secondaryColor shadow text-gray-800 w-full border border-gray-300 font-semibold p-2 rounded mt-4"> Actualizar ficha </button>
+      </div>
+    </div>
+</div>
+</app-modal>
+
 <!-- Nueva Nota de consulta -->
 <app-modal [showModal]="showModalNota">
   <div class="bg-primary-800 p-2 rounded-t flex items-center text-white justify-between">
@@ -9,7 +100,7 @@
   <div>
     <div class="p-2">
       <p class="font-semibold"> Descripción </p>  
-      <input (keyup.enter)="crearNotaConsulta()" [(ngModel)]="notaConsulta" placeholder="Contenido de la nota" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      <input (keyup.enter)="crearNotaConsulta()" [(ngModel)]="notaConsulta" placeholder="Contenido de la nota" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       <button (click)="crearNotaConsulta()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear nota </button>
     </div>
   </div>
@@ -26,7 +117,7 @@
   <div>
     <div class="p-2">
       <p class="font-semibold"> Descripción </p>  
-      <input (keyup.enter)="crearAntecedente()" [(ngModel)]="antecedente" placeholder="Contenido del antecedente" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      <input (keyup.enter)="crearAntecedente()" [(ngModel)]="antecedente" placeholder="Contenido del antecedente" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       <button (click)="crearAntecedente()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear antecedente </button>
     </div>
   </div>
@@ -43,7 +134,7 @@
   <div>
     <div class="p-2">
       <p class="font-semibold"> Tipo de alergia </p>  
-      <input (keyup.enter)="crearAlergia()" [(ngModel)]="alergia" placeholder="Contenido de alergia" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      <input (keyup.enter)="crearAlergia()" [(ngModel)]="alergia" placeholder="Contenido de alergia" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       <button (click)="crearAlergia()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear alergia </button>
     </div>
   </div>
@@ -69,11 +160,11 @@
     <div class="p-2 flex">
       <div class="w-1/2">
         <p class="font-semibold"> Tipo de cirugia </p>  
-        <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia" placeholder="Contenido de cirugia" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+        <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia" placeholder="Contenido de cirugia" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       </div>
       <div class="w-1/2 ml-2">
         <p class="font-semibold"> Institución</p>  
-        <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia_institucion" placeholder="Descripción de institución" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+        <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia_institucion" placeholder="Descripción de institución" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       </div>
     </div>
     <div class="p-2">
@@ -93,11 +184,11 @@
   <div>
     <div class="p-2">
       <p class="font-semibold"> Descripción </p>  
-      <input (keyup.enter)="crearAlergia()" [(ngModel)]="estudio" placeholder="Información del estudio" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      <input (keyup.enter)="crearEstudio()" [(ngModel)]="estudio" placeholder="Información del estudio" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
     </div>
     <div class="px-2">
       <p class="font-semibold"> Laboratorio </p>  
-      <input (keyup.enter)="crearAlergia()" [(ngModel)]="laboratorio" placeholder="Descripción de laboratorio" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
+      <input (keyup.enter)="crearEstudio()" [(ngModel)]="laboratorio" placeholder="Descripción de laboratorio" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
     </div>
     <div class="px-2 mt-1">
       <button (click)="crearEstudio()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear estudio </button>
@@ -108,8 +199,8 @@
 <!-- Pagina principal -->
 
 <!-- Encabezado con informacion -->
-<div *ngIf="ficha" class="border border-gray-300 shadow p-4 m-4">
-  <div class="flex items-center justify-between">
+<div *ngIf="ficha" class="border border-gray-300 shadow rounded-t m-4">
+  <div class="flex bg-primary-800 text-white shadow rounded-t p-4 items-center justify-between">
     <div class="">
       <div class="flex items-center">
         <!-- <div title="Regresar" routerLink="/dashboard/fichas" class="p-2 border border-gray-300 shadow rounded cursor-pointer hover:text-secondaryColor">
@@ -117,16 +208,16 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
           </svg>  
         </div> -->
-        <div class="ml-2">
+        <div class="">
           <div class="flex items-center">
             <p class="text-3xl font-semibold"> {{ ficha?.apellido }} {{ ficha?.nombre }} </p>
-            <div class="cursor-pointer ml-2 p-2 text-gray-900 hover:text-secondaryColor">
+            <div (click)="abrirModalFicha()" class="cursor-pointer ml-2 p-2 hover:text-secondaryColor">
               <svg title="Editar ficha" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
             </div>
           </div>
-          <p class="text-gray-500 text-sm"> Afiliado N° {{ ficha.nro_afiliado }}  </p>
+          <p class="text-sm"> Afiliado N° {{ ficha.nro_afiliado }}  </p>
         </div>
       </div>
       <div class="flex items-center">
@@ -136,7 +227,7 @@
           <p *ngIf="!ficha.grupo_sanguineo && !ficha.rh"> <span class="font-semibold"> Grupo sanguineo: </span> No especificado </p>
         </div>
         <div class="mt-4 ml-10">
-          <p> <span class="font-semibold"> Fecha de nacimiento: </span> {{ ficha?.fecha_nacimiento | fecha }} </p>
+          <p> <span class="font-semibold"> Fecha de nacimiento: </span> {{ ficha.fecha_nacimiento | fecha }} </p>
           <p> <span class="font-semibold"> Edad: </span> 33 años </p>
         </div>
       </div>
@@ -145,7 +236,7 @@
   </div>
  
   <!-- Notas de consulta -->
-  <div class="mb-5 rounded-t">
+  <div class="mb-5 rounded-t px-4">
     <div class="flex items-center justify-between mt-10">
       <h1 class="border-gray-300 font-semibold text-xl text-gray-800 rounded-t py-2"> Consultas médicas - Notas del profesional </h1>
       <button *ngIf="notasConsulta?.length > 0" (click)="abrirModalNota()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
@@ -216,7 +307,7 @@
     </div>
   </div>
 
-  <div class="flex mt-5">
+  <div class="flex mt-5 px-4">
     <div class="w-1/2">
       <div class="flex items-center">
         <button (click)="seccion = 'Antecedentes'" [ngClass]="{'bg-secondaryColor text-white': seccion === 'Antecedentes'}" class="border text-sm focus:outline-none border-gray-300 rounded-t p-2 font-semibold"> Antecendetes personales / Familiares </button>
@@ -234,7 +325,7 @@
             </button>
           </div>
           <button *ngIf="antecedentes?.length === 0" (click)="abrirModalAntecedentes()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
-            Agregar primer antecedente
+            Agregar datos de antecedente
           </button>  
           <div *ngIf="antecedentes?.length > 0" class="py-2 mt-4 overflow-x-auto">
             <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
@@ -463,7 +554,7 @@
           <button *ngIf="estudios?.length === 0" (click)="abrirModalEstudios()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
             Agregar datos de estudio
           </button>  
-          <div *ngIf="cirugias?.length > 0" class="py-2 mt-4 overflow-x-auto">
+          <div *ngIf="estudios?.length > 0" class="py-2 mt-4 overflow-x-auto">
             <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
                   <table class="min-w-full leading-normal">
                       <thead>

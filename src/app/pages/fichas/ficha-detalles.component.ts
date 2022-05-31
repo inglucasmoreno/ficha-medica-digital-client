@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { add } from 'date-fns';
+import { add, format } from 'date-fns';
 import { AlergiasService } from 'src/app/services/alergias.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AntecedentesService } from 'src/app/services/antecedentes.service';
@@ -22,6 +22,7 @@ export class FichaDetallesComponent implements OnInit {
   public seccion = 'Antecedentes';
 
   // Modals
+  public showModalFicha = false;
   public showModalNota = false;
   public showModalAntecedente = false;
   public showModalAlergia = false;
@@ -31,7 +32,19 @@ export class FichaDetallesComponent implements OnInit {
   // Ficha
   public idFicha: string;
   public ficha: any;
-  
+  public dataFicha: any = {
+    apellido: '',
+    nombre: '',
+    dni: '',
+    nro_afiliado: '',
+    fecha_nacimiento: '',
+    grupo_sanguineo: '',
+    rh: '',
+    creatorUser: '',
+    updatorUser: '',  
+  };
+
+
   // Notas de conulta
   public notaConsulta: string = '';
   public notasConsulta: any[];
@@ -78,7 +91,7 @@ export class FichaDetallesComponent implements OnInit {
               private cirugiasService: CirugiasService,
               private estudiosService: EstudiosService,
               private alertService: AlertService,
-              private fichaService: FichasService) { }
+              private fichasService: FichasService) { }
 
 
   // Inicio de componente
@@ -94,9 +107,40 @@ export class FichaDetallesComponent implements OnInit {
     this.alertService.loading();
     
     // Listado de notas de consulta
-    this.fichaService.getFicha(this.idFicha).subscribe({
+    this.fichasService.getFicha(this.idFicha).subscribe({
       next: ({ficha}) => {
         this.ficha = ficha;
+        
+        console.log(ficha);
+
+        let { 
+          apellido, 
+          nombre, 
+          dni, 
+          nro_afiliado, 
+          fecha_nacimiento,
+          grupo_sanguineo, 
+          rh, 
+          creatorUser, 
+          updatorUser } = ficha;
+
+        // Adaptando fecha
+        fecha_nacimiento = format(new Date(fecha_nacimiento), 'yyyy-MM-dd');
+
+        console.log(fecha_nacimiento);
+
+        this.dataFicha = {
+          apellido,
+          nombre,
+          dni,
+          nro_afiliado,
+          fecha_nacimiento,
+          grupo_sanguineo,
+          rh,
+          creatorUser,
+          updatorUser, 
+        } 
+        
         this.notasConsultaService.getNotasPorFicha(
           this.idFicha,
           this.ordenar.direccionNotas, 
@@ -170,6 +214,91 @@ export class FichaDetallesComponent implements OnInit {
         this.alertService.errorApi(error.msg);
       }
     })
+  }
+
+  // Obtener datos de ficha
+  obtenerFicha(): void {
+    this.fichasService.getFicha(this.idFicha).subscribe({
+      next: ({ficha}) => {
+        this.ficha = ficha;
+ 
+        let { 
+          apellido, 
+          nombre, 
+          dni, 
+          nro_afiliado, 
+          fecha_nacimiento, 
+          grupo_sanguineo, 
+          rh, 
+          creatorUser, 
+          updatorUser } = ficha;
+
+        fecha_nacimiento = format(new Date(fecha_nacimiento), 'yyyy-MM-dd');
+
+        this.dataFicha = {
+          apellido,
+          nombre,
+          dni,
+          nro_afiliado,
+          fecha_nacimiento,
+          grupo_sanguineo,
+          rh,
+          creatorUser,
+          updatorUser, 
+        } 
+        this.showModalFicha = false;
+        this.alertService.close();
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error.message);
+      }
+    })
+  }
+
+  // Verificar datos
+  verificarDatos(): boolean {
+
+    const {
+      apellido,
+      nombre,
+      dni,
+      nro_afiliado,
+      fecha_nacimiento
+    } = this.dataFicha;
+    
+    const verificacion = apellido.trim() === '' ||
+                         nombre.trim() === '' ||
+                         dni.trim() === '' ||
+                         nro_afiliado.trim() === '' ||
+                         fecha_nacimiento.trim() === ''
+
+    if(verificacion) return true;
+    else return false;
+
+  }
+
+  // Actualizar ficha
+  actualizarFicha(): void {
+
+    if(this.verificarDatos()){
+      this.alertService.info('Completar los campos obligatorios');
+      return;
+    }
+
+    this.dataFicha.fecha_nacimiento = add(new Date(this.dataFicha.fecha_nacimiento), {hours: 3});
+    this.dataFicha.updatorUser = this.authService.usuario.userId;
+      
+    this.alertService.loading();
+
+    this.fichasService.actualizarFicha(this.idFicha, this.dataFicha).subscribe({
+      next: () => {
+        this.obtenerFicha();
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error.message);
+      }
+    });
+
   }
 
   // Listando notas de consulta
@@ -372,7 +501,7 @@ export class FichaDetallesComponent implements OnInit {
       ficha: this.idFicha,
       tipo_cirugia: this.cirugia,
       institucion: this.cirugia_institucion,
-      fecha_realizacion: add(new Date(this.cirugia_fecha),{ hours: 5 }),
+      fecha_realizacion: add(new Date(this.cirugia_fecha),{ hours: 3 }),
       creatorUser: this.authService.usuario.userId,
       updatorUser: this.authService.usuario.userId,
     };
@@ -419,6 +548,12 @@ export class FichaDetallesComponent implements OnInit {
       }
     })
   
+  }
+
+  // Abrir modal - Datos de ficha
+  abrirModalFicha(): void {
+    this.reiniciarFormularios();
+    this.showModalFicha = true;
   }
 
   // Abrir modal - Nota de consulta

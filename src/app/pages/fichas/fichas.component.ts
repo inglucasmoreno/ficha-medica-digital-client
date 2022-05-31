@@ -190,6 +190,9 @@ export class FichasComponent implements OnInit {
     this.dataFicha.creatorUser = this.authService.usuario.userId;
     this.dataFicha.updatorUser = this.authService.usuario.userId;
 
+    // Adaptacion de fecha de nacimiento
+    this.dataFicha.fecha_nacimiento = add(new Date(this.dataFicha.fecha_nacimiento), {hours: 3});
+
     this.fichasService.nuevaFicha(this.dataFicha).subscribe({
 
       next: () => {
@@ -212,11 +215,13 @@ export class FichasComponent implements OnInit {
       return;
     }
 
+    // Adaptacion de fecha de nacimiento
+    this.dataFicha.fecha_nacimiento = add(new Date(this.dataFicha.fecha_nacimiento), {hours: 3});
+
+    // Se coloca el usuario actualizador
     this.dataFicha.updatorUser = this.authService.usuario.userId;
       
     this.alertService.loading();
-
-    console.log(this.dataFicha.fecha_nacimiento);
 
     this.fichasService.actualizarFicha(this.idFicha, this.dataFicha).subscribe({
       next: () => {
