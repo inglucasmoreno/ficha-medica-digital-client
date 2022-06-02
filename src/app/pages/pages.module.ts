@@ -17,6 +17,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { FichasComponent } from './fichas/fichas.component';
 import { FichaDetallesComponent } from './fichas/ficha-detalles.component';
 import { BuscarFichaComponent } from './buscar-ficha/buscar-ficha.component';
+import { TurnosComponent } from './turnos/turnos.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { BuscarFichaComponent } from './buscar-ficha/buscar-ficha.component';
     FichasComponent,
     FichaDetallesComponent,
     BuscarFichaComponent,
+    TurnosComponent,
   ],
   imports: [
     CommonModule,

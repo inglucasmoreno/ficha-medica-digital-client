@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import gsap from 'gsap';
 import { AlertService } from 'src/app/services/alert.service';
+import { DataService } from 'src/app/services/data.service';
 import { FichasService } from 'src/app/services/fichas.service';
 
 @Component({
@@ -15,10 +16,12 @@ export class BuscarFichaComponent implements OnInit {
   public dni: string = '';
 
   constructor(private alertService: AlertService,
+              private dataService: DataService,
               private router: Router,
               private fichasService: FichasService) { }
 
   ngOnInit(): void {
+    this.dataService.ubicacionActual = 'Dashboard -  Buscando fichas';
     gsap.from('.gsap-contenido', { y:100, opacity: 0, duration: .2 });
   }
 
