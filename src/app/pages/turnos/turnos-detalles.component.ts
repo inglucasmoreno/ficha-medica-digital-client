@@ -48,22 +48,22 @@ export class TurnosDetallesComponent implements OnInit {
 
   // Inicio de componente
   ngOnInit(): void {
-    console.log(new Date(format(new Date(),'yyyy-MM-dd:00:00:00')));
+    // console.log(new Date(format(new Date(),'yyyy-MM-dd:00:00:00')));
     this.dataService.ubicacionActual = 'Dashboard - Detalles de turnos';
     this.alertService.loading();
+    console.log(this.fecha_busqueda);
     this.activatedRoute.params.subscribe(({id}) => {
       this.usuariosService.getUsuario(id).subscribe({
         next: (usuario) => {
           this.usuario = usuario;
-          console.log(usuario);
           this.turnosService.listarTurnos(
             this.ordenar.direccion, 
             this.ordenar.columna,
-            this.usuario._id
+            this.usuario._id,
+            this.fecha_busqueda
             ).subscribe({
             next: ({turnos}) => {
               this.turnos = turnos;
-              console.log(turnos);
               this.alertService.close();
             },
             error: ({error}) => {
@@ -83,7 +83,8 @@ export class TurnosDetallesComponent implements OnInit {
     this.turnosService.listarTurnos(
       this.ordenar.direccion, 
       this.ordenar.columna,
-      this.usuario._id      
+      this.usuario._id,
+      this.fecha_busqueda      
     ).subscribe({
       next: ({turnos}) => {
         this.turnos = turnos;
@@ -104,8 +105,12 @@ export class TurnosDetallesComponent implements OnInit {
   modificarFecha(accion: string): void {
     if(accion === 'proximo' && this.fecha_busqueda !== ''){
       this.fecha_busqueda = format(add(new Date(this.fecha_busqueda),{ days: 1, hours: 3 }),'yyyy-MM-dd');
+      this.alertService.loading();
+      this.listarTurnos();
     }else if(accion === 'anterior' && this.fecha_busqueda !== ''){
       this.fecha_busqueda = format(add(new Date(this.fecha_busqueda),{ days: -1, hours: 3 }),'yyyy-MM-dd');   
+      this.alertService.loading();
+      this.listarTurnos();
     }
   }
 
