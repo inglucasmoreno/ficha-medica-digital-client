@@ -18,6 +18,7 @@ import { FichasComponent } from './fichas/fichas.component';
 import { FichaDetallesComponent } from './fichas/ficha-detalles.component';
 import { BuscarFichaComponent } from './buscar-ficha/buscar-ficha.component';
 import { TurnosComponent } from './turnos/turnos.component';
+import { TurnosDetallesComponent } from './turnos/turnos-detalles.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { TurnosComponent } from './turnos/turnos.component';
     FichaDetallesComponent,
     BuscarFichaComponent,
     TurnosComponent,
+    TurnosDetallesComponent,
   ],
   imports: [
     CommonModule,

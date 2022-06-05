@@ -17,6 +17,7 @@ import { FichasComponent } from './fichas/fichas.component';
 import { FichaDetallesComponent } from './fichas/ficha-detalles.component';
 import { BuscarFichaComponent } from './buscar-ficha/buscar-ficha.component';
 import { TurnosComponent } from './turnos/turnos.component';
+import { TurnosDetallesComponent } from './turnos/turnos-detalles.component';
 
 const routes: Routes = [
     {
@@ -44,6 +45,7 @@ const routes: Routes = [
 
             // Turnos
             { path: 'turnos', data: { permisos: 'TURNOS_NAV' }, canActivate: [PermisosGuard], component: TurnosComponent },
+            { path: 'turnos/detalles/:id', data: { permisos: 'TURNOS_DETALLES_NAV' }, canActivate: [PermisosGuard], component: TurnosDetallesComponent },
 
         ]
     }

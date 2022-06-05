@@ -3,6 +3,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { DataService } from 'src/app/services/data.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import gsap from 'gsap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-turnos',
@@ -13,8 +14,10 @@ import gsap from 'gsap';
 export class TurnosComponent implements OnInit {
 
   public usuarios: any[];
+  public idUsuario: string = '';
 
   constructor(private usuariosService: UsuariosService,
+              private router: Router,
               private dataService: DataService,
               private alertService: AlertService) { }
 
@@ -35,6 +38,22 @@ export class TurnosComponent implements OnInit {
         this.alertService.errorApi(error.message);
       }
     })
+  }
+
+  buscarProfesional(): void {
+    
+    // Verificacion
+    if(this.idUsuario.trim() === ''){
+      this.alertService.info('Debes seleccionar un profesional');
+      return;
+    }
+
+    this.router.navigateByUrl(`dashboard/turnos/detalles/${this.idUsuario}`);
+
+  }
+
+  reiniciarFormulario(): void {
+    this.idUsuario = '';
   }
 
 }
