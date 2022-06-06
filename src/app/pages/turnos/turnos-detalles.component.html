@@ -1,7 +1,7 @@
-<!-- Modal: Nuevo turno -->
+<!-- Modal: Nuevo turno / Editar turno -->
 <app-modal [showModal]="showModal">
   <div class="flex items-center rounded-t bg-primary-800 justify-between">
-    <h1 class="p-2 text-lg text-white rounded-t"> Creando nuevo turno </h1>
+    <h1 class="p-2 text-lg text-white rounded-t"> {{ tipoAccion === 'crear' ? 'Creando nuevo turno' : 'Actualizando turno' }} </h1>
     <svg (click)="showModal = false" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-lg text-white mr-2 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>    
@@ -33,7 +33,8 @@
         </button>
       </div>
     </div>
-    <button (click)="nuevoTurno()" class="bg-secondaryColor text-white w-full p-2 focus:outline-none rounded mt-5 mb-1 shadow"> Generar turno </button>
+    <button *ngIf="tipoAccion === 'crear'" (click)="nuevoTurno()" class="bg-secondaryColor text-white w-full p-2 focus:outline-none rounded mt-5 mb-1 shadow"> Generar turno </button>
+    <button *ngIf="tipoAccion === 'editar'" (click)="actualizarTurno()" class="bg-secondaryColor text-white w-full p-2 focus:outline-none rounded mt-5 mb-1 shadow"> Actualizar turno </button>
   </div>
 </app-modal>
 
@@ -58,14 +59,14 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
           </svg>        
         </button>
-        <input (change)="listarTurnos()" [(ngModel)]="fecha_busqueda" class="border ml-2 text-sm bg-white focus:outline-none border-gray-300 rounded p-2" type="date">
+        <input (blur)="listarTurnos()" [(ngModel)]="fecha_busqueda" class="border ml-2 text-sm bg-white focus:outline-none border-gray-300 rounded p-2" type="date">
         <button (click)="modificarFecha('proximo')" title="Proximo dia" class="p-2 rounded ml-2 border focus:outline-none border-gray-300 hover:text-secondaryColor">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>    
         </button>
       </div>
-      <button (click)="abrirModal()" title="Nuevo turno" class="p-2 rounded ml-2 border focus:outline-none border-gray-300 hover:text-secondaryColor">
+      <button (click)="abrirModal('crear')" title="Nuevo turno" class="p-2 rounded ml-2 border focus:outline-none border-gray-300 hover:text-secondaryColor">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
         </svg>      
@@ -139,10 +140,13 @@
                                 </span>
                             </div>
                           </th>
+                          <th class="px-5 border-b-2 border-gray-200 text-center text-sm font-semibold text-gray-800 tracking-wider">
+                            <span> Acciones </span>
+                          </th>
                       </tr>
                   </thead>
                   <tbody *ngIf="turnos">
-                      <tr class="animate__animated animate__fadeIn" *ngFor="let turno of turnos">
+                      <tr [ngClass]="{'bg-green-100':turno.confirmacion}" class="animate__animated animate__fadeIn" *ngFor="let turno of turnos">
                           <td class="px-5 py-2 border-b border-gray-200 text-xs">
                               <p class="text-gray-900 whitespace-no-wrap">
                                   {{ turno.fecha_turno | hora }} hs
@@ -173,10 +177,29 @@
                                 {{ turno.confirmacion ? 'Confirmado' : 'Pendiente' }}
                             </p>
                           </td>
+                          <td class="px-5 py-2 flex items-center justify-center border-b border-gray-200 text-xs text-center">
+                            <div class="flex items-center ml-2 justify-center text-gray-900 whitespace-no-wrap">
+                              <button *ngIf="turno?.confirmacion === false" (click)="confirmarTurno(turno)" class="p-2 border hover:text-green-500 focus:outline-none border-gray-300 rounded" title="Confirmar turno">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                              </button>
+                              <button (click)="abrirModal('editar', turno)" *ngIf="turno?.confirmacion === false" class="p-2 border hover:text-secondaryColor focus:outline-none ml-2 border-gray-300 rounded" title="Detalles de ficha" title="Editar turno">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                  </svg>
+                              </button>
+                              <div *ngIf="turno?.confirmacion === true" class="p-4"></div>
+                            </div>
+                      </td>
                       </tr>
                   </tbody>
               </table>
         </div>
+      </div>
+      <div *ngIf="turnos?.length === 0">
+        <p class="text-xl text-gray-700 mt-2"> No hay turnos generados para este dia </p>   
+        <button (click)="abrirModal('crear')" class="hover:text-secondaryColor focus:outline-none text-gray-700 text-sm p-2 font-semibold border border-gray-300 shadow focus-outline rounded mt-3"> Agregar primer turno </button> 
       </div>
     </div>
     

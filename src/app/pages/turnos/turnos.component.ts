@@ -31,7 +31,7 @@ export class TurnosComponent implements OnInit {
     this.alertService.loading();
     this.usuariosService.listarUsuarios().subscribe({
       next: ({usuarios}) => {
-        this.usuarios = usuarios;
+        this.usuarios = usuarios.filter(usuario => usuario.activo);
         this.alertService.close();
       },
       error: ({error}) => {

@@ -16,6 +16,9 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class TurnosDetallesComponent implements OnInit {
 
+  // Tipo de accion sobre formulario
+  public tipoAccion = 'crear'; // crear/editar
+
   // Modal turno
   public showModal = false;
 
@@ -25,6 +28,7 @@ export class TurnosDetallesComponent implements OnInit {
 
   // Turnos
   public turnos: any;
+  public turnoSeleccionado: any;
   public fecha_busqueda: any = format(new Date(), 'yyyy-MM-dd');
 
   // Formulario - Turno
@@ -80,6 +84,7 @@ export class TurnosDetallesComponent implements OnInit {
 
   // Listar turnos
   listarTurnos(): void {
+    this.alertService.loading();
     this.turnosService.listarTurnos(
       this.ordenar.direccion, 
       this.ordenar.columna,
@@ -97,19 +102,25 @@ export class TurnosDetallesComponent implements OnInit {
     });
   }
 
-  abrirModal(): void {
-    this.reiniciarFormulario();
+  abrirModal(tipo: string, turno = null): void {
+    this.tipoAccion = tipo;
+    this.turnoSeleccionado = turno;
+    if(tipo === 'crear'){
+      this.reiniciarFormulario();
+    }else if(tipo === 'editar'){
+      this.fecha = format(new Date(turno.fecha_turno),'yyyy-MM-dd');
+      this.hora = format(new Date(turno.fecha_turno),'HH:mm');
+      this.pacienteSeleccionado = turno.ficha;
+    }
     this.showModal = true;
   }
 
   modificarFecha(accion: string): void {
     if(accion === 'proximo' && this.fecha_busqueda !== ''){
       this.fecha_busqueda = format(add(new Date(this.fecha_busqueda),{ days: 1, hours: 3 }),'yyyy-MM-dd');
-      this.alertService.loading();
       this.listarTurnos();
     }else if(accion === 'anterior' && this.fecha_busqueda !== ''){
       this.fecha_busqueda = format(add(new Date(this.fecha_busqueda),{ days: -1, hours: 3 }),'yyyy-MM-dd');   
-      this.alertService.loading();
       this.listarTurnos();
     }
   }
@@ -157,8 +168,55 @@ export class TurnosDetallesComponent implements OnInit {
     });
   }
 
+  actualizarTurno(): void {
+
+    if(this.fecha.trim() === '' || this.hora.trim() === '' || !this.pacienteSeleccionado){
+      this.alertService.info('Debe completar los campos obligatorios');
+      return;
+    }
+
+    this.alertService.loading();
+
+    const nuevaFecha = this.fecha + ':' + this.hora;
+
+    const data = {
+      ficha: this.pacienteSeleccionado._id,
+      fecha_turno: new Date(nuevaFecha),
+      profesional: this.usuario._id,
+      updatorUser: this.authService.usuario.userId
+    }
+
+    this.turnosService.actualizarTurno(this.turnoSeleccionado._id, data).subscribe({
+      next: () => {
+        this.listarTurnos();
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error.message);
+      }
+    });
+
+  }
+
+  // Confirmar turno
+  confirmarTurno(turno: any): void {
+    const { _id } = turno;
+      this.alertService.question({ msg: '¿Quieres confirmar el turno?', buttonText: 'Confirmar' })
+        .then(({isConfirmed}) => {  
+          if (isConfirmed) {
+            this.alertService.loading();
+            this.turnosService.actualizarTurno(_id, { confirmacion: true, activo: false }).subscribe(() => {
+            this.listarTurnos();
+          }, ({error}) => {
+            this.alertService.close();
+            this.alertService.errorApi(error.message);
+          });
+        }
+      });
+  }
+
   reiniciarFormulario(): void {
     this.fecha = this.fecha_busqueda;
+    this.hora = '';
     this.dni = '';
     this.pacienteSeleccionado = null;  
   }

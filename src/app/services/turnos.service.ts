@@ -45,5 +45,15 @@ export class TurnosService {
     });
   }
 
+  
+  // Actualizar turno
+  actualizarTurno(id: string, data: any): Observable<any>{
+    return this.http.put(`${base_url}/turnos/${id}`, data, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }  
+    })
+  }
+
 
 }
