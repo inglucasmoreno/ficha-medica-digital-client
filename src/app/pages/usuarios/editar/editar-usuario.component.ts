@@ -17,10 +17,15 @@ import gsap from 'gsap';
 })
 export class EditarUsuarioComponent implements OnInit {
 
+  // Modal
+  public showModal = false;
+
   // Permisos
   public permisos = {
     usuarios: 'USUARIOS_NOT_ACCESS',
-    productos: 'PRODUCTOS_NOT_ACCESS'
+    fichas: 'FICHAS_NOT_ACCESS',
+    buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
+    turnos: 'TURNOS_NOT_ACCESS'
   };
 
   public id: string;
@@ -94,9 +99,15 @@ export class EditarUsuarioComponent implements OnInit {
       // Usuarios
       (permiso === 'USUARIOS_ALL' || permiso === 'USUARIOS_READ') ? this.permisos.usuarios = permiso : null;
 
-      // Productos
-      (permiso === 'PRODUCTOS_ALL' || permiso === "PRODUCTOS_READ") ? this.permisos.productos = permiso : null;
-    
+      // Fichas
+      (permiso === 'FICHAS_ALL' || permiso === "FICHAS_READ") ? this.permisos.fichas = permiso : null;
+
+      // Buscador de fichas
+      (permiso === 'BUSCADOR_FICHAS_ALL' || permiso === "BUSCADOR_FICHAS_READ") ? this.permisos.buscador_fichas = permiso : null;
+
+      // Turnos
+      (permiso === 'TURNOS_ALL' || permiso === "TURNOS_READ") ? this.permisos.turnos = permiso : null;
+
     });
 
   }
@@ -137,7 +148,10 @@ export class EditarUsuarioComponent implements OnInit {
 
   }
 
-    
+  abrirPermisos(): void {
+    this.showModal = true;
+  }
+
   // Se arma el arreglo de permisos
   adicionarPermisos(): any {
 
@@ -149,11 +163,23 @@ export class EditarUsuarioComponent implements OnInit {
       permisos.push(this.permisos.usuarios);
     }
     
-    // Seccion productos
-    // if(this.permisos.productos !== 'PRODUCTOS_NOT_ACCESS'){
-    //   permisos.push('PRODUCTOS_NAV');
-    //   permisos.push(this.permisos.productos);
-    // }
+    // Seccion fichas
+    if(this.permisos.fichas !== 'FICHAS_NOT_ACCESS'){
+      permisos.push('FICHAS_NAV');
+      permisos.push(this.permisos.fichas);
+    }
+
+    // Seccion buscador de fichas
+    if(this.permisos.buscador_fichas !== 'BUSCADOR_FICHAS_NOT_ACCESS'){
+      permisos.push('BUSCADOR_FICHAS_NAV');
+      permisos.push(this.permisos.buscador_fichas);
+    }
+
+    // Seccion turnos
+    if(this.permisos.turnos !== 'TURNOS_NOT_ACCESS'){
+      permisos.push('TURNOS_NAV');
+      permisos.push(this.permisos.turnos);
+    }
     
     return permisos;  
   

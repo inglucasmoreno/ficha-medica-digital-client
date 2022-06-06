@@ -40,12 +40,12 @@ const routes: Routes = [
             
             // Fichas
             { path: 'fichas', data: { permisos: 'FICHAS_NAV' }, canActivate: [PermisosGuard], component: FichasComponent },
-            { path: 'fichas/detalles/:id', data: { permisos: 'FICHA_DETALLES_NAV' }, canActivate: [PermisosGuard], component: FichaDetallesComponent },
-            { path: 'buscar-ficha', data: { permisos: 'FICHA_BUSCAR_NAV' }, canActivate: [PermisosGuard], component: BuscarFichaComponent },
+            { path: 'fichas/detalles/:id', data: { permisos: 'FICHA__NAV' }, canActivate: [PermisosGuard], component: FichaDetallesComponent },
+            { path: 'buscar-ficha', data: { permisos: 'FICHA__NAV' }, canActivate: [PermisosGuard], component: BuscarFichaComponent },
 
             // Turnos
             { path: 'turnos', data: { permisos: 'TURNOS_NAV' }, canActivate: [PermisosGuard], component: TurnosComponent },
-            { path: 'turnos/detalles/:id', data: { permisos: 'TURNOS_DETALLES_NAV' }, canActivate: [PermisosGuard], component: TurnosDetallesComponent },
+            { path: 'turnos/detalles/:id', data: { permisos: 'TURNOS_NAV' }, canActivate: [PermisosGuard], component: TurnosDetallesComponent },
 
         ]
     }
