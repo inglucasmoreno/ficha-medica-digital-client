@@ -66,7 +66,7 @@
           </svg>    
         </button>
       </div>
-      <button (click)="abrirModal('crear')" title="Nuevo turno" class="p-2 rounded ml-2 border focus:outline-none border-gray-300 hover:text-secondaryColor">
+      <button *appPermisos="permiso_escritura" (click)="abrirModal('crear')" title="Nuevo turno" class="p-2 rounded ml-2 border focus:outline-none border-gray-300 hover:text-secondaryColor">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
         </svg>      
@@ -140,7 +140,7 @@
                                 </span>
                             </div>
                           </th>
-                          <th class="px-5 border-b-2 border-gray-200 text-center text-sm font-semibold text-gray-800 tracking-wider">
+                          <th *appPermisos="permiso_escritura" class="px-5 border-b-2 border-gray-200 text-center text-sm font-semibold text-gray-800 tracking-wider">
                             <span> Acciones </span>
                           </th>
                       </tr>
@@ -177,7 +177,7 @@
                                 {{ turno.confirmacion ? 'Confirmado' : 'Pendiente' }}
                             </p>
                           </td>
-                          <td class="px-5 py-2 flex items-center justify-center border-b border-gray-200 text-xs text-center">
+                          <td *appPermisos="permiso_escritura" class="px-5 py-2 flex items-center justify-center border-b border-gray-200 text-xs text-center">
                             <div class="flex items-center ml-2 justify-center text-gray-900 whitespace-no-wrap">
                               <button *ngIf="turno?.confirmacion === false" (click)="confirmarTurno(turno)" class="p-2 border hover:text-green-500 focus:outline-none border-gray-300 rounded" title="Confirmar turno">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -199,7 +199,7 @@
       </div>
       <div *ngIf="turnos?.length === 0">
         <p class="text-xl text-gray-700 mt-2"> No hay turnos generados para este dia </p>   
-        <button (click)="abrirModal('crear')" class="hover:text-secondaryColor focus:outline-none text-gray-700 text-sm p-2 font-semibold border border-gray-300 shadow focus-outline rounded mt-3"> Agregar primer turno </button> 
+        <button *appPermisos="permiso_escritura" (click)="abrirModal('crear')" class="hover:text-secondaryColor focus:outline-none text-gray-700 text-sm p-2 font-semibold border border-gray-300 shadow focus-outline rounded mt-3"> Agregar primer turno </button> 
       </div>
     </div>
     

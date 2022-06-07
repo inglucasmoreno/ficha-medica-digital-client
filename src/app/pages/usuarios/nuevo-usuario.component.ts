@@ -45,14 +45,14 @@ export class NuevoUsuarioComponent implements OnInit {
 
     // Formulario reactivo
     this.usuarioForm = this.fb.group({
-      usuario: ['testing', Validators.required],
-      apellido: ['testing', Validators.required],
-      nombre: ['testing', Validators.required],
-      dni: ['34060312', Validators.required],
-      email: ['testing@gmail.com', Validators.required],
-      password: ['craneo', Validators.required],
-      repetir: ['craneo', Validators.required],
-      role: ['USER_ROLE', Validators.required],
+      usuario: ['', Validators.required],
+      apellido: ['', Validators.required],
+      nombre: ['', Validators.required],
+      dni: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      repetir: ['', Validators.required],
+      role: ['ADMIN_ROLE', Validators.required],
       activo: ['true', Validators.required]
     });
 

@@ -18,6 +18,7 @@ export class FichasComponent implements OnInit {
 	
   // Permisos de usuarios login
 	public permisos = { all: false };
+  public permiso_escritura = ['FICHAS_ALL'];
 
 	// Modal
 	public showModalFicha = false;
@@ -70,6 +71,7 @@ export class FichasComponent implements OnInit {
     this.dataService.showMenu = false;
     this.alertService.loading();
     this.listarFichas();
+    console.log(this.authService.usuario);
   }
 
   // Abrir modal
@@ -239,7 +241,13 @@ export class FichasComponent implements OnInit {
 
     const { _id, activo } = unidad;
 
-    //  if(!this.permisos.all) return this.alertService.info('Usted no tiene permiso para realizar esta acción');
+    const {permisos, role} = this.authService.usuario;
+
+    console.log(permisos.includes('FICHAS_ALL'));
+
+    const verificacionPermisos = !permisos.includes('FICHAS_ALL') && role !== 'ADMIN_ROLE';
+
+    if(verificacionPermisos) return this.alertService.info('Usted no tiene permiso para realizar esta acción');
 
     this.alertService.question({ msg: '¿Quieres actualizar el estado?', buttonText: 'Actualizar' })
         .then(({isConfirmed}) => {

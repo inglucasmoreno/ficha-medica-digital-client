@@ -16,6 +16,8 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class TurnosDetallesComponent implements OnInit {
 
+  public permiso_escritura = ['TURNOS_ALL'];
+
   // Tipo de accion sobre formulario
   public tipoAccion = 'crear'; // crear/editar
 
