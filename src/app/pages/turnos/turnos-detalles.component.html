@@ -10,8 +10,8 @@
     <div class="mt-2">
       <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Fecha y hora del turno </p>
       <div class="flex items-center mt-2">
-        <input [(ngModel)]="fecha" class="w-1/2 border focus:outline-none text-sm border-gray-300 p-2" type="date">
-        <input [(ngModel)]="hora" class="w-max border focus:outline-none text-sm border-gray-300 p-2 ml-2" type="time">
+        <input (keyup.enter)="tipoAccion == 'crear' ? nuevoTurno() : actualizarTurno()" [(ngModel)]="fecha" class="w-1/2 border focus:outline-none text-sm border-gray-300 p-2" type="date">
+        <input (keyup.enter)="tipoAccion == 'crear' ? nuevoTurno() : actualizarTurno()" [(ngModel)]="hora" class="w-max border focus:outline-none text-sm border-gray-300 p-2 ml-2" type="time">
       </div>
     </div>
     <div class="mt-4">
@@ -76,7 +76,7 @@
     <!-- Tabla de turnos -->
     <div class="mb-5 rounded-t px-4 mt-4">
       <div *ngIf="turnos?.length > 0" class="py-2 overflow-x-auto">
-        <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
+        <div class="inline-block overflow-y-auto min-w-full overflow-hidden">
               <table class="min-w-full leading-normal">
                   <thead>
                       <tr>
