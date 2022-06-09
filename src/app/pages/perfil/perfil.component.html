@@ -8,12 +8,17 @@
             <!-- Avatar -->
             <div class="mt-3 text-center">
                 <div *ngIf="usuarioLogin.role === 'ADMIN_ROLE'" class="bg-blue-100 mr-auto ml-auto rounded-full flex items-center justify-center w-24 h-24 shadow border border-blue-200">
-                    <p class="text-4xl font-semibold text-blue-900"> A </p>
+                    <p class="text-4xl font-semibold text-blue-800"> R </p>
                 </div>
-                <div *ngIf="usuarioLogin.role === 'USER_ROLE'" class="bg-orange-100 mr-auto ml-auto flex items-center justify-center w-24 h-24 rounded-full shadow border border-orange-200">
-                    <p class="text-4xl font-semibold text-orange-500"> E </p>
+                <div *ngIf="usuarioLogin.role === 'DOCTOR_ROLE'" class="bg-green-100 mr-auto ml-auto rounded-full flex items-center justify-center w-24 h-24 shadow border border-green-200">
+                    <p class="text-4xl font-semibold text-green-800"> M </p>
                 </div>
-                <p [ngClass]="{'text-orange-700':usuarioLogin.role === 'USER_ROLE'}" class="mt-1 text-sm text-primaryColor"> {{ usuarioLogin.role === 'ADMIN_ROLE' ? 'Usuario administrador' : 'Usuario estandar' }} </p>
+                <div *ngIf="usuarioLogin.role === 'ADMINISTRATIVE_ROLE'" class="bg-orange-100 mr-auto ml-auto flex items-center justify-center w-24 h-24 rounded-full shadow border border-orange-200">
+                    <p class="text-4xl font-semibold text-orange-800"> A </p>
+                </div>
+                <p *ngIf="usuarioLogin.role === 'ADMIN_ROLE'" class="mt-1 text-sm text-blue-800"> Usuario root </p>
+                <p *ngIf="usuarioLogin.role === 'DOCTOR_ROLE'" class="mt-1 text-sm text-green-800"> Usuario médico </p>
+                <p *ngIf="usuarioLogin.role === 'ADMINISTRATIVE_ROLE'" class="mt-1 text-sm text-orange-800"> Usuario administrativo </p>
             </div>
 
             <!-- Datos de usuario -->

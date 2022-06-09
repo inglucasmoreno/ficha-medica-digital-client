@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class TurnosComponent implements OnInit {
 
-  public usuarios: any[];
+  public medicos: any[];
   public idUsuario: string = '';
 
   constructor(private usuariosService: UsuariosService,
@@ -31,7 +31,7 @@ export class TurnosComponent implements OnInit {
     this.alertService.loading();
     this.usuariosService.listarUsuarios().subscribe({
       next: ({usuarios}) => {
-        this.usuarios = usuarios.filter(usuario => usuario.activo);
+        this.medicos = usuarios.filter(usuario => usuario.activo && usuario.role === 'DOCTOR_ROLE');
         this.alertService.close();
       },
       error: ({error}) => {

@@ -2,14 +2,19 @@
     <div class="flex justify-between">
         <div title="perfil de usuario" routerLink="perfil" class="flex cursor-pointer hover:text-indigo-200">
             <div *ngIf="authService.usuario.role === 'ADMIN_ROLE'" class="bg-blue-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-blue-200">
-                <p class="text-3xl font-semibold text-blue-900"> A </p>
+                <p class="text-3xl font-semibold text-blue-800"> R </p>
             </div>
-            <div *ngIf="authService.usuario.role === 'USER_ROLE'" class="bg-orange-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-orange-200">
-                <p class="text-3xl font-semibold text-orange-500"> E </p>
+            <div *ngIf="authService.usuario.role === 'DOCTOR_ROLE'" class="bg-green-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-green-200">
+                <p class="text-3xl font-semibold text-green-800"> M </p>
+            </div>
+            <div *ngIf="authService.usuario.role === 'ADMINISTRATIVE_ROLE'" class="bg-orange-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-orange-200">
+                <p class="text-3xl font-semibold text-orange-800"> A </p>
             </div>
             <div class='ml-2 mt-2'>
                 <p class="capitalize text-sm font-semibold"> {{ authService.usuario.apellido.toLowerCase() + ' ' + authService.usuario.nombre.toLowerCase() }} </p>
-                <p class="capitalize text-sm"> {{ authService.usuario.role === 'ADMIN_ROLE' ? 'administrador' : 'estandar' }} </p>
+                <p *ngIf="authService.usuario.role === 'ADMIN_ROLE'" class="capitalize text-sm"> Root </p>
+                <p *ngIf="authService.usuario.role === 'ADMINISTRATIVE_ROLE'" class="capitalize text-sm"> Administrativo </p>
+                <p *ngIf="authService.usuario.role === 'DOCTOR_ROLE'" class="capitalize text-sm"> Médico </p>
             </div>
         </div>
         <button (click)="this.dataService.showMenu = false" class="p-2 lg:hidden focus:outline-none focus:bg-gray-600 rounded-md">

@@ -104,8 +104,10 @@
                     </div>
                     <div class="bg-white my-2 flex">
                         <select class="bg-white tranform duration-500 focus:border-secondaryColor p-1 py-2 w-full text-sm border-b-2 outline-none" formControlName="role">
-                            <option value="USER_ROLE"> Estandar </option>
-                            <option value="ADMIN_ROLE"> Administrador </option>
+                                <!-- <option value="USER_ROLE"> Personalizado </option> -->
+                                <option value="ADMIN_ROLE"> Root </option>
+                                <option value="DOCTOR_ROLE"> Médico </option>
+                                <option value="ADMINISTRATIVE_ROLE"> Administrativo </option>
                         </select>
                     </div>
                 </div>
@@ -123,10 +125,10 @@
                     </div>
                 </div>
                 <div class="w-full text-sm mx-2 flex-1">
-                    <div *ngIf="usuarioForm.value.role === 'USER_ROLE'" class="font-semibold mt-3 text-gray-600 text-sm">
+                    <div *ngIf="usuarioForm.value.role === 'ADMINISTRATIVE_ROLE' || usuarioForm.value.role === 'DOCTOR_ROLE'" class="font-semibold mt-3 text-gray-600 text-sm">
                         <span class="text-red-500"> * </span> Permisos
                     </div>
-                    <div *ngIf="usuarioForm.value.role === 'USER_ROLE'" class="bg-white my-2 flex">
+                    <div *ngIf="usuarioForm.value.role === 'ADMINISTRATIVE_ROLE' || usuarioForm.value.role === 'DOCTOR_ROLE'" class="bg-white my-2 flex">
                         <button (click)="abrirPermisos()" class="bg-secondaryColor text-white focus:outline-none font-semibold p-2 rounded w-full border border-gray-300"> Configuración de permisos </button>
                     </div>       
                 </div>
@@ -138,10 +140,16 @@
         <div class="bg-white shadow p-4 rounded border border-gray-300">
             <div *ngIf="usuario" class="flex mb-2">
                 <div *ngIf="usuarioForm.value.role === 'ADMIN_ROLE'" class="bg-blue-100 flex items-center justify-center w-32 h-32 rounded-full shadow border border-blue-200">
-                    <p class="text-6xl font-semibold text-blue-900"> A </p>
+                    <p class="text-6xl font-semibold text-blue-600"> R </p>
                 </div>
-                <div *ngIf="usuarioForm.value.role === 'USER_ROLE'" class="bg-orange-100 flex items-center justify-center w-32 h-32 rounded-full shadow border border-orange-200">
+                <!-- <div *ngIf="usuarioForm.value.role === 'USER_ROLE'" class="bg-orange-100 flex items-center justify-center w-32 h-32 rounded-full shadow border border-orange-200">
                     <p class="text-6xl font-semibold text-orange-500"> E </p>
+                </div> -->
+                <div *ngIf="usuarioForm.value.role === 'DOCTOR_ROLE'" class="bg-green-100 flex items-center justify-center w-32 h-32 rounded-full shadow border border-green-200">
+                    <p class="text-6xl font-semibold text-green-500"> M </p>
+                </div>
+                <div *ngIf="usuarioForm.value.role === 'ADMINISTRATIVE_ROLE'" class="bg-orange-100 flex items-center justify-center w-32 h-32 rounded-full shadow border border-orange-200">
+                    <p class="text-6xl font-semibold text-orange-500"> A </p>
                 </div>
                 <div class="ml-4 mt-2">
                     <div class="mt-1">
