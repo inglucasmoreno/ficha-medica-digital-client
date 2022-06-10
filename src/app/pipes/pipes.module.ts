@@ -6,6 +6,7 @@ import { MonedaPipe } from './moneda.pipe';
 import { FiltroUsuariosPipe } from './filtro-usuarios.pipe';
 import { FiltroFichasPipe } from './filtro-fichas.pipe';
 import { HoraPipe } from './hora.pipe';
+import { FiltroTipoMedicoPipe } from './filtro-tipo-medico.pipe';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { HoraPipe } from './hora.pipe';
     FiltroUsuariosPipe,
     FiltroFichasPipe,
     HoraPipe,
+    FiltroTipoMedicoPipe,
   ],
   imports: [
     CommonModule
@@ -25,7 +27,8 @@ import { HoraPipe } from './hora.pipe';
     MonedaPipe,
     FiltroUsuariosPipe,
     FiltroFichasPipe,
-    HoraPipe
+    HoraPipe,
+    FiltroTipoMedicoPipe,
   ]
 })
 export class PipesModule { }

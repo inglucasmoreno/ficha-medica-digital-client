@@ -18,6 +18,7 @@ import { FichaDetallesComponent } from './fichas/ficha-detalles.component';
 import { BuscarFichaComponent } from './buscar-ficha/buscar-ficha.component';
 import { TurnosComponent } from './turnos/turnos.component';
 import { TurnosDetallesComponent } from './turnos/turnos-detalles.component';
+import { TipoMedicoComponent } from './tipo-medico/tipo-medico.component';
 
 const routes: Routes = [
     {
@@ -38,6 +39,9 @@ const routes: Routes = [
             { path: 'usuarios/editar/:id', data: { permisos: 'USUARIOS_NAV' }, canActivate: [PermisosGuard], component: EditarUsuarioComponent },
             { path: 'usuarios/password/:id', data: { permisos: 'USUARIOS_NAV' }, canActivate: [PermisosGuard], component: EditarPasswordComponent },
             
+            // Tipo de medico
+            { path: 'tipo-medico', data: { permisos: 'TIPO_MEDICO_NAV' }, canActivate: [PermisosGuard], component: TipoMedicoComponent },
+
             // Fichas
             { path: 'fichas', data: { permisos: 'FICHAS_NAV' }, canActivate: [PermisosGuard], component: FichasComponent },
             { path: 'fichas/detalles/:id', data: {}, canActivate: [], component: FichaDetallesComponent },
@@ -46,6 +50,7 @@ const routes: Routes = [
             // Turnos
             { path: 'turnos', data: { permisos: 'TURNOS_NAV' }, canActivate: [PermisosGuard], component: TurnosComponent },
             { path: 'turnos/detalles/:id', data: { permisos: 'TURNOS_NAV' }, canActivate: [PermisosGuard], component: TurnosDetallesComponent },
+
 
         ]
     }

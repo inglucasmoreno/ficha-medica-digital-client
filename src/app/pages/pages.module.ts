@@ -19,6 +19,7 @@ import { FichaDetallesComponent } from './fichas/ficha-detalles.component';
 import { BuscarFichaComponent } from './buscar-ficha/buscar-ficha.component';
 import { TurnosComponent } from './turnos/turnos.component';
 import { TurnosDetallesComponent } from './turnos/turnos-detalles.component';
+import { TipoMedicoComponent } from './tipo-medico/tipo-medico.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { TurnosDetallesComponent } from './turnos/turnos-detalles.component';
     BuscarFichaComponent,
     TurnosComponent,
     TurnosDetallesComponent,
+    TipoMedicoComponent,
   ],
   imports: [
     CommonModule,
