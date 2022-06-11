@@ -8,6 +8,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { DataService } from 'src/app/services/data.service';
 
 import gsap from 'gsap';
+import { TipoMedicoService } from 'src/app/services/tipo-medico.service';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -19,6 +20,10 @@ export class EditarUsuarioComponent implements OnInit {
 
   // Modal
   public showModal = false;
+  
+  // Tipos de medicos
+  public tipos: any[];
+  public tipo: any = "000000000000000000000000";
 
   // Permisos
   public permisos = {
@@ -34,6 +39,7 @@ export class EditarUsuarioComponent implements OnInit {
 
   constructor(private router: Router,
               private fb: FormBuilder,
+              private tipoMedicoService: TipoMedicoService,
               private activatedRoute: ActivatedRoute,
               private usuariosService: UsuariosService,
               private alertService: AlertService,
@@ -74,6 +80,8 @@ export class EditarUsuarioComponent implements OnInit {
       this.usuario = usuarioRes;
       const {usuario, apellido, nombre, dni, email, role, activo} = this.usuario;
 
+      this.tipo = usuarioRes.tipo_medico._id; 
+
       this.usuarioForm.patchValue({
         usuario,
         apellido,
@@ -84,7 +92,17 @@ export class EditarUsuarioComponent implements OnInit {
         activo: String(activo)
       });
 
-      this.alertService.close();
+      // Se obtienen los tipos de medicos
+      this.tipoMedicoService.listarTipos().subscribe({
+        next: ({tipos}) => {
+          this.tipos = tipos.filter(tipo => (tipo.activo && tipo._id !== '000000000000000000000000'));
+          this.alertService.close();
+        },
+        error: ({error}) => {
+          this.alertService.errorApi(error.message);
+        }
+      })
+
     },({error})=> {
       this.alertService.errorApi(error.message); 
     });
@@ -130,9 +148,13 @@ export class EditarUsuarioComponent implements OnInit {
       return false;
     }
 
-    // Se agregan los permisos
-    let data: any = this.usuarioForm.value;
+    let data: any;
 
+    if(role === 'DOCTOR_ROLE') data = {...this.usuarioForm.value, tipo_medico: this.tipo}
+    else data = {...this.usuarioForm.value, tipo_medico: '000000000000000000000000'} 
+    
+    
+    // Se agregan los permisos
     if(role !== 'ADMIN_ROLE') data.permisos = this.adicionarPermisos(); // Se adicionan los permisos a la data para actualizacion
     else data.permisos = [];
 

@@ -69,6 +69,7 @@ export class TurnosDetallesComponent implements OnInit {
             this.fecha_busqueda
             ).subscribe({
             next: ({turnos}) => {
+              console.log(turnos);
               this.turnos = turnos;
               this.alertService.close();
             },
@@ -106,6 +107,7 @@ export class TurnosDetallesComponent implements OnInit {
 
   abrirModal(tipo: string, turno = null): void {
     this.tipoAccion = tipo;
+    console.log(turno);
     this.turnoSeleccionado = turno;
     if(tipo === 'crear'){
       this.reiniciarFormulario();

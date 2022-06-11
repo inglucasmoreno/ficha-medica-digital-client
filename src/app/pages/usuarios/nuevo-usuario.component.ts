@@ -7,6 +7,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { AlertService } from '../../services/alert.service';
 
 import gsap from 'gsap';
+import { TipoMedicoService } from 'src/app/services/tipo-medico.service';
 
 @Component({
   selector: 'app-nuevo-usuario',
@@ -18,6 +19,10 @@ export class NuevoUsuarioComponent implements OnInit {
 
   // Modal: permisos
   public showModal = false;
+
+  // Tipos de medicos
+  public tipos: any[];
+  public tipo: any = "000000000000000000000000";
 
   // Permisos
   public permisos = {
@@ -32,6 +37,7 @@ export class NuevoUsuarioComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
+              private tipoMedicoService: TipoMedicoService,
               private usuariosService: UsuariosService,
               private alertService: AlertService,
               private dataService: DataService
@@ -56,6 +62,22 @@ export class NuevoUsuarioComponent implements OnInit {
       activo: ['true', Validators.required]
     });
 
+    this.obtenerTiposMedicos();
+
+  }
+
+  // Tipo de medicos
+  obtenerTiposMedicos(): void {
+    this.alertService.loading();
+    this.tipoMedicoService.listarTipos().subscribe({
+      next: ({tipos}) => {
+        this.tipos = tipos.filter(tipo => (tipo.activo && tipo._id !== '000000000000000000000000'));
+        this.alertService.close();
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error.message);
+      }
+    })
   }
 
   // Crear nuevo usuario
@@ -64,8 +86,6 @@ export class NuevoUsuarioComponent implements OnInit {
     const { status } = this.usuarioForm;
     const {usuario, apellido, nombre, dni, email, role, password, repetir} = this.usuarioForm.value;
     
-    console.log(this.usuarioForm.valid);
-
     // Se verifica que los campos no tengan un espacio vacio
     const campoVacio = usuario.trim() === '' || 
                        apellido.trim() === '' ||
@@ -87,9 +107,12 @@ export class NuevoUsuarioComponent implements OnInit {
       return;   
     }
 
-    // Se agregan los permisos
-    let data: any = this.usuarioForm.value;
+    let data: any;
+
+    if(role === 'DOCTOR_ROLE') data = {...this.usuarioForm.value, tipo_medico: this.tipo }
+    else data = {...this.usuarioForm.value, tipo_medico: '000000000000000000000000' }
     
+    // Se agregan los permisos
     if(role !== 'ADMIN_ROLE') data.permisos = this.adicionarPermisos();
     else data.permisos = [];
 

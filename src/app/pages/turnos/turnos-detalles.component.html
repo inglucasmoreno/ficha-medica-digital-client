@@ -33,6 +33,34 @@
         </button>
       </div>
     </div>
+    <div *ngIf="turnoSeleccionado && tipoAccion === 'editar'" class="xl:flex items-center mt-4">
+      <div class="xl:w-1/2">
+          <p class="font-semibold text-sm"> Fecha de alta </p>
+          <div class="border text-sm mt-2 border-gray-300 rounded p-2 bg-gray-100">
+              {{ turnoSeleccionado.createdAt | fecha }}
+          </div>
+      </div>
+      <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+          <p class="font-semibold text-sm"> Usuario creador </p>
+          <div class="border text-sm capitalize mt-2 border-gray-300 rounded p-2 bg-gray-100">
+              {{ turnoSeleccionado.creatorUser.apellido.toLowerCase() }} {{ turnoSeleccionado.creatorUser.nombre.toLowerCase() }}
+          </div>
+      </div>
+  </div> 
+  <div *ngIf="turnoSeleccionado" class="xl:flex items-center mt-4">
+      <div class="xl:w-1/2">
+          <p class="font-semibold text-sm"> Ultima modificación </p>
+          <div class="border text-sm mt-2 border-gray-300 rounded p-2 bg-gray-100">
+              {{ turnoSeleccionado.updatedAt | fecha }}
+          </div>
+      </div>
+      <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+          <p class="font-semibold text-sm"> Usuario ultima actualización </p>
+          <div class="border text-sm capitalize mt-2 border-gray-300 rounded p-2 bg-gray-100">
+              {{ turnoSeleccionado.updatorUser.apellido.toLowerCase() }} {{ turnoSeleccionado.updatorUser.nombre.toLowerCase() }}
+          </div>
+      </div>
+  </div>      
     <button *ngIf="tipoAccion === 'crear'" (click)="nuevoTurno()" class="bg-secondaryColor text-white w-full p-2 focus:outline-none rounded mt-5 mb-1 shadow"> Generar turno </button>
     <button *ngIf="tipoAccion === 'editar'" (click)="actualizarTurno()" class="bg-secondaryColor text-white w-full p-2 focus:outline-none rounded mt-5 mb-1 shadow"> Actualizar turno </button>
   </div>
@@ -40,18 +68,36 @@
 
 <!-- Pagina principal -->
 <div class="p-2">
-  <div class="flex items-center justify-center mt-10">
-    <h1 class="text-4xl"> Planilla de turnos del profesional </h1>
-  </div>
-  <div class="mx-auto p-2 max-w-5xl mt-4">
-    
-    <div class="px-4 capitalize flex items-center">
+  <div class="mx-auto border shadow max-w-5xl mt-4">
+    <div class="flex bg-primary-800  items-center justify-between pr-4">
+      <div class="p-4 flex items-center text-white rounded-t">
+        <div class="flex items-center">
+          <div class="py-4 px-6 rounded-full text-2xl font-semibold border shadow border-green-200 text-green-700 bg-green-100">
+            M
+          </div>
+          <div class="ml-2">
+            <p class="font-semibold capitalize"> {{ usuario?.apellido.toLowerCase() }} {{ usuario?.nombre.toLowerCase() }} </p>
+            <p class="text-white text-sm"> {{ usuario?.tipo_medico._id !== '000000000000000000000000' ? usuario?.tipo_medico.descripcion : 'No especificado' }} </p>
+          </div>
+        </div>
+        <div class="border-l-2 border-white h-full ml-4">
+          <h1 class="text-xl text-center ml-4"> LISTADO DE TURNOS </h1>
+        </div>
+      </div>
       <div>
-        <p class="font-semibold"> Profesional: {{ usuario?.apellido.toLowerCase() }} {{ usuario?.nombre.toLowerCase() }} </p>
-        <p class="text-gray-500"> DNI: {{ usuario?.dni }} </p>
+        <button routerLink="/dashboard/turnos" title="Buscar profesional" class="py-2 px-3 bg-white rounded ml-2 border focus:outline-none hover:text-secondaryColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>     
+        </button>  
+        <button *appPermisos="permiso_escritura" (click)="abrirModal('crear')" title="Nuevo turno" class="py-2 px-3 bg-white rounded ml-3 border focus:outline-none hover:text-secondaryColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>      
+        </button>  
       </div>
     </div>
-
+    
     <div class="mt-5 flex items-center justify-between px-4">
       <div class="flex items-center">
         <button (click)="modificarFecha('anterior')" title="Dia anterior" class="p-2 rounded border focus:outline-none border-gray-300 hover:text-secondaryColor">
@@ -65,12 +111,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>    
         </button>
-      </div>
-      <button *appPermisos="permiso_escritura" (click)="abrirModal('crear')" title="Nuevo turno" class="p-2 rounded ml-2 border focus:outline-none border-gray-300 hover:text-secondaryColor">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-        </svg>      
-      </button>      
+      </div>    
     </div>
 
     <!-- Tabla de turnos -->
@@ -79,8 +120,8 @@
         <div class="inline-block overflow-y-auto min-w-full overflow-hidden">
               <table class="min-w-full leading-normal">
                   <thead>
-                      <tr>
-                          <th class="px-5 py-1 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                      <tr class="bg-gray-100 py-2 border">
+                          <th class="px-5 py-2 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
                               <div (click)="ordenarPorColumna('fecha_turno')" class="cursor-pointer flex items-center focus:outline-none">
                                   <span> Hora </span>
                                   <span class="ml-2 text-gray-600">    
@@ -199,7 +240,7 @@
       </div>
       <div *ngIf="turnos?.length === 0">
         <p class="text-xl text-gray-700 mt-2"> No hay turnos generados para este dia </p>   
-        <button *appPermisos="permiso_escritura" (click)="abrirModal('crear')" class="hover:text-secondaryColor focus:outline-none text-gray-700 text-sm p-2 font-semibold border border-gray-300 shadow focus-outline rounded mt-3"> Agregar primer turno </button> 
+        <button *appPermisos="permiso_escritura" (click)="abrirModal('crear')" class="bg-secondaryColor focus:outline-none text-white text-sm p-2 font-semibold border border-gray-300 shadow focus-outline rounded mt-3"> Agregar primer turno </button> 
       </div>
     </div>
     

@@ -94,7 +94,7 @@ constructor(private tipoMedicoService: TipoMedicoService,
       this.ordenar.columna
       )
     .subscribe( ({ tipos }) => {
-      this.tipos = tipos;
+      this.tipos = tipos.filter(tipo => tipo._id !== '000000000000000000000000'); // Se esconde el tipo de inci
       this.showModalTipo = false;
       this.alertService.close();
     }, (({error}) => {
@@ -140,7 +140,7 @@ constructor(private tipoMedicoService: TipoMedicoService,
 
     const data = {
       descripcion: this.descripcion,
-      userUpdator: this.authService.usuario.userId,
+      updatorUser: this.authService.usuario.userId,
     }
 
     this.tipoMedicoService.actualizarTipo(this.idTipo, data).subscribe(() => {
