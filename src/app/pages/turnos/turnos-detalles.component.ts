@@ -23,6 +23,7 @@ export class TurnosDetallesComponent implements OnInit {
 
   // Modal turno
   public showModal = false;
+  public showModalDetalles = false;
 
   // Usuario - Profesional
   public usuario: any;
@@ -37,6 +38,13 @@ export class TurnosDetallesComponent implements OnInit {
   public fecha: string = '';
   public hora: string = '';
   public dni: string = '';
+
+	// Filtrado
+	public filtro = {
+		estado: '',
+		parametro: ''
+	}
+
 
   // Ordenar
   public ordenar = {
@@ -117,6 +125,13 @@ export class TurnosDetallesComponent implements OnInit {
       this.pacienteSeleccionado = turno.ficha;
     }
     this.showModal = true;
+  }
+
+  abrirModalDetalles(turno = null): void {
+    this.reiniciarFormulario();
+    this.pacienteSeleccionado = turno.ficha;
+    this.turnoSeleccionado = turno;
+    this.showModalDetalles = true;
   }
 
   modificarFecha(accion: string): void {
