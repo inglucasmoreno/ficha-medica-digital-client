@@ -21,13 +21,20 @@ export class FichaDetallesComponent implements OnInit {
   // Secciones de datos - Antendentes | Alergias | Cirugias
   public seccion = 'Antecedentes';
 
-  // Modals
+  // Modals - Creacion
   public showModalFicha = false;
   public showModalNota = false;
   public showModalAntecedente = false;
   public showModalAlergia = false;
   public showModalCirugia = false;
   public showModalEstudio = false;
+
+  // Modals - Informacion
+  public showModalInfoNota = false;
+  public showModalInfoAntecedente = false;
+  public showModalInfoAlergia = false;
+  public showModalInfoCirugia = false;
+  public showModalInfoEstudio = false;
 
   // Ficha
   public idFicha: string;
@@ -48,25 +55,30 @@ export class FichaDetallesComponent implements OnInit {
   // Notas de conulta
   public notaConsulta: string = '';
   public notasConsulta: any[];
+  public notaSeleccionada: any;
 
   // Antecedentes
   public antecedente: string = '';
   public antecedentes: any[];
+  public antecedenteSeleccionado: any;
 
   // Alergias
   public alergia: string = '';
   public alergias: any[];
+  public alergiaSeleccionada: any;
 
   // Cirugias
   public cirugia: string = '';
   public cirugia_fecha: string = '';
   public cirugia_institucion: string = '';
   public cirugias: any[];
+  public cirugiaSeleccionada: any;
 
   // Estudios
   public estudio: string = '';
   public estudios: any[];
   public laboratorio: string = '';
+  public estudioSeleccionado: any;
 
 	// Ordenar
 	public ordenar = {
@@ -488,8 +500,7 @@ export class FichaDetallesComponent implements OnInit {
   crearCirugia(): void {
 
     if(this.cirugia.trim() === '' || 
-      this.cirugia_fecha.trim() === '' || 
-      this.cirugia_institucion === ''
+      this.cirugia_fecha.trim() === ''
     ){
       this.alertService.info('Debes completar los datos de la cirugia');
       return;
@@ -584,6 +595,36 @@ export class FichaDetallesComponent implements OnInit {
   abrirModalEstudios(): void {
     this.reiniciarFormularios();
     this.showModalEstudio = true;
+  }
+
+  // Abrir modal - Informacion - Nota de consulta
+  abrirInfoNota(nota: any): void {
+    this.notaSeleccionada = nota;
+    this.showModalInfoNota = true;
+  }
+
+  // Abrir modal - Informacion - Antecedentes
+  abrirInfoAntecedente(antecedente: any): void {
+    this.antecedenteSeleccionado = antecedente;
+    this.showModalInfoAntecedente = true;
+  }
+
+  // Abrir modal - Informacion - Alergia
+  abrirInfoAlergia(alergia: any): void {
+    this.alergiaSeleccionada = alergia;
+    this.showModalInfoAlergia = true;
+  }
+
+  // Abrir modal - Informacion - Cirugia
+  abrirInfoCirugia(cirugia: any): void {
+    this.cirugiaSeleccionada = cirugia;
+    this.showModalInfoCirugia = true;
+  }
+
+  // Abrir modal - Informacion - Estudios
+  abrirInfoEstudio(estudio: any): void {
+    this.estudioSeleccionado = estudio;
+    this.showModalInfoEstudio = true;
   }
 
   // Reiniciar formularios

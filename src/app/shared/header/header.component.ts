@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
+import { TurnosService } from 'src/app/services/turnos.service';
 import { AuthService } from '../../services/auth.service';
 import { items } from './items';
 
@@ -21,18 +22,25 @@ export class HeaderComponent implements OnInit {
   public permiso_usuarios = true;
 
   constructor( public authService: AuthService,
+               public turnosService: TurnosService,
                public dataService: DataService ) { }
 
   ngOnInit(): void {
-    // console.log(this.authService.usuario);
     this.items = items;
+    this.turnosVencidos();
+  }
+
+  // Turnos vencidos
+  turnosVencidos(): void {
+    this.turnosService.turnosVencidos().subscribe({
+      next: ({turnos}) => {
+        console.log(turnos);
+      }, error: ({error}) => {
+        console.log(error);
+      }
+    });
   }
   
-  // Habilitacion de navegacion
-  habilitacionNavegacion(): void {
-
-  }
-
   // Metodo: Cerrar sesion
   logout(): void{ this.authService.logout(); }
 

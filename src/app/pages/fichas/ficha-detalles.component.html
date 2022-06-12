@@ -1,3 +1,314 @@
+<!-- Info: Nota de profesional -->
+<app-modal [showModal]="showModalInfoNota">
+  <div>
+    <div class="bg-primary-800 text-white flex items-center justify-between p-2 rounded-t">
+      <h1 class="text-lg"> Nota de consulta </h1>
+      <button class="focus:outline-none" (click)="showModalInfoNota = false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>    
+      </button>
+    </div>
+    <div class="p-4">
+      <div class="flex items-center">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900 rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Fecha de consulta:   
+          </span>
+          <span>
+            {{ notaSeleccionada?.createdAt | fecha }}
+          </span>
+        </p>
+      </div>   
+      <div class="flex items-center mt-2">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900  rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Profesional:   
+          </span>
+          <span class="capitalize">
+            {{ notaSeleccionada?.creatorUser.apellido.toLowerCase() }} {{ notaSeleccionada?.creatorUser.nombre.toLowerCase() }}
+          </span>
+        </p>
+      </div>  
+      <div class="py-2">
+        <p class="font-semibold rounded bg-gray-100 border border-gray-300 w-full p-1 mt-2"> Nota del profesional </p>
+        <p class="mt-2"> <span class="text-sm"> {{ notaSeleccionada?.descripcion }}  </span> </p>   
+      </div> 
+      <button (click)="showModalInfoNota = false" class="bg-secondaryColor mt-4 text-white w-full rounded focus:outline-none p-2">
+        Regresar
+      </button> 
+    </div>
+  </div> 
+</app-modal>
+
+<!-- Info: Nota de antecedentes -->
+<app-modal [showModal]="showModalInfoAntecedente">
+  <div>
+    <div class="bg-primary-800 text-white flex items-center justify-between p-2 rounded-t">
+      <h1 class="text-lg"> Antecedente personal / Familiar </h1>
+      <button class="focus:outline-none" (click)="showModalInfoAntecedente = false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>    
+      </button>
+    </div>
+    <div class="p-4">
+      <div class="flex items-center">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900 rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Fecha de alta:   
+          </span>
+          <span>
+            {{ antecedenteSeleccionado?.createdAt | fecha }}
+          </span>
+        </p>
+      </div>   
+      <div class="flex items-center mt-2">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900  rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Profesional:   
+          </span>
+          <span class="capitalize">
+            {{ antecedenteSeleccionado?.creatorUser.apellido.toLowerCase() }} {{ antecedenteSeleccionado?.creatorUser.nombre.toLowerCase() }}
+          </span>
+        </p>
+      </div>  
+      <div class="py-2">
+        <p class="font-semibold rounded bg-gray-100 border border-gray-300 w-full p-1 mt-2"> Antecedente </p>
+        <p class="mt-2"> <span class="text-sm"> {{ antecedenteSeleccionado?.descripcion }}  </span> </p>   
+      </div> 
+      <button (click)="showModalInfoAntecedente = false" class="bg-secondaryColor mt-4 text-white w-full rounded focus:outline-none p-2">
+        Regresar
+      </button> 
+    </div>
+  </div> 
+</app-modal>
+
+<!-- Info: Alergia -->
+<app-modal [showModal]="showModalInfoAlergia">
+  <div>
+    <div class="bg-primary-800 text-white flex items-center justify-between p-2 rounded-t">
+      <h1 class="text-lg"> Información de alergia </h1>
+      <button class="focus:outline-none" (click)="showModalInfoAlergia = false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>    
+      </button>
+    </div>
+    <div class="p-4">
+      <div class="flex items-center">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900 rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Fecha de alta:   
+          </span>
+          <span>
+            {{ alergiaSeleccionada?.createdAt | fecha }}
+          </span>
+        </p>
+      </div>   
+      <div class="flex items-center mt-2">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900  rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Profesional:   
+          </span>
+          <span class="capitalize">
+            {{ alergiaSeleccionada?.creatorUser.apellido.toLowerCase() }} {{ alergiaSeleccionada?.creatorUser.nombre.toLowerCase() }}
+          </span>
+        </p>
+      </div>  
+      <div class="py-2">
+        <p class="font-semibold rounded bg-gray-100 border border-gray-300 w-full p-1 mt-2"> Tipo de alergia </p>
+        <p class="mt-2"> <span class="text-sm"> {{ alergiaSeleccionada?.tipo_alergia }}  </span> </p>   
+      </div> 
+      <button (click)="showModalInfoAlergia = false" class="bg-secondaryColor mt-4 text-white w-full rounded focus:outline-none p-2">
+        Regresar
+      </button> 
+    </div>
+  </div> 
+</app-modal>
+
+<!-- Info: Cirugia -->
+<app-modal [showModal]="showModalInfoCirugia">
+  <div>
+    <div class="bg-primary-800 text-white flex items-center justify-between p-2 rounded-t">
+      <h1 class="text-lg"> Información de cirugia </h1>
+      <button class="focus:outline-none" (click)="showModalInfoCirugia = false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>    
+      </button>
+    </div>
+    <div class="p-4">
+      <div class="flex items-center">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900 rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Fecha de realización:   
+          </span>
+          <span>
+            {{ cirugiaSeleccionada?.fecha_realizacion | fecha }}
+          </span>
+        </p>
+      </div> 
+
+      <div class="flex items-center mt-2">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900  rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Profesional:   
+          </span>
+          <span class="capitalize">
+            {{ cirugiaSeleccionada?.creatorUser.apellido.toLowerCase() }} {{ cirugiaSeleccionada?.creatorUser.nombre.toLowerCase() }}
+          </span>
+        </p>
+      </div>  
+  
+      <div class="flex items-center mt-2">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900 rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Institución:   
+          </span>
+          <span>
+            {{ cirugiaSeleccionada?.institucion.trim() !== '' ? cirugiaSeleccionada?.institucion : 'No especificado' }}
+          </span>
+        </p>
+      </div> 
+
+      <div class="py-2">
+        <p class="font-semibold rounded bg-gray-100 border border-gray-300 w-full p-1 mt-2"> Tipo de cirugia </p>
+        <p class="mt-2"> <span class="text-sm"> {{ cirugiaSeleccionada?.tipo_cirugia }}  </span> </p>   
+      </div> 
+      <button (click)="showModalInfoCirugia = false" class="bg-secondaryColor mt-4 text-white w-full rounded focus:outline-none p-2">
+        Regresar
+      </button> 
+    </div>
+  </div> 
+</app-modal>
+
+<!-- Info: Estudios -->
+<app-modal [showModal]="showModalInfoEstudio">
+  <div>
+    <div class="bg-primary-800 text-white flex items-center justify-between p-2 rounded-t">
+      <h1 class="text-lg"> Información de estudio </h1>
+      <button class="focus:outline-none" (click)="showModalInfoEstudio = false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>    
+      </button>
+    </div>
+    <div class="p-4">
+      <div class="flex items-center">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900 rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Fecha de alta:   
+          </span>
+          <span>
+            {{ estudioSeleccionado?.createdAt| fecha }}
+          </span>
+        </p>
+      </div> 
+
+      <div class="flex items-center mt-2">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900  rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Profesional:   
+          </span>
+          <span class="capitalize">
+            {{ estudioSeleccionado?.creatorUser.apellido.toLowerCase() }} {{ estudioSeleccionado?.creatorUser.nombre.toLowerCase() }}
+          </span>
+        </p>
+      </div>  
+  
+      <div class="flex items-center mt-2">
+        <div class="bg-gray-100 border border-gray-300 shadow text-primary-900 rounded-full p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+          </svg>
+        </div>
+        <p>
+          <span class="font-semibold ml-2">
+            Laboratorio:   
+          </span>
+          <span>
+            {{ estudioSeleccionado?.laboratorio.trim() !== '' ? estudioSeleccionado?.laboratorio : 'No especificado' }}
+          </span>
+        </p>
+      </div> 
+
+      <div class="py-2">
+        <p class="font-semibold rounded bg-gray-100 border border-gray-300 w-full p-1 mt-2"> Estudio </p>
+        <p class="mt-2"> <span class="text-sm"> {{ estudioSeleccionado?.descripcion}}  </span> </p>   
+      </div> 
+      <button (click)="showModalInfoEstudio = false" class="bg-secondaryColor mt-4 text-white w-full rounded focus:outline-none p-2">
+        Regresar
+      </button> 
+    </div>
+  </div> 
+</app-modal>
+
 
 <!-- Datos de ficha -->
 <app-modal [showModal]="showModalFicha">
@@ -99,7 +410,7 @@
   </div>
   <div>
     <div class="p-2">
-      <p class="font-semibold"> Descripción </p>  
+      <p class="font-semibold"> <span class="text-red-500"> * </span> Descripción </p>  
       <input (keyup.enter)="crearNotaConsulta()" [(ngModel)]="notaConsulta" placeholder="Contenido de la nota" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       <button (click)="crearNotaConsulta()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear nota </button>
     </div>
@@ -116,7 +427,7 @@
   </div>
   <div>
     <div class="p-2">
-      <p class="font-semibold"> Descripción </p>  
+      <p class="font-semibold"> <span class="text-red-500"> * </span> Descripción </p>  
       <input (keyup.enter)="crearAntecedente()" [(ngModel)]="antecedente" placeholder="Contenido del antecedente" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       <button (click)="crearAntecedente()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear antecedente </button>
     </div>
@@ -133,7 +444,7 @@
   </div>
   <div>
     <div class="p-2">
-      <p class="font-semibold"> Tipo de alergia </p>  
+      <p class="font-semibold"> <span class="text-red-500"> * </span> Tipo de alergia </p>  
       <input (keyup.enter)="crearAlergia()" [(ngModel)]="alergia" placeholder="Contenido de alergia" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       <button (click)="crearAlergia()" class="p-2 my-2 focus:outline-none border border-gray-300 text-sm bg-gray-100 hover:text-secondaryColor font-semibold w-full"> Crear alergia </button>
     </div>
@@ -151,7 +462,7 @@
   <div>
     <div class="p-2 flex">
       <div class="w-1/2">
-        <p class="font-semibold"> Fecha de realización </p>  
+        <p class="font-semibold"> <span class="text-red-500"> * </span> Fecha de realización </p>  
         <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia_fecha" class="mt-2 border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="date" >
       </div>
       <div class="w-1/2 ml-2">
@@ -159,11 +470,11 @@
     </div>
     <div class="p-2 flex">
       <div class="w-1/2">
-        <p class="font-semibold"> Tipo de cirugia </p>  
+        <p class="font-semibold"> <span class="text-red-500"> * </span> Tipo de cirugia </p>  
         <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia" placeholder="Contenido de cirugia" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       </div>
       <div class="w-1/2 ml-2">
-        <p class="font-semibold"> Institución</p>  
+        <p class="font-semibold"> Institución </p>  
         <input (keyup.enter)="crearCirugia()" [(ngModel)]="cirugia_institucion" placeholder="Descripción de institución" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
       </div>
     </div>
@@ -183,7 +494,7 @@
   </div>
   <div>
     <div class="p-2">
-      <p class="font-semibold"> Descripción </p>  
+      <p class="font-semibold"> <span class="text-red-500"> * </span> Descripción </p>  
       <input (keyup.enter)="crearEstudio()" [(ngModel)]="estudio" placeholder="Información del estudio" class="mt-2 uppercase border p-2 text-sm rounded border-gray-300 w-full focus:outline-none" type="text" >
     </div>
     <div class="px-2">
@@ -231,13 +542,14 @@
   </div>
  
   <!-- Notas de consulta -->
-  <div class="mb-5 rounded-t px-4">
+  <div class="mb-8 rounded-t px-4">
     <div class="flex items-center justify-between mt-10">
       <h1 class="border-gray-300 font-semibold text-xl text-gray-800 rounded-t py-2"> Consultas médicas - Notas del profesional </h1>
       <button *ngIf="notasConsulta?.length > 0" (click)="abrirModalNota()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
         Nueva nota
       </button>
     </div>
+    <p class="mb-2 text-gray-500 text-xl" *ngIf="notasConsulta?.length === 0"> No se encontraron notas de consulta </p>  
     <button *ngIf="notasConsulta?.length === 0" (click)="abrirModalNota()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
       Agregar nota de consulta
     </button>  
@@ -279,7 +591,7 @@
                     </tr>
                 </thead>
                 <tbody *ngIf="notasConsulta">
-                    <tr class="animate__animated animate__fadeIn" *ngFor="let nota of notasConsulta">
+                    <tr (click)="abrirInfoNota(nota)" class="animate__animated cursor-pointer hover:bg-indigo-50 animate__fadeIn" *ngFor="let nota of notasConsulta">
                         <td class="px-5 py-2 border-b border-gray-200 text-xs">
                             <p class="text-gray-900 whitespace-no-wrap capitalize">
                                 {{ nota.createdAt | fecha }}
@@ -303,22 +615,23 @@
   </div>
 
   <div class="flex mt-5 px-4">
-    <div class="w-1/2">
+    <div class="w-1/2 border border-gray-300 shadow mb-5">
       <div class="flex items-center">
-        <button (click)="seccion = 'Antecedentes'" [ngClass]="{'bg-secondaryColor text-white': seccion === 'Antecedentes'}" class="border text-sm focus:outline-none border-gray-300 rounded-t p-2 font-semibold"> Antecendetes personales / Familiares </button>
-        <button (click)="seccion = 'Alergias'" [ngClass]="{'bg-secondaryColor text-white': seccion === 'Alergias'}" class="border text-sm focus:outline-none border-gray-300 rounded-t p-2 ml-1 font-semibold"> Alergias </button>
-        <button (click)="seccion = 'Cirugias'" [ngClass]="{'bg-secondaryColor text-white': seccion === 'Cirugias'}" class="border text-sm focus:outline-none border-gray-300 rounded-t p-2 ml-1 font-semibold"> Cirugias </button>
+        <button (click)="seccion = 'Antecedentes'" [ngClass]="{'bg-secondaryColor text-white border-t border-secondaryColor': seccion === 'Antecedentes'}" class="border text-sm focus:outline-none bg-gray-100 border-gray-300 p-2 border-l-0 border-t-0 font-semibold"> Antecendetes personales / Familiares </button>
+        <button (click)="seccion = 'Alergias'" [ngClass]="{'bg-secondaryColor text-white border-t border-secondaryColor': seccion === 'Alergias'}" class="border text-sm focus:outline-none bg-gray-100 border-gray-300 p-2 border-l-0 border-t-0  font-semibold"> Alergias </button>
+        <button (click)="seccion = 'Cirugias'" [ngClass]="{'bg-secondaryColor text-white border-t border-secondaryColor': seccion === 'Cirugias'}" class="border text-sm focus:outline-none bg-gray-100 border-gray-300 p-2 border-l-0 border-t-0 font-semibold"> Cirugias </button>
       </div>
       
       <!-- Antecedentes -->
-      <div *ngIf="seccion === 'Antecedentes'" class="py-2 mt-4 w-full">
+      <div *ngIf="seccion === 'Antecedentes'" class="p-2 mt-2 w-full">
         <div class="rounded-t">
           <div class="flex items-center justify-between">
             <div></div>
-            <button *ngIf="antecedentes?.length > 0" (click)="abrirModalAntecedentes()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+            <button *ngIf="antecedentes?.length > 0" (click)="abrirModalAntecedentes()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded">
               Nuevo antecedente
             </button>
           </div>
+          <p class="mb-2 text-gray-500 text-xl" *ngIf="antecedentes?.length === 0"> No se encontraron datos de antecedentes </p>  
           <button *ngIf="antecedentes?.length === 0" (click)="abrirModalAntecedentes()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
             Agregar datos de antecedente
           </button>  
@@ -347,7 +660,7 @@
                                     </span>
                                 </div>
                               </th>
-                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                              <!-- <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
                                 <div (click)="ordenarPorColumnaAntecedentes('creatorUser.apellido')" class="cursor-pointer flex items-center focus:outline-none">
                                     <span> Registra </span>
                                     <span class="ml-2 text-gray-600">    
@@ -356,11 +669,11 @@
                                         <svg *ngIf="ordenar.columnaAntecedentes != 'creatorUser.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                     </span>
                                 </div>
-                              </th>
+                              </th> -->
                           </tr>
                       </thead>
-                      <tbody *ngIf="notasConsulta">
-                          <tr class="animate__animated animate__fadeIn" *ngFor="let antecedente of antecedentes">
+                      <tbody *ngIf="antecedentes">
+                          <tr (click)="abrirInfoAntecedente(antecedente)" class="animate__animated cursor-pointer hover:bg-indigo-50 animate__fadeIn" *ngFor="let antecedente of antecedentes">
                               <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                   <p class="text-gray-900 whitespace-no-wrap">
                                       {{ antecedente.createdAt | fecha }}
@@ -371,11 +684,11 @@
                                     {{ antecedente.descripcion }}
                                 </p>
                               </td>
-                              <td class="px-5 border-b border-gray-200 text-xs">
+                              <!-- <td class="px-5 border-b border-gray-200 text-xs">
                                 <p class="text-gray-900 whitespace-no-wrap capitalize">
                                     {{ antecedente.creatorUser.apellido }} {{ antecedente.creatorUser.nombre }}
                                 </p>
-                              </td>
+                              </td> -->
                           </tr>
                       </tbody>
                   </table>
@@ -385,7 +698,7 @@
       </div>
 
       <!-- Alergias -->
-      <div *ngIf="seccion === 'Alergias'" class="py-2 mt-4 w-full">
+      <div *ngIf="seccion === 'Alergias'" class="p-2 mt-2 w-full">
         <div class="rounded-t">
           <div class="flex items-center justify-between">
             <div></div>
@@ -393,6 +706,7 @@
               Nueva alergia
             </button>
           </div>
+          <p class="mb-2 text-gray-500 text-xl" *ngIf="alergias?.length === 0"> No se encontraron datos de alergias </p>  
           <button *ngIf="alergias?.length === 0" (click)="abrirModalAlergias()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
             Agregar datos de alergia
           </button>  
@@ -421,7 +735,7 @@
                                     </span>
                                 </div>
                               </th>
-                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                              <!-- <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
                                 <div (click)="ordenarPorColumnaAlergias('creatorUser.apellido')" class="cursor-pointer flex items-center focus:outline-none">
                                     <span> Registra </span>
                                     <span class="ml-2 text-gray-600">    
@@ -430,11 +744,11 @@
                                         <svg *ngIf="ordenar.columnaAlergias != 'creatorUser.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                     </span>
                                 </div>
-                              </th>
+                              </th> -->
                           </tr>
                       </thead>
                       <tbody *ngIf="alergias">
-                          <tr class="animate__animated animate__fadeIn" *ngFor="let alergia of alergias">
+                          <tr (click)="abrirInfoAlergia(alergia)" class="animate__animated cursor-pointer hover:bg-indigo-50 animate__fadeIn" *ngFor="let alergia of alergias">
                               <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                   <p class="text-gray-900 whitespace-no-wrap">
                                       {{ alergia.createdAt | fecha }}
@@ -445,11 +759,11 @@
                                     {{ alergia.tipo_alergia }}
                                 </p>
                               </td>
-                              <td class="px-5 border-b border-gray-200 text-xs">
+                              <!-- <td class="px-5 border-b border-gray-200 text-xs">
                                 <p class="text-gray-900 whitespace-no-wrap capitalize">
                                     {{ alergia.creatorUser.apellido }} {{ alergia.creatorUser.nombre }}
                                 </p>
-                              </td>
+                              </td> -->
                           </tr>
                       </tbody>
                   </table>
@@ -459,7 +773,7 @@
       </div>
 
       <!-- Cirugias -->
-      <div *ngIf="seccion === 'Cirugias'" class="py-2 mt-4 w-full">
+      <div *ngIf="seccion === 'Cirugias'" class="p-2 mt-2 w-full">
         <div class="rounded-t">
           <div class="flex items-center justify-between">
             <div></div>
@@ -467,6 +781,7 @@
               Nueva cirugia
             </button>
           </div>
+          <p class="mb-2 text-gray-500 text-xl" *ngIf="cirugias?.length === 0"> No se encontraron datos de cirugias </p>  
           <button *ngIf="cirugias?.length === 0" (click)="abrirModalCirugias()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
             Agregar datos de cirugia
           </button>  
@@ -495,7 +810,7 @@
                                     </span>
                                 </div>
                               </th>
-                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                              <!-- <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
                                 <div (click)="ordenarPorColumnaCirugias('institucion')" class="cursor-pointer flex items-center focus:outline-none">
                                     <span> Institución </span>
                                     <span class="ml-2 text-gray-600">    
@@ -504,11 +819,11 @@
                                         <svg *ngIf="ordenar.columnaCirugias != 'institucion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                     </span>
                                 </div>
-                              </th>
+                              </th> -->
                           </tr>
                       </thead>
                       <tbody *ngIf="cirugias">
-                          <tr class="animate__animated animate__fadeIn" *ngFor="let cirugia of cirugias">
+                          <tr (click)="abrirInfoCirugia(cirugia)" class="animate__animated cursor-pointer hover:bg-indigo-50 animate__fadeIn" *ngFor="let cirugia of cirugias">
                               <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                   <p class="text-gray-900 whitespace-no-wrap">
                                       {{ cirugia.fecha_realizacion | fecha }}
@@ -519,11 +834,11 @@
                                     {{ cirugia.tipo_cirugia }}
                                 </p>
                               </td>
-                              <td class="px-5 border-b border-gray-200 text-xs">
+                              <!-- <td class="px-5 border-b border-gray-200 text-xs">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ cirugia.institucion }}
+                                    {{ cirugia.institucion.trim() !== '' ? cirugia.institucion : 'No especificado' }}
                                 </p>
-                              </td>
+                              </td> -->
                           </tr>
                       </tbody>
                   </table>
@@ -534,11 +849,12 @@
     </div>
 
     <!-- Estudios solicitados al paciente -->
-    <div class="w-1/2 ml-4 pl-4 border-l-2 pb-10">
+    <div class="w-1/2 ml-4 border border-gray-300 shadow mb-5">
       <div class="flex items-center">
-        <button class="border bg-secondaryColor text-sm focus:outline-none text-white border-gray-300 rounded-t p-2 font-semibold"> Estudios solicitados al paciente </button>
+        <button class="border bg-secondaryColor text-sm focus:outline-none text-white border-secondaryColor p-2 font-semibold"> Estudios solicitados al paciente </button>
       </div> 
-      <div class="py-2 mt-4 w-full">
+      <div class="p-2 mt-2 w-full">
+        <p class="mb-2 text-gray-500 text-xl" *ngIf="estudios?.length === 0"> No se encontraron datos de estudios </p>  
         <div class="rounded-t">
           <div class="flex items-center justify-between">
             <div></div>
@@ -574,7 +890,7 @@
                                     </span>
                                 </div>
                               </th>
-                              <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                              <!-- <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
                                 <div (click)="ordenarPorColumnaEstudios('laboratorio')" class="cursor-pointer flex items-center focus:outline-none">
                                     <span> Laboratorio </span>
                                     <span class="ml-2 text-gray-600">    
@@ -583,11 +899,11 @@
                                         <svg *ngIf="ordenar.columnaEstudios != 'laboratorio'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                     </span>
                                 </div>
-                              </th>
+                              </th> -->
                           </tr>
                       </thead>
                       <tbody *ngIf="estudios">
-                          <tr class="animate__animated animate__fadeIn" *ngFor="let estudio of estudios">
+                          <tr (click)="abrirInfoEstudio(estudio)" class="animate__animated cursor-pointer hover:bg-indigo-50 animate__fadeIn" *ngFor="let estudio of estudios">
                               <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                   <p class="text-gray-900 whitespace-no-wrap">
                                       {{ estudio.createdAt | fecha }}
@@ -598,11 +914,11 @@
                                     {{ estudio.descripcion }}
                                 </p>
                               </td>
-                              <td class="px-5 border-b border-gray-200 text-xs">
+                              <!-- <td class="px-5 border-b border-gray-200 text-xs">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ estudio.laboratorio.trim() !== '' ? estudio.laboratorio : 'Sin especificar' }}
+                                    {{ estudio.laboratorio.trim() !== '' ? estudio.laboratorio : 'No especificado' }}
                                 </p>
-                              </td>
+                              </td> -->
                           </tr>
                       </tbody>
                   </table>

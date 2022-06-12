@@ -68,11 +68,11 @@
 
 <!-- Pagina principal -->
 <div class="p-2">
-  <div class="mx-auto border shadow max-w-5xl mt-4">
+  <div class="mx-auto border shadow w-11/12 mt-4">
     <div class="flex bg-primary-800  items-center justify-between pr-4">
       <div class="p-4 flex items-center text-white rounded-t">
         <div class="flex items-center">
-          <div class="py-4 px-6 rounded-full text-2xl font-semibold border shadow border-green-200 text-green-700 bg-green-100">
+          <div class="py-4 px-6 rounded-full text-3xl font-semibold border shadow border-green-200 text-green-700 bg-green-100">
             M
           </div>
           <div class="ml-2">
@@ -187,7 +187,7 @@
                       </tr>
                   </thead>
                   <tbody *ngIf="turnos">
-                      <tr [ngClass]="{'bg-green-100':turno.confirmacion}" class="animate__animated animate__fadeIn" *ngFor="let turno of turnos">
+                      <tr [ngClass]="{'bg-green-100':turno.confirmacion, 'bg-red-100':turno.vencido }" class="animate__animated animate__fadeIn" *ngFor="let turno of turnos">
                           <td class="px-5 py-2 border-b border-gray-200 text-xs">
                               <p class="text-gray-900 whitespace-no-wrap">
                                   {{ turno.fecha_turno | hora }} hs
@@ -220,17 +220,17 @@
                           </td>
                           <td *appPermisos="permiso_escritura" class="px-5 py-2 flex items-center justify-center border-b border-gray-200 text-xs text-center">
                             <div class="flex items-center ml-2 justify-center text-gray-900 whitespace-no-wrap">
-                              <button *ngIf="turno?.confirmacion === false" (click)="confirmarTurno(turno)" class="p-2 border hover:text-green-500 focus:outline-none border-gray-300 rounded" title="Confirmar turno">
+                              <button *ngIf="turno?.activo === true" (click)="confirmarTurno(turno)" class="p-2 border hover:text-green-500 focus:outline-none border-gray-300 rounded" title="Confirmar turno">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                 </svg>
                               </button>
-                              <button (click)="abrirModal('editar', turno)" *ngIf="turno?.confirmacion === false" class="p-2 border hover:text-secondaryColor focus:outline-none ml-2 border-gray-300 rounded" title="Detalles de ficha" title="Editar turno">
+                              <button *ngIf="turno?.activo === true" (click)="abrirModal('editar', turno)" class="p-2 border hover:text-secondaryColor focus:outline-none ml-2 border-gray-300 rounded" title="Detalles de ficha" title="Editar turno">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                   </svg>
                               </button>
-                              <div *ngIf="turno?.confirmacion === true" class="p-4"></div>
+                              <div *ngIf="turno?.activo === false" class="p-4"></div>
                             </div>
                       </td>
                       </tr>

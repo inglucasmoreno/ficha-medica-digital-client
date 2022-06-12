@@ -45,7 +45,15 @@ export class TurnosService {
     });
   }
 
-  
+  // Turnos vencidos
+  turnosVencidos(): Observable<any>{
+    return this.http.get(`${base_url}/turnos/vencidos/baja`, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+  }
+
   // Actualizar turno
   actualizarTurno(id: string, data: any): Observable<any>{
     return this.http.put(`${base_url}/turnos/${id}`, data, {
