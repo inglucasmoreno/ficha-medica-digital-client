@@ -71,7 +71,6 @@ export class FichasComponent implements OnInit {
     this.dataService.showMenu = false;
     this.alertService.loading();
     this.listarFichas();
-    console.log(this.authService.usuario);
   }
 
   // Abrir modal
@@ -242,8 +241,6 @@ export class FichasComponent implements OnInit {
     const { _id, activo } = unidad;
 
     const {permisos, role} = this.authService.usuario;
-
-    console.log(permisos.includes('FICHAS_ALL'));
 
     const verificacionPermisos = !permisos.includes('FICHAS_ALL') && role !== 'ADMIN_ROLE';
 

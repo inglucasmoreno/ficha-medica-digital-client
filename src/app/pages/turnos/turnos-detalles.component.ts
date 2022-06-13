@@ -62,10 +62,8 @@ export class TurnosDetallesComponent implements OnInit {
 
   // Inicio de componente
   ngOnInit(): void {
-    // console.log(new Date(format(new Date(),'yyyy-MM-dd:00:00:00')));
     this.dataService.ubicacionActual = 'Dashboard - Detalles de turnos';
     this.alertService.loading();
-    console.log(this.fecha_busqueda);
     this.activatedRoute.params.subscribe(({id}) => {
       this.usuariosService.getUsuario(id).subscribe({
         next: (usuario) => {
@@ -77,7 +75,6 @@ export class TurnosDetallesComponent implements OnInit {
             this.fecha_busqueda
             ).subscribe({
             next: ({turnos}) => {
-              console.log(turnos);
               this.turnos = turnos;
               this.alertService.close();
             },
@@ -115,7 +112,6 @@ export class TurnosDetallesComponent implements OnInit {
 
   abrirModal(tipo: string, turno = null): void {
     this.tipoAccion = tipo;
-    console.log(turno);
     this.turnoSeleccionado = turno;
     if(tipo === 'crear'){
       this.reiniciarFormulario();

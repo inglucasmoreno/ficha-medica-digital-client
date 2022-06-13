@@ -7,23 +7,11 @@ export class FiltroTurnosPipe implements PipeTransform {
 
   transform(valores: any[], parametro: string, estado: string): any {
     
-    // Trabajando con activo boolean
-    let boolActivo: boolean;
     let filtrados: any[];
-  
-    // Creando variable booleana
-    if(estado === 'true') boolActivo = true;
-    else if(estado === 'false') boolActivo = false; 
-    else boolActivo = null;
-    
-    // Filtrado Activo - Inactivo - Todos
-    if(boolActivo !== null){
-      filtrados = valores.filter( valor => {
-        return valor.activo == boolActivo;
-      });
-    }else if(boolActivo === null){
-      filtrados = valores; 
-    }
+
+    if(estado === 'confirmados') filtrados = valores.filter( valor => valor.confirmacion );
+    else if(estado === 'vencidos') filtrados = valores.filter( valor => valor.vencido );
+    else filtrados = valores;
     
     // Filtrado por parametro
     parametro = parametro.toLocaleLowerCase();

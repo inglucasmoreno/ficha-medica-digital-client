@@ -33,11 +33,7 @@ export class HeaderComponent implements OnInit {
   // Turnos vencidos
   turnosVencidos(): void {
     this.turnosService.turnosVencidos().subscribe({
-      next: ({turnos}) => {
-        console.log(turnos);
-      }, error: ({error}) => {
-        console.log(error);
-      }
+      next: () => {}, error: () => {}
     });
   }
   
