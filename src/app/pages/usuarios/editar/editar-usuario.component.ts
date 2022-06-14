@@ -28,6 +28,7 @@ export class EditarUsuarioComponent implements OnInit {
   // Permisos
   public permisos = {
     usuarios: 'USUARIOS_NOT_ACCESS',
+    tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
     fichas: 'FICHAS_NOT_ACCESS',
     buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
     turnos: 'TURNOS_NOT_ACCESS'
@@ -120,6 +121,9 @@ export class EditarUsuarioComponent implements OnInit {
       // Fichas
       (permiso === 'FICHAS_ALL' || permiso === "FICHAS_READ") ? this.permisos.fichas = permiso : null;
 
+      // Tipos de medicos
+      (permiso === 'TIPO_MEDICO_ALL' || permiso === "TIPO_MEDICO_READ") ? this.permisos.tipo_medico = permiso : null;
+
       // Buscador de fichas
       (permiso === 'BUSCADOR_FICHAS_ALL' || permiso === "BUSCADOR_FICHAS_READ") ? this.permisos.buscador_fichas = permiso : null;
 
@@ -184,6 +188,12 @@ export class EditarUsuarioComponent implements OnInit {
       permisos.push('USUARIOS_NAV');
       permisos.push(this.permisos.usuarios);
     }
+  
+    // Seccion tipo de medicos
+    if(this.permisos.tipo_medico !== 'TIPO_MEDICO_NOT_ACCESS'){
+      permisos.push('TIPO_MEDICO_NAV');
+      permisos.push(this.permisos.tipo_medico);
+    }
     
     // Seccion fichas
     if(this.permisos.fichas !== 'FICHAS_NOT_ACCESS'){
@@ -205,6 +215,31 @@ export class EditarUsuarioComponent implements OnInit {
     
     return permisos;  
   
+  }
+
+  // Asignar permisos por tipo de usuario seleccionado
+  asignarPermisosTipoUsuario():void {
+  
+    const { role } = this.usuarioForm.value;
+
+    if(role === 'ADMINISTRATIVE_ROLE'){
+      this.permisos = {
+        usuarios: 'USUARIOS_NOT_ACCESS',
+        tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
+        fichas: 'FICHAS_ALL',
+        buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
+        turnos: 'TURNOS_ALL'
+      }
+    }else if(role === 'DOCTOR_ROLE'){
+      this.permisos = {
+        usuarios: 'USUARIOS_NOT_ACCESS',
+        tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
+        fichas: 'FICHAS_READ',
+        buscador_fichas: 'BUSCADOR_FICHAS_ALL',
+        turnos: 'TURNOS_NOT_ACCESS'
+      }
+    }
+
   }
 
   // Funcion del boton regresar

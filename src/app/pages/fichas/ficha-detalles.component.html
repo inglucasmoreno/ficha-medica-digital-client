@@ -534,7 +534,7 @@
         </div>
         <div class="mt-4 ml-10">
           <p> <span class="font-semibold"> Fecha de nacimiento: </span> {{ ficha.fecha_nacimiento | fecha }} </p>
-          <p> <span class="font-semibold"> Edad: </span> 33 años </p>
+          <p> <span class="font-semibold"> Edad: </span> {{ edad }} </p>
         </div>
       </div>
     </div>
@@ -545,12 +545,12 @@
   <div class="mb-8 rounded-t px-4">
     <div class="flex items-center justify-between mt-10">
       <h1 class="border-gray-300 font-semibold text-xl text-gray-800 rounded-t py-2"> Consultas médicas - Notas del profesional </h1>
-      <button *ngIf="notasConsulta?.length > 0" (click)="abrirModalNota()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+      <button *ngIf="notasConsulta?.length > 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalNota()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
         Nueva nota
       </button>
     </div>
     <p class="mb-2 text-gray-500 text-xl" *ngIf="notasConsulta?.length === 0"> No se encontraron notas de consulta </p>  
-    <button *ngIf="notasConsulta?.length === 0" (click)="abrirModalNota()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+    <button *ngIf="notasConsulta?.length === 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalNota()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
       Agregar nota de consulta
     </button>  
     <div *ngIf="notasConsulta?.length > 0" class="py-2 overflow-x-auto">
@@ -627,15 +627,15 @@
         <div class="rounded-t">
           <div class="flex items-center justify-between">
             <div></div>
-            <button *ngIf="antecedentes?.length > 0" (click)="abrirModalAntecedentes()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded">
+            <button *ngIf="antecedentes?.length > 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalAntecedentes()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded">
               Nuevo antecedente
             </button>
           </div>
           <p class="mb-2 text-gray-500 text-xl" *ngIf="antecedentes?.length === 0"> No se encontraron datos de antecedentes </p>  
-          <button *ngIf="antecedentes?.length === 0" (click)="abrirModalAntecedentes()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+          <button *ngIf="antecedentes?.length === 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalAntecedentes()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
             Agregar datos de antecedente
           </button>  
-          <div *ngIf="antecedentes?.length > 0" class="py-2 mt-4 overflow-x-auto">
+          <div *ngIf="antecedentes?.length > 0 " class="py-2 mt-4 overflow-x-auto">
             <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
                   <table class="min-w-full leading-normal">
                       <thead>
@@ -702,12 +702,12 @@
         <div class="rounded-t">
           <div class="flex items-center justify-between">
             <div></div>
-            <button *ngIf="alergias?.length > 0" (click)="abrirModalAlergias()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+            <button *ngIf="alergias?.length > 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalAlergias()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
               Nueva alergia
             </button>
           </div>
           <p class="mb-2 text-gray-500 text-xl" *ngIf="alergias?.length === 0"> No se encontraron datos de alergias </p>  
-          <button *ngIf="alergias?.length === 0" (click)="abrirModalAlergias()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+          <button *ngIf="alergias?.length === 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalAlergias()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
             Agregar datos de alergia
           </button>  
           <div *ngIf="alergias?.length > 0" class="py-2 mt-4 overflow-x-auto">
@@ -777,12 +777,12 @@
         <div class="rounded-t">
           <div class="flex items-center justify-between">
             <div></div>
-            <button *ngIf="cirugias?.length > 0" (click)="abrirModalCirugias()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+            <button *ngIf="cirugias?.length > 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalCirugias()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
               Nueva cirugia
             </button>
           </div>
           <p class="mb-2 text-gray-500 text-xl" *ngIf="cirugias?.length === 0"> No se encontraron datos de cirugias </p>  
-          <button *ngIf="cirugias?.length === 0" (click)="abrirModalCirugias()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+          <button *ngIf="cirugias?.length === 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalCirugias()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
             Agregar datos de cirugia
           </button>  
           <div *ngIf="cirugias?.length > 0" class="py-2 mt-4 overflow-x-auto">
@@ -858,13 +858,13 @@
         <div class="rounded-t">
           <div class="flex items-center justify-between">
             <div></div>
-            <button *ngIf="estudios?.length > 0" (click)="abrirModalEstudios()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
+            <button *ngIf="estudios?.length > 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalEstudios()" class="hover:text-secondaryColor text-sm shadow border border-gray-300 focus:outline-none p-2 font-semibold rounded-t">
               Nuevo estudio
             </button>
           </div>
-          <button *ngIf="estudios?.length === 0" (click)="abrirModalEstudios()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
+          <button *ngIf="estudios?.length === 0 && (authService.usuario.role === 'ADMIN_ROLE' || authService.usuario.role === 'DOCTOR_ROLE')" (click)="abrirModalEstudios()" class="border text-sm font-semibold hover:text-secondaryColor text-gray-800 focus:outline-none rounded shadow p-2 border-gray-300"> 
             Agregar datos de estudio
-          </button>  
+          </button>   
           <div *ngIf="estudios?.length > 0" class="py-2 mt-4 overflow-x-auto">
             <div class="inline-block max-h-56 overflow-y-auto min-w-full overflow-hidden">
                   <table class="min-w-full leading-normal">

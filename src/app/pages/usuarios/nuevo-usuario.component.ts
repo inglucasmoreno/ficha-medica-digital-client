@@ -27,6 +27,7 @@ export class NuevoUsuarioComponent implements OnInit {
   // Permisos
   public permisos = {
     usuarios: 'USUARIOS_NOT_ACCESS',
+    tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
     fichas: 'FICHAS_NOT_ACCESS',
     buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
     turnos: 'TURNOS_NOT_ACCESS'
@@ -133,6 +134,31 @@ export class NuevoUsuarioComponent implements OnInit {
   abrirPermisos(): void {
     this.showModal = true;
   }
+
+  // Asignar permisos por tipo de usuario seleccionado
+  asignarPermisosTipoUsuario():void {
+    
+    const { role } = this.usuarioForm.value;
+
+    if(role === 'ADMINISTRATIVE_ROLE'){
+      this.permisos = {
+        usuarios: 'USUARIOS_NOT_ACCESS',
+        tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
+        fichas: 'FICHAS_ALL',
+        buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
+        turnos: 'TURNOS_ALL'
+      }
+    }else if(role === 'DOCTOR_ROLE'){
+      this.permisos = {
+        usuarios: 'USUARIOS_NOT_ACCESS',
+        tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
+        fichas: 'FICHAS_READ',
+        buscador_fichas: 'BUSCADOR_FICHAS_ALL',
+        turnos: 'TURNOS_NOT_ACCESS'
+      }
+    }
+
+  }
   
   // Se arma el arreglo de permisos
   adicionarPermisos(): any {
@@ -143,6 +169,12 @@ export class NuevoUsuarioComponent implements OnInit {
     if(this.permisos.usuarios !== 'USUARIOS_NOT_ACCESS'){
       permisos.push('USUARIOS_NAV');
       permisos.push(this.permisos.usuarios);
+    }
+
+    // Seccion tipo de medicos
+    if(this.permisos.tipo_medico !== 'TIPO_MEDICO_NOT_ACCESS'){
+      permisos.push('TIPO_MEDICO_NAV');
+      permisos.push(this.permisos.tipo_medico);
     }
     
     // Seccion fichas

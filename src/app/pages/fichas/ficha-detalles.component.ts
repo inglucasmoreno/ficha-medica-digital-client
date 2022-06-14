@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { add, format } from 'date-fns';
+import { add, format, formatDistanceStrict } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { AlergiasService } from 'src/app/services/alergias.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AntecedentesService } from 'src/app/services/antecedentes.service';
@@ -20,6 +21,9 @@ export class FichaDetallesComponent implements OnInit {
 
   // Secciones de datos - Antendentes | Alergias | Cirugias
   public seccion = 'Antecedentes';
+  
+  // Edad del paciente
+  public edad;
 
   // Modals - Creacion
   public showModalFicha = false;
@@ -96,7 +100,7 @@ export class FichaDetallesComponent implements OnInit {
 
 
   constructor(private activatedRoute: ActivatedRoute,
-              private authService: AuthService,
+              public authService: AuthService,
               private notasConsultaService: NotasConsultaService,
               private alergiasService: AlergiasService,
               private antecedentesService: AntecedentesService,
@@ -123,8 +127,6 @@ export class FichaDetallesComponent implements OnInit {
       next: ({ficha}) => {
         this.ficha = ficha;
         
-        console.log(ficha);
-
         let { 
           apellido, 
           nombre, 
@@ -136,10 +138,18 @@ export class FichaDetallesComponent implements OnInit {
           creatorUser, 
           updatorUser } = ficha;
 
+        // Calculando edad del paciente
+        const hoy = new Date();
+        const nacimiento = new Date(fecha_nacimiento);
+
+        this.edad = formatDistanceStrict(
+          hoy,
+          nacimiento,
+          {locale: es}
+        )
+        
         // Adaptando fecha
         fecha_nacimiento = format(new Date(fecha_nacimiento), 'yyyy-MM-dd');
-
-        console.log(fecha_nacimiento);
 
         this.dataFicha = {
           apellido,
@@ -192,7 +202,6 @@ export class FichaDetallesComponent implements OnInit {
                         ).subscribe({
                         next: ({estudios}) => {
                           this.estudios = estudios;
-                          console.log(estudios);
                           this.alertService.close();
                         },
                         error: ({error}) => {
@@ -227,6 +236,7 @@ export class FichaDetallesComponent implements OnInit {
       }
     })
   }
+
 
   // Obtener datos de ficha
   obtenerFicha(): void {

@@ -17,30 +17,41 @@
                 </select>
             </div>
             <div class="w-1/2 ml-4">
+                <p class="font-semibold"> Tipo de medicos </p>
+                <select [(ngModel)]="permisos.tipo_medico" class="border rounded border-gray-300 focus:outline-none mt-2 shadow p-2 w-full">
+                    <option value="TIPO_MEDICO_NOT_ACCESS"> Sin acceso </option>
+                    <option value="TIPO_MEDICO_ALL"> Permiso total </option>
+                    <option value="TIPO_MEDICO_READ"> Solo lectura </option>
+                </select>       
+            </div>   
+        </div>
+        <div class=" flex items-center text-sm p-2">
+            <div class="w-1/2">
                 <p class="font-semibold"> Fichas </p>
                 <select [(ngModel)]="permisos.fichas" class="border rounded border-gray-300 focus:outline-none mt-2 shadow p-2 w-full">
                     <option value="FICHAS_NOT_ACCESS"> Sin acceso </option>
                     <option value="FICHAS_ALL"> Permiso total </option>
                     <option value="FICHAS_READ"> Solo lectura </option>
-                </select>       
-            </div>    
-        </div>
-        <div class=" flex items-center text-sm p-2">
-            <div class="w-1/2">
+                </select> 
+            </div>
+            <div class="w-1/2 ml-4">
                 <p class="font-semibold"> Buscador de fichas </p>
                 <select [(ngModel)]="permisos.buscador_fichas" class="border rounded border-gray-300 focus:outline-none mt-2 shadow p-2 w-full">
                     <option value="BUSCADOR_FICHAS_NOT_ACCESS"> Sin acceso </option>
                     <option value="BUSCADOR_FICHAS_ALL"> Permiso total </option>
                 </select>
-            </div>
-            <div class="w-1/2 ml-4">
+            </div>    
+        </div>
+        <div class=" flex items-center text-sm p-2">
+            <div class="w-1/2">
                 <p class="font-semibold"> Turnos </p>
                 <select [(ngModel)]="permisos.turnos" class="border rounded border-gray-300 focus:outline-none mt-2 shadow p-2 w-full">
                     <option value="TURNOS_NOT_ACCESS"> Sin acceso </option>
                     <option value="TURNOS_ALL"> Permiso total </option>
                     <option value="TURNOS_READ"> Solo lectura </option>
                 </select>
-            </div>    
+            </div>
+            <div class="w-1/2 ml-4"></div>    
         </div>
     </div>
     <div class="p-2">
@@ -103,7 +114,7 @@
                         <span class="text-red-500"> * </span> Rol
                     </div>
                     <div class="bg-white my-2 flex">
-                        <select class="bg-white tranform duration-500 focus:border-secondaryColor p-1 py-2 w-full text-sm border-b-2 outline-none" formControlName="role">
+                        <select (click)="asignarPermisosTipoUsuario()" class="bg-white tranform duration-500 focus:border-secondaryColor p-1 py-2 w-full text-sm border-b-2 outline-none" formControlName="role">
                                 <!-- <option value="USER_ROLE"> Personalizado </option> -->
                                 <option value="ADMIN_ROLE"> Root </option>
                                 <option value="DOCTOR_ROLE"> Médico </option>
