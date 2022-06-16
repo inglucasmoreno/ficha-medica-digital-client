@@ -229,6 +229,23 @@ export class TurnosDetallesComponent implements OnInit {
       });
   }
 
+  // Cancelar turno
+  cancelarTurno(turno: any): void {
+    const { _id } = turno;
+      this.alertService.question({ msg: '¿Quieres cancelar el turno?', buttonText: 'Cancelar' })
+        .then(({isConfirmed}) => {  
+          if (isConfirmed) {
+            this.alertService.loading();
+            this.turnosService.actualizarTurno(_id, { cancelado: true, activo: false }).subscribe(() => {
+            this.listarTurnos();
+          }, ({error}) => {
+            this.alertService.close();
+            this.alertService.errorApi(error.message);
+          });
+        }
+      });
+  }
+
   reiniciarFormulario(): void {
     this.fecha = this.fecha_busqueda;
     this.hora = '';

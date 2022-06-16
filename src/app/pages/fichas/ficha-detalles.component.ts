@@ -10,6 +10,7 @@ import { CirugiasService } from 'src/app/services/cirugias.service';
 import { EstudiosService } from 'src/app/services/estudios.service';
 import { FichasService } from 'src/app/services/fichas.service';
 import { NotasConsultaService } from 'src/app/services/notas-consulta.service';
+import { TurnosService } from 'src/app/services/turnos.service';
 
 @Component({
   selector: 'app-ficha-detalles',
@@ -39,6 +40,12 @@ export class FichaDetallesComponent implements OnInit {
   public showModalInfoAlergia = false;
   public showModalInfoCirugia = false;
   public showModalInfoEstudio = false;
+
+  // Modals - Turnos
+  public showModalTurnos = false;
+
+  // Turnos
+  public turnos: any[];
 
   // Ficha
   public idFicha: string;
@@ -98,11 +105,23 @@ export class FichaDetallesComponent implements OnInit {
     columnaEstudios: 'createdAt'
 	}
 
+    // Filtrado de turnos
+	public filtroTurnos = {
+		estado: '',
+		parametro: ''
+	}
+
+    // Ordenar turnos
+	public ordenarTurnos = {
+		direccion: -1,  // Asc (1) | Desc (-1)
+		columna: 'createdAt'
+	}
 
   constructor(private activatedRoute: ActivatedRoute,
               public authService: AuthService,
               private notasConsultaService: NotasConsultaService,
               private alergiasService: AlergiasService,
+              private turnosService: TurnosService,
               private antecedentesService: AntecedentesService,
               private cirugiasService: CirugiasService,
               private estudiosService: EstudiosService,
@@ -571,6 +590,21 @@ export class FichaDetallesComponent implements OnInit {
   
   }
 
+  // Buscar turnos
+  buscarTurnos(): void {
+    this.alertService.loading();
+    this.turnosService.listarTurnosPorFicha(this.ordenarTurnos.direccion, this.ordenarTurnos.columna, this.idFicha).subscribe({
+      next: ({turnos}) => {
+        this.turnos = turnos;
+        this.showModalTurnos = true;
+        this.alertService.close();
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error);
+      }
+    });
+  }
+
   // Abrir modal - Datos de ficha
   abrirModalFicha(): void {
     this.reiniciarFormularios();
@@ -637,6 +671,18 @@ export class FichaDetallesComponent implements OnInit {
     this.showModalInfoEstudio = true;
   }
 
+  // Abrir modal turnos
+  abrirModalTurnos(): void {
+    this.filtroTurnos.estado = '';
+    this.ordenarTurnos = {
+      direccion: -1,  // Asc (1) | Desc (-1)
+      columna: 'createdAt'
+    }
+    this.turnos = [];
+    this.buscarTurnos();
+  }
+  
+
   // Reiniciar formularios
   reiniciarFormularios(): void {
     this.notaConsulta = '';  
@@ -687,6 +733,13 @@ export class FichaDetallesComponent implements OnInit {
     this.ordenar.direccionEstudios = this.ordenar.direccionEstudios == 1 ? -1 : 1;
     this.alertService.loading();
     this.listarEstudios();
+  }
+
+  // Ordenar por columna turnos
+  ordenarPorColumnaTurnos(columna: string){
+    this.ordenarTurnos.columna = columna;
+    this.ordenarTurnos.direccion = this.ordenarTurnos.direccion == 1 ? -1 : 1;
+    this.buscarTurnos();
   }
 
 }

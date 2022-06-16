@@ -36,6 +36,21 @@ export class TurnosService {
     });
   }
 
+  // Listado de turnos por ficha
+  listarTurnosPorFicha( direccion : number = -1, columna: string = 'createdAt', ficha = ''): Observable<any>{
+    console.log(direccion, columna);
+    return this.http.get(`${base_url}/turnos/filtrado/ficha`, {
+      params: {
+        direccion: String(direccion),
+        columna,
+        ficha,
+      },
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+  }
+
   // Nuevo turno
   nuevoTurno(data: any): Observable<any>{
     return this.http.post(`${base_url}/turnos`, data, {

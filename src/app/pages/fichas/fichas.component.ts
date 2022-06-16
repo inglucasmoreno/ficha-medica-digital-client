@@ -4,6 +4,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { FichasService } from 'src/app/services/fichas.service';
+import { TurnosService } from 'src/app/services/turnos.service';
 import { environment } from 'src/environments/environment';
 
 const base_url = environment.base_url;
@@ -22,14 +23,19 @@ export class FichasComponent implements OnInit {
 
 	// Modal
 	public showModalFicha = false;
+  public showModalTurnos = false;
 
 	// Estado formulario
 	public estadoFormulario = 'crear';
 
-	// Unidades de medida
+  // Turnos
+  public turnos: any[];
+
+	// Fichas
   public ficha: any;
 	public idFicha: string = '';
 	public fichas: any = [];
+  public fichaSeleccionada: any;
   
   public dataFicha: any = { 
     apellido: '',
@@ -49,9 +55,19 @@ export class FichasComponent implements OnInit {
 	public paginaActual: number = 1;
 	public cantidadItems: number = 10;
 
+  // Paginacion
+	public paginaActualTurnos: number = 1;
+	public cantidadItemsTurnos: number = 10;
+
 	// Filtrado
 	public filtro = {
 		activo: 'true',
+		parametro: ''
+	}
+
+  // Filtrado de turnos
+	public filtroTurnos = {
+		estado: '',
 		parametro: ''
 	}
 
@@ -61,7 +77,14 @@ export class FichasComponent implements OnInit {
 		columna: 'apellido'
 	}
 
+  // Ordenar turnos
+	public ordenarTurnos = {
+		direccion: -1,  // Asc (1) | Desc (-1)
+		columna: 'createdAt'
+	}
+
 	constructor(private fichasService : FichasService,
+              private turnosService: TurnosService,
 					    private authService: AuthService,
 					    private alertService: AlertService,
 					    private dataService: DataService) { }
@@ -271,6 +294,33 @@ export class FichasComponent implements OnInit {
         });
   }
 
+  // Abrir modal turnos
+  abrirModalTurnos(ficha: any): void {
+    this.fichaSeleccionada = ficha;
+    this.filtroTurnos.estado = '';
+    this.ordenarTurnos = {
+      direccion: -1,  // Asc (1) | Desc (-1)
+      columna: 'createdAt'
+    }
+    this.turnos = [];
+    this.buscarTurnos();
+  }
+
+  // Buscar turnos
+  buscarTurnos(): void {
+    this.alertService.loading();
+    this.turnosService.listarTurnosPorFicha(this.ordenarTurnos.direccion, this.ordenarTurnos.columna, this.fichaSeleccionada._id).subscribe({
+      next: ({turnos}) => {
+        this.turnos = turnos;
+        this.showModalTurnos = true;
+        this.alertService.close();
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error);
+      }
+    });
+  }
+
   // Reiniciando formulario
   reiniciarFormulario(): void {
     this.dataFicha = { 
@@ -285,6 +335,7 @@ export class FichasComponent implements OnInit {
       updatorUser: '',  
     }
   }
+
 
   // Imprimir reporte
   imprimirReporte(): void {
@@ -319,4 +370,12 @@ export class FichasComponent implements OnInit {
     this.alertService.loading();
     this.listarFichas();
   }
+
+  // Ordenar por columna turnos
+  ordenarPorColumnaTurnos(columna: string){
+    this.ordenarTurnos.columna = columna;
+    this.ordenarTurnos.direccion = this.ordenarTurnos.direccion == 1 ? -1 : 1;
+    this.buscarTurnos();
+  }
+
 }

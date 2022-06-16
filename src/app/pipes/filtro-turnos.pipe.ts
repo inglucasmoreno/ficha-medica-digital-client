@@ -11,6 +11,7 @@ export class FiltroTurnosPipe implements PipeTransform {
 
     if(estado === 'confirmados') filtrados = valores.filter( valor => valor.confirmacion );
     else if(estado === 'vencidos') filtrados = valores.filter( valor => valor.vencido );
+    else if(estado === 'cancelados') filtrados = valores.filter( valor => valor.cancelado );
     else filtrados = valores;
     
     // Filtrado por parametro
