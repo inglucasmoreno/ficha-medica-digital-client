@@ -161,7 +161,7 @@ export class TurnosDetallesComponent implements OnInit {
 
     // Verificacion de dia laboral
     if(this.alertas.diaIncorrecto){
-      this.alertService.info('El profesional no esta disponible este día');
+      this.alertService.info('El profesional no esta disponible ese día');
       return;
     }
 
@@ -205,6 +205,12 @@ export class TurnosDetallesComponent implements OnInit {
 
     if(this.fecha.trim() === '' || this.hora.trim() === '' || !this.pacienteSeleccionado){
       this.alertService.info('Debe completar los campos obligatorios');
+      return;
+    }
+
+    // Verificacion de dia laboral
+    if(this.alertas.diaIncorrecto){
+      this.alertService.info('El profesional no esta disponible ese día');
       return;
     }
 
