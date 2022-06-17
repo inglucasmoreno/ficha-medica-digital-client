@@ -24,6 +24,18 @@ export class PerfilComponent implements OnInit {
   public usuarioLogin: Usuario;
   public passwordForm: FormGroup;
 
+  // Dias laborales
+  public dias_laborales = ['lunes'];
+  public dias = {
+    lunes: true,
+    martes: true,
+    miercoles: true,
+    jueves: true,
+    viernes: true,
+    sabado: true,
+    domingo: true,
+  }
+
   ngOnInit(): void {
     gsap.from('.gsap-contenido', { y:100, opacity: 0, duration: .2 });
     this.dataService.ubicacionActual = "Dashboard - Perfil";
@@ -42,6 +54,8 @@ export class PerfilComponent implements OnInit {
     this.usuariosService.getUsuario(this.authService.usuario.userId).subscribe( (usuario: Usuario) => {
       this.alertService.close();
       this.usuarioLogin = usuario;
+      this.dias_laborales = usuario.dias_laborales;
+      this.ajustarDias();
     },({error}) => {
       this.alertService.errorApi(error.msg);
     })
@@ -55,6 +69,54 @@ export class PerfilComponent implements OnInit {
       this.alertService.success('Contraseña actualizada');
     },({error}) => { 
       this.alertService.errorApi(error.msg)
+    });
+  }
+
+  ajustarDias(): any {
+    this.dias_laborales.includes('lunes') ? this.dias.lunes = true : this.dias.lunes = false;
+    this.dias_laborales.includes('martes') ? this.dias.martes = true : this.dias.martes = false;
+    this.dias_laborales.includes('miércoles') ? this.dias.miercoles = true : this.dias.miercoles = false;
+    this.dias_laborales.includes('jueves') ? this.dias.jueves = true : this.dias.jueves = false;
+    this.dias_laborales.includes('viernes') ? this.dias.viernes = true : this.dias.viernes = false;
+    this.dias_laborales.includes('sábado') ? this.dias.sabado = true : this.dias.sabado = false;
+    this.dias_laborales.includes('domingo') ? this.dias.domingo = true : this.dias.domingo = false;
+  }
+
+  cambiarDia(dia: string): any {
+    if(dia === 'lunes') this.dias.lunes = !this.dias.lunes;
+    else if(dia === 'martes') this.dias.martes = !this.dias.martes;
+    else if(dia === 'miércoles') this.dias.miercoles = !this.dias.miercoles;
+    else if(dia === 'jueves') this.dias.jueves = !this.dias.jueves;
+    else if(dia === 'viernes') this.dias.viernes = !this.dias.viernes;
+    else if(dia === 'sábado') this.dias.sabado = !this.dias.sabado;
+    else if(dia === 'domingo') this.dias.domingo = !this.dias.domingo;    
+  }
+
+  adicionarDias(): any {
+
+    this.dias_laborales = [];
+    if(this.dias.lunes) this.dias_laborales.push('lunes');
+    if(this.dias.martes) this.dias_laborales.push('martes');
+    if(this.dias.miercoles) this.dias_laborales.push('miércoles');
+    if(this.dias.jueves) this.dias_laborales.push('jueves');
+    if(this.dias.viernes) this.dias_laborales.push('viernes');
+    if(this.dias.sabado) this.dias_laborales.push('sábado');
+    if(this.dias.domingo) this.dias_laborales.push('domingo');
+
+    return this.dias_laborales;
+
+  }
+
+  actualizarDias(): void {
+    this.alertService.loading();
+    const dias_laborales = this.adicionarDias();
+    this.usuariosService.actualizarUsuario(this.usuarioLogin._id,{dias_laborales}).subscribe({
+      next: () => {
+        this.alertService.success('Días laborales actualizados');
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error);
+      }
     });
   }
 

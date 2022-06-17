@@ -61,7 +61,7 @@
 
 <!-- Pagina principal -->
 <div class="lg:flex lg:justify-center p-4 gsap-contenido">
-    <div class="w-full max-w-xl lg:w-1/2 bg-white mr-2 shadow rounded border border-gray-200">
+    <div class="w-full max-w-xl lg:w-1/2 bg-white mr-2 shadow rounded border h-full border-gray-200">
         <div class="flex items-center pb-2 py-2 px-2 bg-primary-800 rounded-t">
             <app-boton-regresar routerLink="/dashboard/usuarios"></app-boton-regresar>
             <h1 class="mt-1 ml-2 text-2xl text-white"> Formulario de edición </h1>
@@ -197,6 +197,20 @@
                     <option value="000000000000000000000000"> No especificar </option>
                     <option *ngFor="let tipo of tipos" [value]="tipo._id"> {{ tipo.descripcion }} </option>
                 </select>
+            </div>
+        </div>
+        <div *ngIf="usuarioForm.value.role === 'DOCTOR_ROLE'" class="border mt-2 shadow">
+            <h1 class="font-semibold p-2 rounded-t bg-primary-800 text-white"> 
+                Días laborales
+            </h1>
+            <div class="text-sm px-3 p-2 flex flex-wrap items-center">
+                <div (click)="cambiarDia('lunes')" [ngClass]="{'bg-indigo-50 text-secondaryColor border-indigo-300':dias.lunes}" class="p-2 cursor-pointer bg-gray-50 border border-gray-300 rounded font-semibold text-gray-800 w-max"> Lun </div>
+                <div (click)="cambiarDia('martes')" [ngClass]="{'bg-indigo-50 text-secondaryColor border-indigo-300':dias.martes}"  class="p-2 cursor-pointer bg-gray-50 border border-gray-300 rounded font-semibold text-gray-800 w-max ml-2"> Mar </div>
+                <div (click)="cambiarDia('miércoles')" [ngClass]="{'bg-indigo-50 text-secondaryColor border-indigo-300':dias.miercoles}"  class="p-2 cursor-pointer bg-gray-50 border border-gray-300 rounded font-semibold text-gray-800 w-max ml-2"> Mie </div>
+                <div (click)="cambiarDia('jueves')" [ngClass]="{'bg-indigo-50 text-secondaryColor border-indigo-300':dias.jueves}"  class="p-2 cursor-pointer bg-gray-50 border border-gray-300 rounded font-semibold text-gray-800 w-max ml-2"> Jue </div>
+                <div (click)="cambiarDia('viernes')" [ngClass]="{'bg-indigo-50 text-secondaryColor border-indigo-300':dias.viernes}"  class="p-2 cursor-pointer bg-gray-50 border border-gray-300 rounded font-semibold text-gray-800 w-max ml-2"> Vie </div>
+                <div (click)="cambiarDia('sábado')" [ngClass]="{'bg-indigo-50 text-secondaryColor border-indigo-300':dias.sabado}"  class="p-2 cursor-pointer bg-gray-50 border border-gray-300 rounded font-semibold text-gray-800 w-max ml-2"> Sab </div>
+                <div (click)="cambiarDia('domingo')" [ngClass]="{'bg-indigo-50 text-secondaryColor border-indigo-300':dias.domingo}"  class="p-2 cursor-pointer bg-gray-50 border border-gray-300 rounded font-semibold text-gray-800 w-max ml-2"> Dom </div>     
             </div>
         </div>
     </div>

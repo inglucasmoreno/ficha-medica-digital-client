@@ -25,6 +25,18 @@ export class EditarUsuarioComponent implements OnInit {
   public tipos: any[];
   public tipo: any = "000000000000000000000000";
 
+  // Dias laborales
+  public dias_laborales = ['lunes'];
+  public dias = {
+    lunes: true,
+    martes: true,
+    miercoles: true,
+    jueves: true,
+    viernes: true,
+    sabado: true,
+    domingo: true,
+  }
+
   // Permisos
   public permisos = {
     usuarios: 'USUARIOS_NOT_ACCESS',
@@ -79,9 +91,14 @@ export class EditarUsuarioComponent implements OnInit {
       this.getPermisos(usuarioRes.permisos); // Se obtienen los permisos
 
       this.usuario = usuarioRes;
-      const {usuario, apellido, nombre, dni, email, role, activo} = this.usuario;
+      const {usuario, apellido, nombre, dni, email, role, dias_laborales, activo} = this.usuario;
 
       this.tipo = usuarioRes.tipo_medico._id; 
+
+      if(dias_laborales && role === 'DOCTOR_ROLE') this.dias_laborales = dias_laborales;
+      else this.dias_laborales = [];
+    
+      this.ajustarDias();
 
       this.usuarioForm.patchValue({
         usuario,
@@ -162,6 +179,11 @@ export class EditarUsuarioComponent implements OnInit {
     if(role !== 'ADMIN_ROLE') data.permisos = this.adicionarPermisos(); // Se adicionan los permisos a la data para actualizacion
     else data.permisos = [];
 
+    // Agregar dias laborales
+    let dias_laborales = [];
+    if(role === 'DOCTOR_ROLE') dias_laborales = this.adicionarDias();
+    data = { ...data, dias_laborales };
+
     this.alertService.loading();
 
     this.usuariosService.actualizarUsuario(this.id, data).subscribe(() => {
@@ -239,6 +261,41 @@ export class EditarUsuarioComponent implements OnInit {
         turnos: 'TURNOS_NOT_ACCESS'
       }
     }
+
+  }
+
+  ajustarDias(): any {
+    this.dias_laborales.includes('lunes') ? this.dias.lunes = true : this.dias.lunes = false;
+    this.dias_laborales.includes('martes') ? this.dias.martes = true : this.dias.martes = false;
+    this.dias_laborales.includes('miércoles') ? this.dias.miercoles = true : this.dias.miercoles = false;
+    this.dias_laborales.includes('jueves') ? this.dias.jueves = true : this.dias.jueves = false;
+    this.dias_laborales.includes('viernes') ? this.dias.viernes = true : this.dias.viernes = false;
+    this.dias_laborales.includes('sábado') ? this.dias.sabado = true : this.dias.sabado = false;
+    this.dias_laborales.includes('domingo') ? this.dias.domingo = true : this.dias.domingo = false;
+  }
+
+  cambiarDia(dia: string): any {
+    if(dia === 'lunes') this.dias.lunes = !this.dias.lunes;
+    else if(dia === 'martes') this.dias.martes = !this.dias.martes;
+    else if(dia === 'miércoles') this.dias.miercoles = !this.dias.miercoles;
+    else if(dia === 'jueves') this.dias.jueves = !this.dias.jueves;
+    else if(dia === 'viernes') this.dias.viernes = !this.dias.viernes;
+    else if(dia === 'sábado') this.dias.sabado = !this.dias.sabado;
+    else if(dia === 'domingo') this.dias.domingo = !this.dias.domingo;    
+  }
+
+  adicionarDias(): any {
+
+    this.dias_laborales = [];
+    if(this.dias.lunes) this.dias_laborales.push('lunes');
+    if(this.dias.martes) this.dias_laborales.push('martes');
+    if(this.dias.miercoles) this.dias_laborales.push('miércoles');
+    if(this.dias.jueves) this.dias_laborales.push('jueves');
+    if(this.dias.viernes) this.dias_laborales.push('viernes');
+    if(this.dias.sabado) this.dias_laborales.push('sábado');
+    if(this.dias.domingo) this.dias_laborales.push('domingo');
+
+    return this.dias_laborales;
 
   }
 

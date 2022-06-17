@@ -8,11 +8,21 @@
   </div>
   <div class="p-2">
     <div class="mt-2">
+      <p class="font-semibold text-sm"> Días laborales del profesional </p>
+      <div *ngIf="dias.length < 7" class="flex items-center mt-1 mb-3">
+        <span *ngFor="let dia of dias" class="mr-2 bg-indigo-50 border border-indigo-300 text-secondaryColor text-sm p-1 rounded font-semibold"> {{ dia }} </span>
+      </div>  
+      <div *ngIf="dias.length >= 7" class="flex items-center mt-1 mb-3">
+        <span class="bg-indigo-50 border border-indigo-300 text-secondaryColor text-sm p-1 rounded font-semibold"> Todos los días </span>
+      </div>
+    </div>
+    <div class="mt-2">
       <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Fecha y hora del turno </p>
       <div class="flex items-center mt-2">
-        <input (keyup.enter)="tipoAccion == 'crear' ? nuevoTurno() : actualizarTurno()" [(ngModel)]="fecha" class="w-1/2 border focus:outline-none text-sm border-gray-300 p-2" type="date">
+        <input [min]="fechaHoy" (change)="verificarFecha()" (keyup.enter)="tipoAccion == 'crear' ? nuevoTurno() : actualizarTurno()" [(ngModel)]="fecha" [ngClass]="{'border-red-500' : alertas.diaIncorrecto}" class="w-1/2 border focus:outline-none text-sm border-gray-300 p-2" type="date">
         <input (keyup.enter)="tipoAccion == 'crear' ? nuevoTurno() : actualizarTurno()" [(ngModel)]="hora" class="w-max border focus:outline-none text-sm border-gray-300 p-2 ml-2" type="time">
       </div>
+      <p *ngIf="alertas.diaIncorrecto" class="text-xs mt-1 text-red-500"> El profesional no esta disponible este día </p>
     </div>
     <div class="mt-4">
       <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Paciente </p>  

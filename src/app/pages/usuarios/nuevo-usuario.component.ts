@@ -24,6 +24,18 @@ export class NuevoUsuarioComponent implements OnInit {
   public tipos: any[];
   public tipo: any = "000000000000000000000000";
 
+  // Dias laborales
+  public dias_laborales = ['lunes'];
+  public dias = {
+    lunes: true,
+    martes: true,
+    miercoles: true,
+    jueves: true,
+    viernes: true,
+    sabado: true,
+    domingo: true,
+  }
+
   // Permisos
   public permisos = {
     usuarios: 'USUARIOS_NOT_ACCESS',
@@ -117,6 +129,11 @@ export class NuevoUsuarioComponent implements OnInit {
     if(role !== 'ADMIN_ROLE') data.permisos = this.adicionarPermisos();
     else data.permisos = [];
 
+    // Agregar dias laborales
+    let dias_laborales = [];
+    if(role === 'DOCTOR_ROLE') dias_laborales = this.adicionarDias();
+    data = { ...data, dias_laborales };
+
     this.alertService.loading();  // Comienzo de loading
 
     // Se crear el nuevo usuario
@@ -160,6 +177,31 @@ export class NuevoUsuarioComponent implements OnInit {
 
   }
   
+  cambiarDia(dia: string): any {
+    if(dia === 'lunes') this.dias.lunes = !this.dias.lunes;
+    else if(dia === 'martes') this.dias.martes = !this.dias.martes;
+    else if(dia === 'miércoles') this.dias.miercoles = !this.dias.miercoles;
+    else if(dia === 'jueves') this.dias.jueves = !this.dias.jueves;
+    else if(dia === 'viernes') this.dias.viernes = !this.dias.viernes;
+    else if(dia === 'sábado') this.dias.sabado = !this.dias.sabado;
+    else if(dia === 'domingo') this.dias.domingo = !this.dias.domingo;    
+  }
+
+  adicionarDias(): any {
+
+    this.dias_laborales = [];
+    if(this.dias.lunes) this.dias_laborales.push('lunes');
+    if(this.dias.martes) this.dias_laborales.push('martes');
+    if(this.dias.miercoles) this.dias_laborales.push('miércoles');
+    if(this.dias.jueves) this.dias_laborales.push('jueves');
+    if(this.dias.viernes) this.dias_laborales.push('viernes');
+    if(this.dias.sabado) this.dias_laborales.push('sábado');
+    if(this.dias.domingo) this.dias_laborales.push('domingo');
+
+    return this.dias_laborales;
+
+  }
+
   // Se arma el arreglo de permisos
   adicionarPermisos(): any {
 

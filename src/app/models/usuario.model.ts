@@ -6,6 +6,7 @@ export class Usuario {
         public apellido: string,
         public nombre: string,
         public email: string,
+        public dias_laborales?: [],
         public dni?: string,
         public role?: string,
         public activo?: boolean,

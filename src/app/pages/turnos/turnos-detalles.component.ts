@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { add, format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
@@ -17,6 +18,9 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class TurnosDetallesComponent implements OnInit {
 
   public permiso_escritura = ['TURNOS_ALL'];
+
+  // Dia de hoy
+  public fechaHoy = format(new Date, 'yyyy-MM-dd');
 
   // Tipo de accion sobre formulario
   public tipoAccion = 'crear'; // crear/editar
@@ -39,18 +43,24 @@ export class TurnosDetallesComponent implements OnInit {
   public hora: string = '';
   public dni: string = '';
 
+  // Alertas
+  public alertas = {
+    diaIncorrecto: false
+  }
+
 	// Filtrado
 	public filtro = {
 		estado: '',
 		parametro: ''
 	}
 
-
   // Ordenar
   public ordenar = {
     direccion: 1,  // Asc (1) | Desc (-1)
     columna: 'fecha_turno'
   }
+
+  public dias: any[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
               private dataService: DataService,
@@ -68,6 +78,7 @@ export class TurnosDetallesComponent implements OnInit {
       this.usuariosService.getUsuario(id).subscribe({
         next: (usuario) => {
           this.usuario = usuario;
+          this.dias = usuario.dias_laborales;
           this.turnosService.listarTurnos(
             this.ordenar.direccion, 
             this.ordenar.columna,
@@ -142,8 +153,15 @@ export class TurnosDetallesComponent implements OnInit {
 
   nuevoTurno(): void {
 
+    // Verificacion de campos obligatorios
     if(this.fecha.trim() === '' || this.hora.trim() === '' || !this.pacienteSeleccionado){
       this.alertService.info('Debe completar los campos obligatorios');
+      return;
+    }
+
+    // Verificacion de dia laboral
+    if(this.alertas.diaIncorrecto){
+      this.alertService.info('El profesional no esta disponible este día');
       return;
     }
 
@@ -246,8 +264,18 @@ export class TurnosDetallesComponent implements OnInit {
       });
   }
 
+  // Verificar fecha
+  verificarFecha(): void {
+    if(this.fecha){
+      const diaSeleccionado = format(add(new Date(this.fecha),{ hours: 3 }),'eeee',{locale: es});
+      if(!this.dias.includes(diaSeleccionado)) this.alertas.diaIncorrecto = true;
+      else this.alertas.diaIncorrecto = false;
+    }
+  }
+
   reiniciarFormulario(): void {
     this.fecha = this.fecha_busqueda;
+    this.verificarFecha();  // Se verifica si la fecha seleccionada es laboral para el profesional
     this.hora = '';
     this.dni = '';
     this.pacienteSeleccionado = null;  
