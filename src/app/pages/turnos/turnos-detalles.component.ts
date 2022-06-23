@@ -159,14 +159,23 @@ export class TurnosDetallesComponent implements OnInit {
       return;
     }
 
-    // Verificacion de dia laboral
+    // Dia no laboral - Medico
     if(this.alertas.diaIncorrecto){
-      this.alertService.info('El profesional no esta disponible ese día');
-      return;
+      this.alertService.question({ msg: 'El profesional no esta disponible ese día', buttonText: 'Crear turno' })
+        .then(({isConfirmed}) => {    
+          if(isConfirmed) this.generandoTurno(); 
+        })
+    }else{ // Generacion de turno normal
+      this.generandoTurno();
     }
 
-    this.alertService.loading();
+  }
 
+  // Funcion de generacion de turno
+  generandoTurno(): void {
+
+    this.alertService.loading();
+  
     const nuevaFecha = this.fecha + ':' + this.hora;
 
     const data = {
@@ -185,7 +194,9 @@ export class TurnosDetallesComponent implements OnInit {
         this.alertService.errorApi(error.message);
       }
     });
+  
   }
+
 
   buscarPaciente(): void {
     this.alertService.loading();
@@ -208,12 +219,20 @@ export class TurnosDetallesComponent implements OnInit {
       return;
     }
 
-    // Verificacion de dia laboral
+    // Dia no laboral - Medico
     if(this.alertas.diaIncorrecto){
-      this.alertService.info('El profesional no esta disponible ese día');
-      return;
+      this.alertService.question({ msg: 'El profesional no esta disponible ese día', buttonText: 'Actualizar turno' })
+        .then(({isConfirmed}) => {    
+          if(isConfirmed) this.actualizandoTurno(); 
+        })
+    }else{ // Generacion de turno normal
+      this.actualizandoTurno();
     }
 
+  }
+
+  // Actualizando turno
+  actualizandoTurno(): void {
     this.alertService.loading();
 
     const nuevaFecha = this.fecha + ':' + this.hora;
@@ -233,7 +252,6 @@ export class TurnosDetallesComponent implements OnInit {
         this.alertService.errorApi(error.message);
       }
     });
-
   }
 
   // Confirmar turno
@@ -256,7 +274,7 @@ export class TurnosDetallesComponent implements OnInit {
   // Cancelar turno
   cancelarTurno(turno: any): void {
     const { _id } = turno;
-      this.alertService.question({ msg: '¿Quieres cancelar el turno?', buttonText: 'Cancelar' })
+      this.alertService.questionRegresar({ msg: '¿Quieres cancelar el turno?', buttonText: 'Cancelar turno'})
         .then(({isConfirmed}) => {  
           if (isConfirmed) {
             this.alertService.loading();

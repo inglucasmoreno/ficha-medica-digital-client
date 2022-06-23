@@ -21,6 +21,19 @@ export class AlertService {
     });
   }
 
+  // Alerta - Pregunta - Con Cancelar = Regresar
+  questionRegresar({ msg, buttonText }): any {
+    return Swal.fire({
+      title: '¿Estas seguro?',
+      text: msg,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: buttonText,
+      cancelButtonText: 'Regresar', 
+      confirmButtonColor: '#6C63FF'
+    });
+  }
+
   // Alerta - Completado
   success(msg: string = 'Acción completada!'): void {
     Swal.fire({
