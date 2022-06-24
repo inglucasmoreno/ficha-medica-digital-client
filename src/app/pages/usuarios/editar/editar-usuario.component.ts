@@ -9,6 +9,8 @@ import { DataService } from 'src/app/services/data.service';
 
 import gsap from 'gsap';
 import { TipoMedicoService } from 'src/app/services/tipo-medico.service';
+import { AuthService } from '../../../services/auth.service';
+import { HistorialDiasLaboralesService } from '../../../services/historial-dias-laborales.service';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -26,6 +28,7 @@ export class EditarUsuarioComponent implements OnInit {
   public tipo: any = "000000000000000000000000";
 
   // Dias laborales
+  public dias_laboralesTMP = [];
   public dias_laborales = ['lunes'];
   public dias = {
     lunes: true,
@@ -54,6 +57,8 @@ export class EditarUsuarioComponent implements OnInit {
               private fb: FormBuilder,
               private tipoMedicoService: TipoMedicoService,
               private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
+              private historialDiasLaboralesService: HistorialDiasLaboralesService,
               private usuariosService: UsuariosService,
               private alertService: AlertService,
               private dataService: DataService) { }
@@ -95,8 +100,12 @@ export class EditarUsuarioComponent implements OnInit {
 
       this.tipo = usuarioRes.tipo_medico._id; 
 
-      if(dias_laborales && role === 'DOCTOR_ROLE') this.dias_laborales = dias_laborales;
-      else this.dias_laborales = [];
+      if(dias_laborales && role === 'DOCTOR_ROLE'){
+        this.dias_laborales = dias_laborales;
+        this.dias_laboralesTMP = dias_laborales;
+      }else{
+        this.dias_laborales = [];
+      }
     
       this.ajustarDias();
 
@@ -186,13 +195,37 @@ export class EditarUsuarioComponent implements OnInit {
 
     this.alertService.loading();
 
-    this.usuariosService.actualizarUsuario(this.id, data).subscribe(() => {
-      this.alertService.close();
-      this.router.navigateByUrl('dashboard/usuarios');
-    }, ({error}) => {
-      this.alertService.close();
-      this.alertService.errorApi(error.message);
-    });
+    this.usuariosService.actualizarUsuario(this.id,data).subscribe({
+
+      next: () => {
+        if(role !== 'DOCTOR_ROLE'){
+          this.alertService.close();  // Finaliza el loading
+          this.router.navigateByUrl('dashboard/usuarios');
+        }else{
+          if(JSON.stringify(this.dias_laboralesTMP) !== JSON.stringify(data.dias_laborales)){
+            const dataHistorial = {
+              usuario: this.id,
+              dias_laborales: data.dias_laborales,
+              creatorUser: this.authService.usuario.userId,
+              updatorUser: this.authService.usuario.userId, 
+            };
+    
+            this.historialDiasLaboralesService.nuevoHistorial(dataHistorial).subscribe({
+              next: () => {
+                this.alertService.close();  // Finaliza el loading
+                this.router.navigateByUrl('dashboard/usuarios');            
+              },
+              error: ({error}) => this.alertService.errorApi(error.message)
+            });
+          }else{
+            this.alertService.close();  // Finaliza el loading
+            this.router.navigateByUrl('dashboard/usuarios');           
+          }
+        }  
+      },
+      error: ({error}) => this.alertService.errorApi(error.message)
+
+    })
 
   }
 

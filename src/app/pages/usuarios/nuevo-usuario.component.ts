@@ -8,6 +8,8 @@ import { AlertService } from '../../services/alert.service';
 
 import gsap from 'gsap';
 import { TipoMedicoService } from 'src/app/services/tipo-medico.service';
+import { HistorialDiasLaboralesService } from '../../services/historial-dias-laborales.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-nuevo-usuario',
@@ -51,7 +53,9 @@ export class NuevoUsuarioComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private router: Router,
               private tipoMedicoService: TipoMedicoService,
+              private historialDiasLaboralesService: HistorialDiasLaboralesService,
               private usuariosService: UsuariosService,
+              private authService: AuthService,
               private alertService: AlertService,
               private dataService: DataService
               ) { }
@@ -132,14 +136,38 @@ export class NuevoUsuarioComponent implements OnInit {
     // Agregar dias laborales
     let dias_laborales = [];
     if(role === 'DOCTOR_ROLE') dias_laborales = this.adicionarDias();
+    
     data = { ...data, dias_laborales };
 
     this.alertService.loading();  // Comienzo de loading
 
     // Se crear el nuevo usuario
-    this.usuariosService.nuevoUsuario(data).subscribe(() => {
-      this.alertService.close();  // Finaliza el loading
-      this.router.navigateByUrl('dashboard/usuarios');
+    this.usuariosService.nuevoUsuario(data).subscribe(({usuario}) => {
+      
+      
+      if(role !== 'DOCTOR_ROLE'){
+        this.alertService.close();  // Finaliza el loading
+        this.router.navigateByUrl('dashboard/usuarios');
+      }else{
+        
+        const dataHistorial = {
+          usuario: usuario._id,
+          dias_laborales: data.dias_laborales,
+          creatorUser: this.authService.usuario.userId,
+          updatorUser: this.authService.usuario.userId, 
+        };
+
+        this.historialDiasLaboralesService.nuevoHistorial(dataHistorial).subscribe({
+          next: () => {
+            this.alertService.close();  // Finaliza el loading
+            this.router.navigateByUrl('dashboard/usuarios');            
+          },
+          error: ({error}) => this.alertService.errorApi(error.message)
+        });
+      
+      } 
+      
+    
     },( ({error}) => {
       this.alertService.close();  // Finaliza el loading
       this.alertService.errorApi(error.message);

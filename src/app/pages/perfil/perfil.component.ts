@@ -6,6 +6,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { DataService } from 'src/app/services/data.service';
 import gsap from 'gsap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HistorialDiasLaboralesService } from '../../services/historial-dias-laborales.service';
 
 @Component({
   selector: 'app-perfil',
@@ -17,6 +18,7 @@ export class PerfilComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private dataService: DataService,
+              private historialDiasLaboralesService: HistorialDiasLaboralesService,
               private fb: FormBuilder,
               private usuariosService: UsuariosService,
               private alertService: AlertService) { }
@@ -25,6 +27,8 @@ export class PerfilComponent implements OnInit {
   public passwordForm: FormGroup;
 
   // Dias laborales
+
+  public dias_laboralesTMP = [];
   public dias_laborales = ['lunes'];
   public dias = {
     lunes: true,
@@ -37,6 +41,7 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     gsap.from('.gsap-contenido', { y:100, opacity: 0, duration: .2 });
     this.dataService.ubicacionActual = "Dashboard - Perfil";
     this.getUsuario();
@@ -55,6 +60,7 @@ export class PerfilComponent implements OnInit {
       this.alertService.close();
       this.usuarioLogin = usuario;
       this.dias_laborales = usuario.dias_laborales;
+      this.dias_laboralesTMP = usuario.dias_laborales;
       this.ajustarDias();
     },({error}) => {
       this.alertService.errorApi(error.msg);
@@ -108,16 +114,42 @@ export class PerfilComponent implements OnInit {
   }
 
   actualizarDias(): void {
-    this.alertService.loading();
+    
+    
     const dias_laborales = this.adicionarDias();
-    this.usuariosService.actualizarUsuario(this.usuarioLogin._id,{dias_laborales}).subscribe({
-      next: () => {
-        this.alertService.success('Días laborales actualizados');
-      },
-      error: ({error}) => {
-        this.alertService.errorApi(error);
-      }
-    });
+    
+    if(JSON.stringify(this.dias_laborales) !== JSON.stringify(this.dias_laboralesTMP)){ // Se actualiza si es necesario
+      this.alertService.loading();
+      
+      // Actualizacion de informacion de usuario
+      this.usuariosService.actualizarUsuario(this.usuarioLogin._id,{dias_laborales}).subscribe({
+        next: () => {
+          
+          const data = {
+            usuario: this.authService.usuario.userId,
+            dias_laborales: this.dias_laborales,
+            creatorUser: this.authService.usuario.userId,
+            updatorUser: this.authService.usuario.userId,
+          }
+  
+          // Actualizacion del historial de turnos
+          this.historialDiasLaboralesService.nuevoHistorial(data).subscribe({
+            next: () => {
+              this.dias_laboralesTMP = this.dias_laborales;
+              this.alertService.success('Días laborales actualizados');
+            },
+            error: ({error}) => this.alertService.errorApi(error.message)
+          });
+  
+        },
+        error: ({error}) => {
+          this.alertService.errorApi(error);
+        }
+      });
+    }else{
+      this.alertService.info('No es necesario realizar cambios');
+    }
+
   }
 
   // Reiniciar valores
