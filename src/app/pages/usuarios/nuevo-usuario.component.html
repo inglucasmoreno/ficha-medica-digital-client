@@ -51,7 +51,13 @@
                     <option value="TURNOS_READ"> Solo lectura </option>
                 </select>
             </div>
-            <div class="w-1/2 ml-4"></div>    
+            <div class="w-1/2 ml-4">
+                <p class="font-semibold"> Reportes </p>
+                <select [(ngModel)]="permisos.reportes" class="border rounded border-gray-300 focus:outline-none mt-2 shadow p-2 w-full">
+                    <option value="REPORTES_NOT_ACCESS"> Sin acceso </option>
+                    <option value="REPORTES_ALL"> Permiso total </option>
+                </select>
+            </div>    
         </div>
     </div>
     <div class="p-2">

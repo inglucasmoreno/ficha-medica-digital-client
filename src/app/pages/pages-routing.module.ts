@@ -19,6 +19,8 @@ import { BuscarFichaComponent } from './buscar-ficha/buscar-ficha.component';
 import { TurnosComponent } from './turnos/turnos.component';
 import { TurnosDetallesComponent } from './turnos/turnos-detalles.component';
 import { TipoMedicoComponent } from './tipo-medico/tipo-medico.component';
+import { DiasLaboralesComponent } from './reportes/dias-laborales/dias-laborales.component';
+import { TurnosReportesComponent } from './reportes/turnos-reportes/turnos-reportes.component';
 
 const routes: Routes = [
     {
@@ -51,6 +53,9 @@ const routes: Routes = [
             { path: 'turnos', data: { permisos: 'TURNOS_NAV' }, canActivate: [PermisosGuard], component: TurnosComponent },
             { path: 'turnos/detalles/:id', data: { permisos: 'TURNOS_NAV' }, canActivate: [PermisosGuard], component: TurnosDetallesComponent },
 
+            // Reportes
+            { path: 'reportes/dias-laborales', data: { permisos: 'REPORTES_NAV' }, canActivate: [PermisosGuard], component: DiasLaboralesComponent },
+            { path: 'reportes/turnos', data: { permisos: 'REPORTES_NAV' }, canActivate: [PermisosGuard], component: TurnosReportesComponent },
 
         ]
     }

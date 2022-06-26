@@ -22,7 +22,7 @@ export class HistorialDiasLaboralesService {
   }
   
   // Obtener historial por medico
-  getHistorialPorMedico(id: string, direccion: number = -1, columna: string = 'createdAt'): Observable<any>{
+  listarHistorialPorMedico(id: string, direccion: number = -1, columna: string = 'createdAt'): Observable<any>{
     return this.http.get(`${base_url}/historial-dias-laborales/usuario/${id}`, {
       params: {
         direccion,

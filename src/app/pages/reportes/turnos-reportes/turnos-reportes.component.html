@@ -1,0 +1,194 @@
+<!-- Modal: Reportes de turno -->
+<app-modal-medium [showModal]="showModalTurnos">
+  
+  <div class="bg-primary-800 px-3 py-2 rounded-t flex items-center justify-between">
+      <h1 class="text-white text-xl"> Reporte de turnos </h1>
+      <button (click)="showModalTurnos = false" class="text-white focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>            
+      </button>    
+  </div>
+      
+  <!-- Tabla de turnos -->
+  <div class="px-4 pt-3 flex items-center justify-between">
+      <div>
+
+      </div>
+      <select *ngIf="turnos?.length > 0" [(ngModel)]="filtro.estado" class="w-56 border ml-4 rounded text-sm focus:outline-none border-gray-300 p-2">
+          <option value=""> Todos </option>
+          <option value="confirmados"> Confirmados </option>
+          <option value="vencidos"> Vencidos </option>
+          <option value="cancelados"> Cancelados </option>
+      </select>
+  </div>
+  <div class="mb-5 rounded-t px-4 mt-4">
+      <div *ngIf="turnos?.length > 0" class="py-2 overflow-x-auto">
+          <div class="inline-block overflow-y-auto max-h-80 min-w-full overflow-hidden">
+              <table class="min-w-full leading-normal">
+                  <thead>
+                      <tr class="bg-gray-100 py-2 border">
+                          <th class="px-5 py-2 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                              <div (click)="ordenarPorColumna('fecha_turno')" class="cursor-pointer flex items-center focus:outline-none">
+                                  <span> Fecha </span>
+                                  <span class="ml-2 text-gray-600">    
+                                      <svg *ngIf="ordenar.columna == 'fecha_turno' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                      <svg *ngIf="ordenar.columna == 'fecha_turno' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                      <svg *ngIf="ordenar.columna != 'fecha_turno'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                  </span>
+                              </div>
+                          </th>
+                          <th class="px-5 py-2 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                              <div (click)="ordenarPorColumna('fecha_turno')" class="cursor-pointer flex items-center focus:outline-none">
+                                  <span> Hora </span>
+                                  <span class="ml-2 text-gray-600">    
+                                      <svg *ngIf="ordenar.columna == 'fecha_turno' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                      <svg *ngIf="ordenar.columna == 'fecha_turno' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                      <svg *ngIf="ordenar.columna != 'fecha_turno'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                  </span>
+                              </div>
+                          </th>
+                          <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                            <div (click)="ordenarPorColumna('ficha.apellido')" class="cursor-pointer flex items-center focus:outline-none">
+                                <span> Paciente </span>
+                                <span class="ml-2 text-gray-600">    
+                                    <svg *ngIf="ordenar.columna == 'ficha.apellido' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                    <svg *ngIf="ordenar.columna == 'ficha.apellido' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                    <svg *ngIf="ordenar.columna != 'ficha.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </span>
+                            </div>
+                        </th>
+                          <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                              <div (click)="ordenarPorColumna('profesional.apellido')" class="cursor-pointer flex items-center focus:outline-none">
+                                  <span> Profesional </span>
+                                  <span class="ml-2 text-gray-600">    
+                                      <svg *ngIf="ordenar.columna == 'profesional.apellido' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                      <svg *ngIf="ordenar.columna == 'profesional.apellido' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                      <svg *ngIf="ordenar.columna != 'profesional.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                  </span>
+                              </div>
+                          </th>
+                          <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                              <div (click)="ordenarPorColumna('creatorUser.apellido')" class="cursor-pointer flex items-center focus:outline-none">
+                                  <span> Operador </span>
+                                  <span class="ml-2 text-gray-600">    
+                                      <svg *ngIf="ordenar.columna == 'creatorUser.apellido' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                      <svg *ngIf="ordenar.columna == 'creatorUser.apellido' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                      <svg *ngIf="ordenar.columna != 'creatorUser.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                  </span>
+                              </div>
+                          </th>
+                          <!-- <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                              <div class="flex items-center focus:outline-none">
+                                  <span> Estado </span>
+                              </div>
+                          </th> -->
+                      </tr>
+                  </thead>
+                  <tbody *ngIf="turnos">
+                      <tr [ngClass]="{'bg-green-100':turno.confirmacion, 'bg-orange-100':turno.vencido, 'bg-red-100':turno.cancelado }" class="animate__animated animate__fadeIn" *ngFor="let turno of turnos |  filtroTurnos:'':filtro.estado">
+                          <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                              <p class="text-gray-900 whitespace-no-wrap">
+                                  {{ turno.fecha_turno | fecha }}
+                              </p>
+                          </td>
+                          <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                              <p class="text-gray-900 whitespace-no-wrap">
+                                  {{ turno.fecha_turno | hora }} hs
+                              </p>
+                          </td>
+                          <td class="px-5 border-b border-gray-200 text-xs">
+                            <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                {{ turno.ficha.apellido.toLowerCase() }} {{ turno.ficha.nombre.toLowerCase()  }}
+                            </p>
+                        </td>
+                          <td class="px-5 border-b border-gray-200 text-xs">
+                              <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                  {{ turno.profesional.apellido.toLowerCase() }} {{ turno.profesional.nombre.toLowerCase()  }}
+                              </p>
+                          </td>
+                          <td class="px-5 border-b border-gray-200 text-xs">
+                              <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                  {{ turno.creatorUser.apellido.toLowerCase() }} {{ turno.creatorUser.nombre.toLowerCase()  }}
+                              </p>
+                          </td>
+                          <!-- <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                              <p *ngIf="turno.activo" class="text-gray-900 whitespace-no-wrap"> Activo </p>
+                              <p *ngIf="turno.confirmacion" class="text-gray-900 whitespace-no-wrap"> Confirmado </p>
+                              <p *ngIf="turno.cancelado" class="text-gray-900 whitespace-no-wrap"> Cancelado </p>
+                              <p *ngIf="turno.vencido" class="text-gray-900 whitespace-no-wrap"> Vencido </p>
+                          </td> -->
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="flex items-center justify-center" *ngIf="turnos?.length === 0">
+          <p class="text-xl text-gray-600 mb-5 border rounded shadow p-2 bg-gray-100 border-gray-300 w-max"> No se encontraron turnos para los parametros seleccionados </p>   
+      </div>
+      <button (click)="showModalTurnos = false" class="bg-secondaryColor focus:outline-none text-white w-full rounded shadow p-2">
+        Regresar al buscador
+      </button>
+  </div>
+</app-modal-medium>
+
+<div class="flex gsap-contenido justify-center w-full mt-10">
+  
+  <!-- Filtrado de turnos -->
+  <div class="border text-sm rounded-t h-full shadow w-1/3">
+    <div class="bg-primary-800 p-2">
+      <h1 class="text-white text-xl text-center"> Filtrado de turnos </h1>
+    </div>
+    <div class="p-2">
+
+      <!-- Profesionales -->
+      <div class="mt-2">
+        <p class="font-semibold"> Profesional </p>
+        <select [(ngModel)]="parametros.profesional" class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
+          <option value=""> Todos los profesionales </option>
+          <option *ngFor="let profesional of profesionales" [value]="profesional._id"> {{ profesional.apellido }} {{ profesional.nombre }} </option>
+        </select>
+      </div>
+
+      <!-- Operador -->
+      <div class="mt-2">
+        <p class="font-semibold"> Operador </p>
+        <select [(ngModel)]="parametros.operador"  class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
+          <option value=""> Todos los operadores </option>
+          <option *ngFor="let operador of operadores" [value]="operador._id"> {{ operador.apellido }} {{ operador.nombre }} </option>
+        </select>
+      </div>
+      
+      <!-- Paciente -->
+      <div  class="mt-4">
+        <p class="font-semibold"> Paciente </p>
+        <div *ngIf="!pacienteSeleccionado" class="flex items-center">
+          <input (keyup.enter)="buscarPaciente()" [(ngModel)]="pacienteDNI" class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded" type="text" placeholder="DNI de paciente">
+          <button (click)="buscarPaciente()" title="Buscar paciente" class="border focus:outline-none border-gray-300 ml-2 mt-2 bg-gray-100 rounded p-2 hover:text-secondaryColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+        </div>
+        <div *ngIf="pacienteSeleccionado" class="flex items-center">
+            <p class="bg-green-700 text-white p-2 mt-2 rounded w-max text-xs"> {{ pacienteSeleccionado.apellido }} {{ pacienteSeleccionado.nombre }}  </p>
+            <button (click)="eliminarPacienteSeleccionado()" class="bg-red-700 focus:outline-none ml-2 mt-2 text-white rounded p-2 shadow">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>    
+            </button>
+          </div>
+      </div>
+
+      <button (click)="generarReporte()" class="bg-secondaryColor font-semibold text-white p-2 rounded w-full mt-4 mb-2 focus:outline-none shadow">
+        Generar reporte
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Imagen de inicio -->
+  <img src="assets/img/reportes/turnos.svg" class="w-1/4 ml-4 h-full">
+
+
+</div>

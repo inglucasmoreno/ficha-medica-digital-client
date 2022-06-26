@@ -50,6 +50,16 @@
                                 </div>
                             </th>
                             <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                                <div (click)="ordenarPorColumnaTurnos('profesional.apellido')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <span> Profesional </span>
+                                    <span class="ml-2 text-gray-600">    
+                                        <svg *ngIf="ordenarTurnos.columna == 'profesional.apellido' && ordenarTurnos.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                        <svg *ngIf="ordenarTurnos.columna == 'profesional.apellido' && ordenarTurnos.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        <svg *ngIf="ordenarTurnos.columna != 'profesional.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </span>
+                                </div>
+                            </th>
+                            <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
                                 <div (click)="ordenarPorColumnaTurnos('creatorUser.apellido')" class="cursor-pointer flex items-center focus:outline-none">
                                     <span> Operador </span>
                                     <span class="ml-2 text-gray-600">    
@@ -80,6 +90,11 @@
                             </td>
                             <td class="px-5 border-b border-gray-200 text-xs">
                                 <p class="text-gray-900 whitespace-no-wrap capitalize">
+                                    {{ turno.profesional.apellido.toLowerCase() }} {{ turno.profesional.nombre.toLowerCase()  }}
+                                </p>
+                            </td>
+                            <td class="px-5 border-b border-gray-200 text-xs">
+                                <p class="text-gray-900 whitespace-no-wrap capitalize">
                                     {{ turno.creatorUser.apellido.toLowerCase() }} {{ turno.creatorUser.nombre.toLowerCase()  }}
                                 </p>
                             </td>
@@ -95,7 +110,7 @@
             </div>
         </div>
         <div *ngIf="turnos?.length === 0">
-            <p class="text-xl text-gray-900 mt-2 border p-2 bg-gray-100 border-gray-300"> No se encontraron turnos </p>   
+            <p class="text-xl text-gray-900 mt-2 border rounded shadow p-2 bg-gray-100 border-gray-300"> No se encontraron turnos </p>   
         </div>
     </div>
 </app-modal-medium>
@@ -118,11 +133,11 @@
         <div class="xl:flex items-center mt-4">
             <div class="xl:w-1/2">
                 <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Apellido </p>
-                <input [(ngModel)]="dataFicha.apellido" class="py-2 uppercase mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Moreno" type="text">     
+                <input [(ngModel)]="dataFicha.apellido" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Moreno" type="text">     
             </div>
             <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
                 <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Nombre </p>
-                <input [(ngModel)]="dataFicha.nombre" class="py-2 uppercase mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Lucas Omar" type="text">     
+                <input [(ngModel)]="dataFicha.nombre" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Lucas Omar" type="text">     
             </div>
         </div>
         <div class="xl:flex items-center mt-4">
@@ -276,7 +291,7 @@
                                 </div>
                               </th>
                               <th class="px-5 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-900 tracking-wider">
-                                <div (click)="ordenarPorColumna('nro_afiliado')" class="cursor-pointer flex items-center focus:outline-none">
+                                <div (click)="ordenarPorColumna('nro_afiliado')" class="cursor-pointer w-max flex items-center focus:outline-none">
                                     <span> N° de afiliado </span>
                                     <span class="ml-2 text-gray-600">    
                                         <svg *ngIf="ordenar.columna == 'nro_afiliado' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
@@ -364,10 +379,10 @@
                                 </p>
                               </td>
                               <td class="px-5 py-2 border-b border-gray-200">
-                                <p *ngIf="ficha.rh.trim() === ''" class="text-gray-900 whitespace-no-wrap text-xs">
+                                <p *ngIf="ficha.rh.trim() === ''" class="text-gray-900 w-max whitespace-no-wrap text-xs">
                                     Sin datos
                                 </p>                                
-                                <p *ngIf="ficha.rh.trim() !== ''" class="text-gray-900 whitespace-no-wrap text-xs">
+                                <p *ngIf="ficha.rh.trim() !== ''" class="text-gray-900 w-max whitespace-no-wrap text-xs">
                                     {{ ficha.rh.trim() === '+' ? 'Positivo (+)' : 'Negativo (-)' }}
                                 </p>
                               </td>

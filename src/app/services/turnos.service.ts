@@ -36,9 +36,24 @@ export class TurnosService {
     });
   }
 
+  // Reporte de turnos
+  reporteTurnos(parametros: any): Observable<any>{
+    return this.http.get(`${base_url}/turnos/seccion/reportes/finales`, {
+      params: {
+        ficha: parametros.ficha || '',
+        profesional: parametros.profesional || '',
+        operador: parametros.operador || '',
+        columna: String(parametros.columna) || 'createdAt',
+        direccion: parametros.direccion || -1,
+      },
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+  }
+
   // Listado de turnos por ficha
   listarTurnosPorFicha( direccion : number = -1, columna: string = 'createdAt', ficha = ''): Observable<any>{
-    console.log(direccion, columna);
     return this.http.get(`${base_url}/turnos/filtrado/ficha`, {
       params: {
         direccion: String(direccion),

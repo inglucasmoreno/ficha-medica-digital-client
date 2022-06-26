@@ -7,7 +7,7 @@
       </div>
       <div class="p-4 text-sm">
           <p class="font-semibold"> <span class="text-red-500"> * </span> Descripción </p>
-          <input [(ngModel)]="descripcion" class="py-2 mt-1 border-b-2 border-gray-300 tranform duration-500 focus:border-primaryColor appearance-none outline-none w-full text-gray-800 uppercase" placeholder="Ej. Medico clinico" type="text">
+          <input [(ngModel)]="descripcion" class="py-2 mt-1 border-b-2 border-gray-300 tranform duration-500 focus:border-primaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Medico clinico" type="text">
           <div *ngIf="tipoSeleccionado && estadoFormulario === 'editar'" class="xl:flex items-center mt-4">
             <div class="xl:w-1/2">
                 <p class="font-semibold text-sm"> Fecha de alta </p>

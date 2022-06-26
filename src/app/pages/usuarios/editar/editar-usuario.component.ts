@@ -46,7 +46,8 @@ export class EditarUsuarioComponent implements OnInit {
     tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
     fichas: 'FICHAS_NOT_ACCESS',
     buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
-    turnos: 'TURNOS_NOT_ACCESS'
+    turnos: 'TURNOS_NOT_ACCESS',
+    reportes: 'REPORTES_NOT_ACCESS',
   };
 
   public id: string;
@@ -123,6 +124,7 @@ export class EditarUsuarioComponent implements OnInit {
       this.tipoMedicoService.listarTipos().subscribe({
         next: ({tipos}) => {
           this.tipos = tipos.filter(tipo => (tipo.activo && tipo._id !== '000000000000000000000000'));
+          
           this.alertService.close();
         },
         error: ({error}) => {
@@ -155,6 +157,9 @@ export class EditarUsuarioComponent implements OnInit {
 
       // Turnos
       (permiso === 'TURNOS_ALL' || permiso === "TURNOS_READ") ? this.permisos.turnos = permiso : null;
+
+      // Reportes
+      (permiso === 'REPORTES_ALL' || permiso === "TURNOS_READ") ? this.permisos.turnos = permiso : null;
 
     });
 
@@ -267,6 +272,12 @@ export class EditarUsuarioComponent implements OnInit {
       permisos.push('TURNOS_NAV');
       permisos.push(this.permisos.turnos);
     }
+
+    // Seccion reportes
+    if(this.permisos.reportes !== 'REPORTES_NOT_ACCESS'){
+      permisos.push('REPORTES_NAV');
+      permisos.push(this.permisos.reportes);
+    }
     
     return permisos;  
   
@@ -283,7 +294,8 @@ export class EditarUsuarioComponent implements OnInit {
         tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
         fichas: 'FICHAS_ALL',
         buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
-        turnos: 'TURNOS_ALL'
+        turnos: 'TURNOS_ALL',
+        reportes: 'REPORTES_NOT_ACCESS'
       }
     }else if(role === 'DOCTOR_ROLE'){
       this.permisos = {
@@ -291,20 +303,21 @@ export class EditarUsuarioComponent implements OnInit {
         tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
         fichas: 'FICHAS_READ',
         buscador_fichas: 'BUSCADOR_FICHAS_ALL',
-        turnos: 'TURNOS_NOT_ACCESS'
+        turnos: 'TURNOS_NOT_ACCESS',
+        reportes: 'REPORTES_NOT_ACCESS'
       }
     }
 
   }
 
   ajustarDias(): any {
-    this.dias_laborales.includes('lunes') ? this.dias.lunes = true : this.dias.lunes = false;
-    this.dias_laborales.includes('martes') ? this.dias.martes = true : this.dias.martes = false;
-    this.dias_laborales.includes('miércoles') ? this.dias.miercoles = true : this.dias.miercoles = false;
-    this.dias_laborales.includes('jueves') ? this.dias.jueves = true : this.dias.jueves = false;
-    this.dias_laborales.includes('viernes') ? this.dias.viernes = true : this.dias.viernes = false;
-    this.dias_laborales.includes('sábado') ? this.dias.sabado = true : this.dias.sabado = false;
-    this.dias_laborales.includes('domingo') ? this.dias.domingo = true : this.dias.domingo = false;
+    this.dias_laborales?.includes('lunes') ? this.dias.lunes = true : this.dias.lunes = false;
+    this.dias_laborales?.includes('martes') ? this.dias.martes = true : this.dias.martes = false;
+    this.dias_laborales?.includes('miércoles') ? this.dias.miercoles = true : this.dias.miercoles = false;
+    this.dias_laborales?.includes('jueves') ? this.dias.jueves = true : this.dias.jueves = false;
+    this.dias_laborales?.includes('viernes') ? this.dias.viernes = true : this.dias.viernes = false;
+    this.dias_laborales?.includes('sábado') ? this.dias.sabado = true : this.dias.sabado = false;
+    this.dias_laborales?.includes('domingo') ? this.dias.domingo = true : this.dias.domingo = false;
   }
 
   cambiarDia(dia: string): any {

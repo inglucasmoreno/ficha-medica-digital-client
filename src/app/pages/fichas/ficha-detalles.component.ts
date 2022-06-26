@@ -7,6 +7,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AntecedentesService } from 'src/app/services/antecedentes.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CirugiasService } from 'src/app/services/cirugias.service';
+import { DataService } from 'src/app/services/data.service';
 import { EstudiosService } from 'src/app/services/estudios.service';
 import { FichasService } from 'src/app/services/fichas.service';
 import { NotasConsultaService } from 'src/app/services/notas-consulta.service';
@@ -119,6 +120,7 @@ export class FichaDetallesComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               public authService: AuthService,
+              private dataService: DataService,
               private notasConsultaService: NotasConsultaService,
               private alergiasService: AlergiasService,
               private turnosService: TurnosService,
@@ -131,6 +133,7 @@ export class FichaDetallesComponent implements OnInit {
 
   // Inicio de componente
   ngOnInit(): void {
+    this.dataService.ubicacionActual = 'Dashboard - Detalle de ficha';
     this.activatedRoute.params.subscribe( ({id}) => {
       this.idFicha = id;
       this.obtenerInformacion();

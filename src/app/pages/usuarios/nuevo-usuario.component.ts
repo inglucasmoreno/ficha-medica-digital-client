@@ -44,7 +44,8 @@ export class NuevoUsuarioComponent implements OnInit {
     tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
     fichas: 'FICHAS_NOT_ACCESS',
     buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
-    turnos: 'TURNOS_NOT_ACCESS'
+    turnos: 'TURNOS_NOT_ACCESS',
+    reportes: 'REPORTES_NOT_ACCESS'
   };
 
   // Modelo reactivo
@@ -191,7 +192,8 @@ export class NuevoUsuarioComponent implements OnInit {
         tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
         fichas: 'FICHAS_ALL',
         buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
-        turnos: 'TURNOS_ALL'
+        turnos: 'TURNOS_ALL',
+        reportes: 'REPORTES_NOT_ACCESS'   
       }
     }else if(role === 'DOCTOR_ROLE'){
       this.permisos = {
@@ -199,7 +201,8 @@ export class NuevoUsuarioComponent implements OnInit {
         tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
         fichas: 'FICHAS_READ',
         buscador_fichas: 'BUSCADOR_FICHAS_ALL',
-        turnos: 'TURNOS_NOT_ACCESS'
+        turnos: 'TURNOS_NOT_ACCESS',
+        reportes: 'REPORTES_NOT_ACCESS'
       }
     }
 
@@ -263,6 +266,12 @@ export class NuevoUsuarioComponent implements OnInit {
     if(this.permisos.turnos !== 'TURNOS_NOT_ACCESS'){
       permisos.push('TURNOS_NAV');
       permisos.push(this.permisos.turnos);
+    }
+
+    // Seccion reportes
+    if(this.permisos.turnos !== 'REPORTES_NOT_ACCESS'){
+      permisos.push('REPORTES_NAV');
+      permisos.push(this.permisos.reportes);
     }
 
     return permisos;  

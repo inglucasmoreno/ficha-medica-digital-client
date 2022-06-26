@@ -1,0 +1,109 @@
+<!-- Modal: Listado de dias laborales -->
+<app-modal-medium [showModal]="showModalDias">
+  <div class="bg-primary-800 text-xl text-white flex items-center justify-between pl-3 py-2 pr-2">
+    <h1> Historial de días laborales </h1>
+    <svg (click)="showModalDias = false" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>  
+  </div>
+  <div *ngIf="historiales && historiales?.length !== 0" class="px-4 gsap-contenido pt-2 mt-5 overflow-x-auto">
+    <div class="max-h-screen overflow-y-auto w-full flex items-center justify-center overflow-hidden pb-5">
+        <table class="leading-normal border rounded shadow">
+            <thead>
+                <tr class="border">
+                  <th class="px-5 border-b-2 border-gray-200 bg-gray-100 text-sm font-semibold text-gray-900 tracking-wider">
+                    <div (click)="ordenarPorColumna('createdAt')" class="cursor-pointer w-max flex items-center justify-center focus:outline-none">
+                        <span>
+                            Fecha de creación                                                
+                        </span>
+                        <span class="ml-2">
+                            <svg *ngIf="ordenar.columna == 'createdAt' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                            <svg *ngIf="ordenar.columna == 'createdAt' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                            <svg *ngIf="ordenar.columna != 'createdAt'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </span>
+                    </div>
+                  </th>
+                  <th class="px-5 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-900 tracking-wider">
+                      <div class="flex items-center focus:outline-none">
+                          <span> Días laborales </span>
+                      </div>
+                  </th>
+                  <th class="px-5 border-b-2 border-gray-200 bg-gray-100 text-sm font-semibold text-gray-900 tracking-wider">
+                    <div (click)="ordenarPorColumna('creatorUser.apellido')" class="cursor-pointer w-max flex items-center justify-center focus:outline-none">
+                        <span>
+                            Realizó el cambio                                               
+                        </span>
+                        <span class="ml-2">
+                            <svg *ngIf="ordenar.columna == 'creatorUser.apellido' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                            <svg *ngIf="ordenar.columna == 'creatorUser.apellido' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                            <svg *ngIf="ordenar.columna != 'creatorUser.apellido'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </span>
+                    </div>
+                  </th>
+                </tr>
+            </thead>
+            <tbody *ngIf="historiales">
+                <tr class="animate__animated animate__fadeIn" *ngFor="let historial of historiales | paginate: {itemsPerPage: cantidadItems, currentPage: paginaActual}">
+                  <td class="px-5 py-3 border-b border-gray-200 text-xs">
+                    <p class="text-gray-900 whitespace-no-wrap">
+                        {{ historial.createdAt | fecha }}
+                    </p>
+                  </td>  
+                  <td class="px-5 py-3 border-b border-gray-200 text-xs">
+                    <p *ngIf="historial?.dias_laborales?.length === 7" class="text-gray-900 whitespace-no-wrap">
+                      <span class="p-1 border font-semibold border-green-300 rounded bg-green-100 mr-2 text-green-700"> Todos los días </span>
+                    </p>
+                    <p *ngIf="historial?.dias_laborales?.length === 0" class="text-gray-900 whitespace-no-wrap">
+                      <span class="p-1 border font-semibold border-red-300 rounded bg-red-100 mr-2 text-red-700"> Ningún día </span>
+                    </p>
+                    <p *ngIf="historial?.dias_laborales?.length < 7 && historial?.dias_laborales?.length > 0" class="text-gray-900 whitespace-no-wrap">
+                        <span class="p-1 border font-semibold border-indigo-300 rounded bg-indigo-50 mr-2 text-secondaryColor" *ngFor="let dia of historial.dias_laborales"> {{ dia }} </span>
+                    </p>
+                  </td>
+                  <td class="px-5 py-3 border-b border-gray-200 text-xs">
+                    <p class="text-gray-900 whitespace-no-wrap capitalize">
+                        {{ historial.creatorUser.apellido.toLowerCase() }} {{ historial.creatorUser.nombre.toLowerCase() }}
+                    </p>
+                  </td>  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="historiales?.length > cantidadItems" class="px-5 py-2 bg-white flex flex-col text-sm xs:flex-row items-center xs:justify-between">
+            <pagination-controls nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="paginaActual = $event"></pagination-controls>
+          </div>
+  </div>
+  <div class="text-center my-4 gsap-contenido" *ngIf="historiales?.length === 0">
+    <p class="text-xl text-gray-600 bg-gray-100 p-2 mx-auto rounded w-max shadow border border-gray-300"> No hay historial de días laborales para este profesional </p>
+  </div>
+  <div class="px-4 pb-2">
+    <button (click)="showModalDias = false" class="bg-secondaryColor focus:outline-none text-white rounded w-full p-2 shadow">
+      Regresar al buscador
+    </button>
+  </div>
+  <button></button>
+</app-modal-medium>
+
+<!-- Pagina principal -->
+<div class="gsap-contenido mt-10">
+  <div class="flex justify-center">
+    <div class="border border-gray-300 w-1/3 shadow h-full">
+      <h1 class="text-xl bg-primary-800 text-white p-2 text-center"> Historial de días laborales </h1>
+      <div class="p-2">
+        <p class="text-sm font-semibold"> Profesional </p>
+        <select [(ngModel)]="idMedico" class="p-2 shadow mt-2 rounded w-full text-sm focus:outline-none border border-gray-300" name="" id="">
+          <option value=""> Seleccionar profesional </option>
+          <option *ngFor="let usuario of usuarios" [value]="usuario._id"> {{ usuario.apellido }} {{ usuario.nombre }} </option>
+        </select>
+        <button (click)="generarHistorial()" class="bg-secondaryColor text-sm font-semibold focus:outline-none mt-4 mb-1 text-white w-full p-2 rounded shadow">
+          Generar historial
+        </button>
+      </div>
+    </div>
+    <img class="w-1/2 md:w-1/3 ml-4 h-full" src="assets/img/reportes/dias-laborales.svg" alt="Dias laborales">
+  </div>
+</div>
+
+
+
+
