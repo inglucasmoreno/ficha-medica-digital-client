@@ -71,7 +71,6 @@ export class TurnosReportesComponent implements OnInit {
         this.profesionales = usuarios.filter(usuario => usuario.role === 'DOCTOR_ROLE');
         this.operadores = usuarios.filter(usuario => usuario.role !== 'DOCTOR_ROLE');
         this.alertService.close();
-        console.log(this.profesionales, this.operadores);
       },
       error: ({error}) => this.alertService.errorApi(error.message)
     })
@@ -81,7 +80,6 @@ export class TurnosReportesComponent implements OnInit {
   generarReporte(): void {
     this.alertService.loading();
     this.filtro.estado = '';
-    console.log(this.parametros);
     this.turnosService.reporteTurnos(this.parametros).subscribe({
       next: ({turnos}) => {
         this.turnos = turnos;

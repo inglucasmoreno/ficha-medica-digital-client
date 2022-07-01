@@ -1,3 +1,65 @@
+<!-- Modal: Crear ficha -->
+<app-modal [showModal]="showModalFicha">
+  <div (keyup.enter)="nuevaFicha()">
+      <div class="flex items-center justify-between bg-primary-800 rounded-t px-2 py-1">
+          <h1 class=" text-white px-2 py-1 rounded-t text-xl"> Creando nueva ficha </h1>
+          <svg (click)="cerrarNuevaFicha()" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer feather feather-x text-white mr-2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </div>
+      <div class="p-4">
+        <div class="xl:flex items-center">
+            <div class="xl:w-1/2">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Nro de afiliado </p>
+                <input [(ngModel)]="dataFicha.nro_afiliado" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 2365401" type="text">     
+            </div>
+            <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0"></div>
+        </div>  
+        <div class="xl:flex items-center mt-4">
+            <div class="xl:w-1/2">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Apellido </p>
+                <input [(ngModel)]="dataFicha.apellido" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Moreno" type="text">     
+            </div>
+            <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Nombre </p>
+                <input [(ngModel)]="dataFicha.nombre" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Lucas Omar" type="text">     
+            </div>
+        </div>
+        <div class="xl:flex items-center mt-4">
+            <div class="xl:w-1/2">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> DNI </p>
+                <input [(ngModel)]="dataFicha.dni" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 34060398" type="text">                   
+            </div>
+            <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+                <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Fecha de nacimiento </p>
+                <input [(ngModel)]="dataFicha.fecha_nacimiento" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 34060398" type="date">     
+            </div>
+        </div>    
+        <div class="xl:flex items-center mt-4">
+            <div class="xl:w-1/2">
+                <p class="font-semibold text-sm"> Grupo sanguineo </p>
+                <select class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor outline-none w-full text-gray-800" [(ngModel)]="dataFicha.grupo_sanguineo">
+                    <option value=""> Sin datos </option>
+                    <option value="A"> A </option>
+                    <option value="O"> O </option>
+                    <option value="AO"> AO </option>
+                    <option value="B"> B </option>
+                </select>
+            </div>
+            <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
+                <p class="font-semibold text-sm"> RH </p>
+                <select class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor outline-none w-full text-gray-800" [(ngModel)]="dataFicha.rh">
+                    <option value=""> Sin datos </option>
+                    <option value="+"> Positivo (+) </option>
+                    <option value="-"> Negativo (-) </option>
+                </select>
+            </div>
+        </div>       
+        <div class="mt-2">
+            <button (click)="nuevaFicha()" class="bg-gray-100 text-sm focus:outline-none hover:text-secondaryColor shadow text-gray-800 w-full border border-gray-300 font-semibold p-2 rounded mt-4"> Crear ficha </button>
+        </div>
+      </div>
+  </div>
+</app-modal>
+
 <!-- Modal: Nuevo turno / Editar turno -->
 <app-modal [showModal]="showModal">
   <div class="flex items-center rounded-t bg-primary-800 justify-between">

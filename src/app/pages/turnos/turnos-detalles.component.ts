@@ -29,6 +29,9 @@ export class TurnosDetallesComponent implements OnInit {
   public showModal = false;
   public showModalDetalles = false;
 
+  // Modal crear ficha
+  public showModalFicha = false;
+
   // Usuario - Profesional
   public usuario: any;
   public pacienteSeleccionado: any;
@@ -47,6 +50,19 @@ export class TurnosDetallesComponent implements OnInit {
   public alertas = {
     diaIncorrecto: false
   }
+
+  // Data - Creacion de nueva ficha
+  public dataFicha: any = {
+    apellido: '',
+    nombre: '',
+    dni: '',
+    nro_afiliado: '',
+    fecha_nacimiento: '',
+    grupo_sanguineo: '',
+    rh: '',
+    creatorUser: '',
+    updatorUser: '',  
+  };
 
 	// Filtrado
 	public filtro = {
@@ -206,10 +222,31 @@ export class TurnosDetallesComponent implements OnInit {
         this.dni = '';
         this.pacienteSeleccionado = ficha;
       },
-      error: ({error}) => {
-        this.alertService.info('El paciente no esta registrado');
+      error: () => {
+        this.alertService.questionPaciente({ msg: '¿Quieres crear una ficha para este paciente?', buttonText: 'Crear ficha' })
+        .then(({isConfirmed}) => {    
+          if(isConfirmed){
+            this.reiniciarFormularioNuevaFicha();
+            this.showModal = false;
+            this.showModalFicha = true;
+          } 
+        })
       }
     });
+  }
+
+  reiniciarFormularioNuevaFicha(): void {
+    this.dataFicha = {
+      apellido: '',
+      nombre: '',
+      dni: this.dni,
+      nro_afiliado: '',
+      fecha_nacimiento: '',
+      grupo_sanguineo: '',
+      rh: '',
+      creatorUser: '',
+      updatorUser: '',  
+    }; 
   }
 
   actualizarTurno(): void {
@@ -286,6 +323,70 @@ export class TurnosDetallesComponent implements OnInit {
           });
         }
       });
+  }
+
+  // Verificar datos
+  verificarDatos(): boolean {
+
+    const {
+      apellido,
+      nombre,
+      dni,
+      nro_afiliado,
+      fecha_nacimiento
+    } = this.dataFicha;
+    
+    const verificacion = apellido.trim() === '' ||
+                         nombre.trim() === '' ||
+                         dni.trim() === '' ||
+                         nro_afiliado.trim() === '' ||
+                         fecha_nacimiento.trim() === ''
+
+    if(verificacion) return true;
+    else return false;
+
+  }
+
+  // Nueva ficha
+  nuevaFicha(): void {
+
+    if(this.verificarDatos()){
+      this.alertService.info('Completar los campos obligatorios');
+      return;
+    }
+
+    this.verificarDatos();
+
+    this.alertService.loading();
+
+    this.dataFicha.creatorUser = this.authService.usuario.userId;
+    this.dataFicha.updatorUser = this.authService.usuario.userId;
+
+    // Adaptacion de fecha de nacimiento
+    this.dataFicha.fecha_nacimiento = add(new Date(this.dataFicha.fecha_nacimiento), {hours: 3});
+
+    this.fichasService.nuevaFicha(this.dataFicha).subscribe({
+
+      next: ({ficha}) => {
+        this.alertService.close();
+        this.dni = '';
+        this.pacienteSeleccionado = ficha;
+        this.showModalFicha = false;
+        this.showModal = true;
+      },
+      
+      error: ({error}) => {
+        this.alertService.errorApi(error.message);
+      }
+
+    });
+
+  }
+
+  // Cerrar nuevo paciente
+  cerrarNuevaFicha(): void {
+    this.showModalFicha = false;
+    this.showModal = true;  
   }
 
   // Verificar fecha

@@ -34,6 +34,19 @@ export class AlertService {
     });
   }
 
+  // Aleta - Pregunta - Crear paciente
+  questionPaciente({ msg, buttonText }): any {
+    return Swal.fire({
+      title: 'El paciente no existe',
+      text: msg,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: buttonText,
+      cancelButtonText: 'Cancelar', 
+      confirmButtonColor: '#6C63FF'
+    });
+  }
+
   // Alerta - Completado
   success(msg: string = 'Acción completada!'): void {
     Swal.fire({
