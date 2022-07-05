@@ -4,6 +4,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { FichasService } from 'src/app/services/fichas.service';
+import { InicializacionService } from 'src/app/services/inicializacion.service';
 import { TurnosService } from 'src/app/services/turnos.service';
 import { environment } from 'src/environments/environment';
 
@@ -17,6 +18,14 @@ const base_url = environment.base_url;
 })
 export class FichasComponent implements OnInit {
 	
+  // Flag y mensaje de estado
+  public flag_fichas_importadas = false;
+  public mensaje = '';
+
+  // Archivos para importacion
+  public file: any;
+  public archivoSubir: any;
+
   // Permisos de usuarios login
 	public permisos = { all: false };
   public permiso_escritura = ['FICHAS_ALL'];
@@ -24,6 +33,7 @@ export class FichasComponent implements OnInit {
 	// Modal
 	public showModalFicha = false;
   public showModalTurnos = false;
+  public showModalImportarFichas = false;
 
 	// Estado formulario
 	public estadoFormulario = 'crear';
@@ -38,8 +48,7 @@ export class FichasComponent implements OnInit {
   public fichaSeleccionada: any;
   
   public dataFicha: any = { 
-    apellido: '',
-    nombre: '',
+    apellido_nombre: '',
     dni: '',
     nro_afiliado: '',
     fecha_nacimiento: '',
@@ -74,7 +83,7 @@ export class FichasComponent implements OnInit {
 	// Ordenar
 	public ordenar = {
 		direccion: 1,  // Asc (1) | Desc (-1)
-		columna: 'apellido'
+		columna: 'apellido_nombre'
 	}
 
   // Ordenar turnos
@@ -85,7 +94,8 @@ export class FichasComponent implements OnInit {
 
 	constructor(private fichasService : FichasService,
               private turnosService: TurnosService,
-					    private authService: AuthService,
+              private inicializacionService: InicializacionService,
+					    public authService: AuthService,
 					    private alertService: AlertService,
 					    private dataService: DataService) { }
 
@@ -119,8 +129,7 @@ export class FichasComponent implements OnInit {
         this.ficha = ficha;
 
         let { 
-          apellido, 
-          nombre, 
+          apellido_nombre, 
           dni, 
           nro_afiliado, 
           fecha_nacimiento, 
@@ -133,8 +142,7 @@ export class FichasComponent implements OnInit {
         fecha_nacimiento = format(add(new Date(fecha_nacimiento), {hours: 3}), 'yyyy-MM-dd')
 
         this.dataFicha = {
-          apellido,
-          nombre,
+          apellido_nombre,
           dni,
           nro_afiliado,
           fecha_nacimiento,
@@ -167,7 +175,16 @@ export class FichasComponent implements OnInit {
       next: ({ fichas }) => {
         this.fichas = fichas;
         this.showModalFicha = false;
-        this.alertService.close();
+
+        if(this.flag_fichas_importadas){
+          this.showModalImportarFichas = false;
+          this.file = null;
+          this.alertService.successConfirm(this.mensaje);
+          this.flag_fichas_importadas = false;
+        }else{
+          this.alertService.close();
+        }
+
       },
 
       error: ({error}) => {
@@ -181,15 +198,13 @@ export class FichasComponent implements OnInit {
   verificarDatos(): boolean {
 
     const {
-      apellido,
-      nombre,
+      apellido_nombre,
       dni,
       nro_afiliado,
       fecha_nacimiento
     } = this.dataFicha;
     
-    const verificacion = apellido.trim() === '' ||
-                         nombre.trim() === '' ||
+    const verificacion = apellido_nombre.trim() === '' ||
                          dni.trim() === '' ||
                          nro_afiliado.trim() === '' ||
                          fecha_nacimiento.trim() === ''
@@ -324,8 +339,7 @@ export class FichasComponent implements OnInit {
   // Reiniciando formulario
   reiniciarFormulario(): void {
     this.dataFicha = { 
-      apellido: '',
-      nombre: '',
+      apellido_nombre: '',
       dni: '',
       nro_afiliado: '',
       fecha_nacimiento: '',
@@ -336,6 +350,51 @@ export class FichasComponent implements OnInit {
     }
   }
 
+  // Capturando archivo de importacion
+  capturarArchivo(event: any): void {
+    if(event.target.files[0]){
+      // Se capatura el archivo
+      this.archivoSubir = event.target.files[0];
+  
+      // Se verifica el formato - Debe ser un excel
+      const formato = this.archivoSubir.type.split('/')[1];
+      const condicion = formato !== 'vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  
+      if(condicion){
+        this.file = null;
+        this.archivoSubir = null;
+        return this.alertService.info('Debes seleccionar un archivo de excel');      
+      }
+    }
+  }
+
+  // Abrir modal de importacion de fichas
+  abrirImportarFichas(): void {
+    this.file = null;
+    this.showModalImportarFichas = true;
+  }
+
+  // Importar fichas
+  importarFichas(): void {
+
+    if(!this.file) return this.alertService.info('Debe seleccionar un archivo de excel');
+
+    this.alertService.loading();
+    const formData =  new FormData();
+    formData.append('file', this.archivoSubir); // FormData -> key = 'file' y value = Archivo
+
+    this.inicializacionService.importarFichas(formData, this.authService.usuario.userId).subscribe({
+      next: ({msg}) => {
+        this.mensaje = msg;
+        this.flag_fichas_importadas = true;
+        this.listarFichas();        
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error.message);
+      }
+    })
+
+  }
 
   // Imprimir reporte
   imprimirReporte(): void {

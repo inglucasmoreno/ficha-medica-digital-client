@@ -79,13 +79,13 @@ export class PerfilComponent implements OnInit {
   }
 
   ajustarDias(): any {
-    this.dias_laborales.includes('lunes') ? this.dias.lunes = true : this.dias.lunes = false;
-    this.dias_laborales.includes('martes') ? this.dias.martes = true : this.dias.martes = false;
-    this.dias_laborales.includes('miércoles') ? this.dias.miercoles = true : this.dias.miercoles = false;
-    this.dias_laborales.includes('jueves') ? this.dias.jueves = true : this.dias.jueves = false;
-    this.dias_laborales.includes('viernes') ? this.dias.viernes = true : this.dias.viernes = false;
-    this.dias_laborales.includes('sábado') ? this.dias.sabado = true : this.dias.sabado = false;
-    this.dias_laborales.includes('domingo') ? this.dias.domingo = true : this.dias.domingo = false;
+    this.dias_laborales?.includes('lunes') ? this.dias.lunes = true : this.dias.lunes = false;
+    this.dias_laborales?.includes('martes') ? this.dias.martes = true : this.dias.martes = false;
+    this.dias_laborales?.includes('miércoles') ? this.dias.miercoles = true : this.dias.miercoles = false;
+    this.dias_laborales?.includes('jueves') ? this.dias.jueves = true : this.dias.jueves = false;
+    this.dias_laborales?.includes('viernes') ? this.dias.viernes = true : this.dias.viernes = false;
+    this.dias_laborales?.includes('sábado') ? this.dias.sabado = true : this.dias.sabado = false;
+    this.dias_laborales?.includes('domingo') ? this.dias.domingo = true : this.dias.domingo = false;
   }
 
   cambiarDia(dia: string): any {

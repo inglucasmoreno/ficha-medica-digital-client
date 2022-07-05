@@ -53,8 +53,7 @@ export class TurnosDetallesComponent implements OnInit {
 
   // Data - Creacion de nueva ficha
   public dataFicha: any = {
-    apellido: '',
-    nombre: '',
+    apellido_nombre: '',
     dni: '',
     nro_afiliado: '',
     fecha_nacimiento: '',
@@ -237,8 +236,7 @@ export class TurnosDetallesComponent implements OnInit {
 
   reiniciarFormularioNuevaFicha(): void {
     this.dataFicha = {
-      apellido: '',
-      nombre: '',
+      apellido_nombre: '',
       dni: this.dni,
       nro_afiliado: '',
       fecha_nacimiento: '',
@@ -329,15 +327,13 @@ export class TurnosDetallesComponent implements OnInit {
   verificarDatos(): boolean {
 
     const {
-      apellido,
-      nombre,
+      apellido_nombre,
       dni,
       nro_afiliado,
       fecha_nacimiento
     } = this.dataFicha;
     
-    const verificacion = apellido.trim() === '' ||
-                         nombre.trim() === '' ||
+    const verificacion = apellido_nombre.trim() === '' ||
                          dni.trim() === '' ||
                          nro_afiliado.trim() === '' ||
                          fecha_nacimiento.trim() === ''

@@ -17,9 +17,12 @@ export class InicializacionService {
     return this.http.get(`${base_url}/inicializacion/usuarios`);
   }
 
-  // Inicializacion de TABLA - preguntas
-  inicializarPreguntas(): Observable<any> {
-    return this.http.get(`${base_url}/inicializacion/preguntas`);
+  // Actualizando base de fichas
+  importarFichas(formData: any, usuario: string): Observable<any> {
+    return this.http.post(`${base_url}/inicializacion/fichas`, formData, {
+      params: { usuario }
+    });
   }
+
 
 }

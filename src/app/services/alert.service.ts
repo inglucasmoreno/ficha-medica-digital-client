@@ -58,6 +58,17 @@ export class AlertService {
     });
   }
 
+  // Alerta - Completado
+  successConfirm(msg: string = 'Acción completada!'): void {
+    Swal.fire({
+      icon: 'success',
+      title: 'Completado',
+      text: msg,
+      showConfirmButton: true,
+      confirmButtonText: 'Entendido'
+    });
+  }
+
   // Alerta - Información
   info(msg: string): void {
     Swal.fire({

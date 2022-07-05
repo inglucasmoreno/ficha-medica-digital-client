@@ -12,7 +12,7 @@
   <!-- Tabla de turnos -->
   <div class="px-4 pt-3 flex items-center justify-between">
       <div>
-          <p class="text-sm"> <span class="font-semibold"> Apellido y Nombre: </span> <span class="capitalize"> {{ ficha?.apellido?.toLowerCase() }} {{ ficha?.nombre?.toLowerCase() }} </span> </p>
+          <p class="text-sm"> <span class="font-semibold"> Apellido y Nombre: </span> <span class="capitalize"> {{ ficha?.apellido_nombre?.toLowerCase() }} </span> </p>
           <p class="text-sm"> <span class="font-semibold"> DNI: </span> <span> {{ ficha?.dni }} </span> </p>   
           <p class="text-sm"> <span class="font-semibold"> Nro de afiliado: </span> <span> {{ ficha?.nro_afiliado }} </span> </p>   
       </div>
@@ -443,13 +443,9 @@
           <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0"></div>
       </div>  
       <div class="xl:flex items-center mt-4">
-          <div class="xl:w-1/2">
-              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Apellido </p>
-              <input [(ngModel)]="dataFicha.apellido" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Moreno" type="text">     
-          </div>
-          <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
-              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Nombre </p>
-              <input [(ngModel)]="dataFicha.nombre" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Lucas Omar" type="text">     
+          <div class="w-full">
+              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Apellido y nombre </p>
+              <input [(ngModel)]="dataFicha.apellido_nombre" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Moreno" type="text">     
           </div>
       </div>
       <div class="xl:flex items-center mt-4">
@@ -633,7 +629,7 @@
       <div class="flex items-center">
         <div class="">
           <div class="flex items-center">
-            <p class="text-3xl font-semibold"> {{ ficha?.apellido }} {{ ficha?.nombre }} </p>
+            <p class="text-3xl font-semibold"> {{ ficha?.apellido_nombre }} </p>
           </div>
           <p class="text-sm"> Afiliado N° {{ ficha.nro_afiliado }}  </p>
         </div>

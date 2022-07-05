@@ -52,8 +52,7 @@ export class FichaDetallesComponent implements OnInit {
   public idFicha: string;
   public ficha: any;
   public dataFicha: any = {
-    apellido: '',
-    nombre: '',
+    apellido_nombre: '',
     dni: '',
     nro_afiliado: '',
     fecha_nacimiento: '',
@@ -150,8 +149,7 @@ export class FichaDetallesComponent implements OnInit {
         this.ficha = ficha;
         
         let { 
-          apellido, 
-          nombre, 
+          apellido_nombre, 
           dni, 
           nro_afiliado, 
           fecha_nacimiento,
@@ -174,8 +172,7 @@ export class FichaDetallesComponent implements OnInit {
         fecha_nacimiento = format(new Date(fecha_nacimiento), 'yyyy-MM-dd');
 
         this.dataFicha = {
-          apellido,
-          nombre,
+          apellido_nombre,
           dni,
           nro_afiliado,
           fecha_nacimiento,
@@ -267,8 +264,7 @@ export class FichaDetallesComponent implements OnInit {
         this.ficha = ficha;
  
         let { 
-          apellido, 
-          nombre, 
+          apellido_nombre, 
           dni, 
           nro_afiliado, 
           fecha_nacimiento, 
@@ -280,8 +276,7 @@ export class FichaDetallesComponent implements OnInit {
         fecha_nacimiento = format(new Date(fecha_nacimiento), 'yyyy-MM-dd');
 
         this.dataFicha = {
-          apellido,
-          nombre,
+          apellido_nombre,
           dni,
           nro_afiliado,
           fecha_nacimiento,
@@ -303,15 +298,13 @@ export class FichaDetallesComponent implements OnInit {
   verificarDatos(): boolean {
 
     const {
-      apellido,
-      nombre,
+      apellido_nombre,
       dni,
       nro_afiliado,
       fecha_nacimiento
     } = this.dataFicha;
     
-    const verificacion = apellido.trim() === '' ||
-                         nombre.trim() === '' ||
+    const verificacion = apellido_nombre.trim() === '' ||
                          dni.trim() === '' ||
                          nro_afiliado.trim() === '' ||
                          fecha_nacimiento.trim() === ''
