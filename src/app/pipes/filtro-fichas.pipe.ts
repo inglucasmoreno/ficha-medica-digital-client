@@ -30,8 +30,7 @@ export class FiltroFichasPipe implements PipeTransform {
     
     if(parametro.length !== 0){
       return filtrados.filter( valor => { 
-        return valor.apellido.toLocaleLowerCase().includes(parametro) ||
-               valor.nombre.toLocaleLowerCase().includes(parametro) ||
+        return valor.apellido_nombre.toLocaleLowerCase().includes(parametro) ||
                valor.dni.toLocaleLowerCase().includes(parametro) ||
                valor.nro_afiliado.toLocaleLowerCase().includes(parametro)
       });

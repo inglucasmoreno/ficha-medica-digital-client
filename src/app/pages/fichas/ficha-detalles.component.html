@@ -438,20 +438,29 @@
       <div class="xl:flex items-center">
           <div class="xl:w-1/2">
               <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Nro de afiliado </p>
-              <input [(ngModel)]="dataFicha.nro_afiliado" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 2365401" type="text">     
+              <input *ngIf="authService.usuario.role === 'ADMIN_ROLE'" [(ngModel)]="dataFicha.nro_afiliado" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 2365401" type="text">     
+              <div *ngIf="authService.usuario.role !== 'ADMIN_ROLE'" class="py-2 mt-1 rounded text-sm bg-gray-100 border pl-2 border-gray-300 tranform duration-500 appearance-none outline-none w-full text-gray-800">
+                {{ dataFicha.nro_afiliado }}
+              </div>
           </div>
           <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0"></div>
       </div>  
       <div class="xl:flex items-center mt-4">
           <div class="w-full">
-              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Apellido y nombre </p>
-              <input [(ngModel)]="dataFicha.apellido_nombre" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Moreno" type="text">     
+            <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Apellido y nombre </p>
+            <input *ngIf="authService.usuario.role === 'ADMIN_ROLE'" [(ngModel)]="dataFicha.apellido_nombre" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Moreno" type="text">     
+            <div *ngIf="authService.usuario.role !== 'ADMIN_ROLE'" class="py-2 mt-1 rounded text-sm bg-gray-100 border pl-2 border-gray-300 tranform duration-500 appearance-none outline-none w-full text-gray-800">
+              {{ dataFicha.apellido_nombre }}
+            </div>
           </div>
       </div>
       <div class="xl:flex items-center mt-4">
           <div class="xl:w-1/2">
-              <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> DNI </p>
-              <input [(ngModel)]="dataFicha.dni" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 34060398" type="text">                   
+            <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> DNI </p>
+            <input *ngIf="authService.usuario.role === 'ADMIN_ROLE'" [(ngModel)]="dataFicha.dni" class="py-2 mt-1 text-sm border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. 34060398" type="text">                   
+            <div *ngIf="authService.usuario.role !== 'ADMIN_ROLE'" class="py-2 mt-1 text-sm bg-gray-100 rounded border pl-2 border-gray-300 tranform duration-500 appearance-none outline-none w-full text-gray-800">
+              {{ dataFicha.dni }}
+            </div>             
           </div>
           <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
               <p class="font-semibold text-sm"> <span class="text-red-500"> * </span> Fecha de nacimiento </p>
@@ -478,7 +487,7 @@
               </select>
           </div>
       </div> 
-      <div *ngIf="ficha" class="xl:flex items-center mt-4">
+      <div *ngIf="ficha && authService.usuario.role === 'ADMIN_ROLE'" class="xl:flex items-center mt-4">
           <div class="xl:w-1/2">
               <p class="font-semibold text-sm"> Fecha de alta </p>
               <div class="border text-sm mt-2 border-gray-300 rounded p-2 bg-gray-100">
@@ -492,7 +501,7 @@
               </div>
           </div>
       </div>   
-      <div *ngIf="ficha" class="xl:flex items-center mt-4">
+      <div *ngIf="ficha && authService.usuario.role === 'ADMIN_ROLE'" class="xl:flex items-center mt-4">
         <div class="xl:w-1/2">
             <p class="font-semibold text-sm"> Ultima modificación </p>
             <div class="border text-sm mt-2 border-gray-300 rounded p-2 bg-gray-100">

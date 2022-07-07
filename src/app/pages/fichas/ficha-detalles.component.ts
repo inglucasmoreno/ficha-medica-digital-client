@@ -275,6 +275,16 @@ export class FichaDetallesComponent implements OnInit {
 
         fecha_nacimiento = format(new Date(fecha_nacimiento), 'yyyy-MM-dd');
 
+        // Calculando edad del paciente
+        const hoy = new Date();
+        const nacimiento = new Date(fecha_nacimiento);
+
+        this.edad = formatDistanceStrict(
+          hoy,
+          nacimiento,
+          {locale: es}
+        )
+
         this.dataFicha = {
           apellido_nombre,
           dni,

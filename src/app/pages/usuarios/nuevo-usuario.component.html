@@ -71,7 +71,7 @@
     <div class="w-full max-w-xl lg:w-1/2 bg-white mr-2 shadow rounded border border-gray-200">
 
         <!-- Cuerpo de formulario -->
-        <form [formGroup]="usuarioForm">
+        <div [formGroup]="usuarioForm">
             <div class="flex items-center p-2 bg-primary-800 rounded-t">
                 <app-boton-regresar routerLink="/dashboard/usuarios"></app-boton-regresar>
                 <h1 class="ml-2 text-2xl text-white"> Datos de usuario </h1>
@@ -173,7 +173,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 
     <div class="w-full max-w-xl lg:w-1/2 mt-2 lg:mt-0 h-full">
