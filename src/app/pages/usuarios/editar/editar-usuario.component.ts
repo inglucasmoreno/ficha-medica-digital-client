@@ -159,7 +159,7 @@ export class EditarUsuarioComponent implements OnInit {
       (permiso === 'TURNOS_ALL' || permiso === "TURNOS_READ") ? this.permisos.turnos = permiso : null;
 
       // Reportes
-      (permiso === 'REPORTES_ALL' || permiso === "TURNOS_READ") ? this.permisos.turnos = permiso : null;
+      (permiso === 'REPORTES_ALL' || permiso === "REPORTES_READ") ? this.permisos.reportes = permiso : null;
 
     });
 

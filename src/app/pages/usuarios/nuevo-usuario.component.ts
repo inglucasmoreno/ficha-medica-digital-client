@@ -269,7 +269,7 @@ export class NuevoUsuarioComponent implements OnInit {
     }
 
     // Seccion reportes
-    if(this.permisos.turnos !== 'REPORTES_NOT_ACCESS'){
+    if(this.permisos.reportes !== 'REPORTES_NOT_ACCESS'){
       permisos.push('REPORTES_NAV');
       permisos.push(this.permisos.reportes);
     }
