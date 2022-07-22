@@ -22,6 +22,8 @@ import { TurnosDetallesComponent } from './turnos/turnos-detalles.component';
 import { TipoMedicoComponent } from './tipo-medico/tipo-medico.component';
 import { DiasLaboralesComponent } from './reportes/dias-laborales/dias-laborales.component';
 import { TurnosReportesComponent } from './reportes/turnos-reportes/turnos-reportes.component';
+import { MedicamentosComponent } from './medicamentos/medicamentos.component';
+import { MedicamentosAutorizacionesComponent } from './medicamentos/medicamentos-autorizaciones.component';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { TurnosReportesComponent } from './reportes/turnos-reportes/turnos-repor
     TipoMedicoComponent,
     DiasLaboralesComponent,
     TurnosReportesComponent,
+    MedicamentosComponent,
+    MedicamentosAutorizacionesComponent,
   ],
   imports: [
     CommonModule,

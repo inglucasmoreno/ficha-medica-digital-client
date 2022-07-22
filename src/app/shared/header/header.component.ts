@@ -3,6 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { TurnosService } from 'src/app/services/turnos.service';
 import { AuthService } from '../../services/auth.service';
 import { items } from './items';
+import { itemsMedicamentos } from './items-medicamentos';
 import { itemsReportes } from './items-reportes';
 
 @Component({
@@ -16,10 +17,12 @@ export class HeaderComponent implements OnInit {
   // Items
   public items: any[];
   public itemsReportes: any[];
+  public itemsMedicamentos: any[];
  
   // Flags - Navegacion
   public administrador = false;
   public showReportes = false;
+  public showMedicamentos = false;
 
   // Permisos para navegacion
   public permiso_usuarios = true;
@@ -31,6 +34,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.items = items;
     this.itemsReportes = itemsReportes;
+    this.itemsMedicamentos = itemsMedicamentos;
     this.turnosVencidos();
   }
 
