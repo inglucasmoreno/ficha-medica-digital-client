@@ -59,7 +59,7 @@ export class UsuariosComponent implements OnInit {
       )
     .subscribe( resp => {
       const { usuarios, total } = resp;
-      this.usuarios = usuarios;
+      this.usuarios = usuarios.filter(usuario => usuario._id !== '000000000000000000000000');
       this.total = total;
       this.alertService.close();
     }, (({error}) => {
