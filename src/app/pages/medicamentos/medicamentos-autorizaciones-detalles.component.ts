@@ -14,6 +14,14 @@ import { FichasService } from 'src/app/services/fichas.service';
 })
 export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
 
+  // Formulario
+  public profesional_tipo = 'Interno';
+  public profesional_interno = '';
+  public profesional_externo = '';
+  public medicamento = '';
+  public cantidad = null;
+  public diagnostico = '';
+
   // Permisos de usuarios login
   public permisos = { all: false };
 
@@ -26,6 +34,15 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
   // Ficha
   public idFicha;
   public ficha;
+
+  // Medicos externos
+  public medicosExternos: any[] = [];
+
+  // Medicos internos
+  public medicosInternos: any[] = [];
+
+  // Medicamentos
+  public medicamentos: any[] = [];
 
   // Autorizacion
   public idAutorizacion: string = '';
@@ -77,13 +94,17 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
       this.fichasService.getFicha(id).subscribe({
         next: ({ficha}) => {
           this.ficha = ficha;
-          this.autorizacionesMedicamentosService.listarAutorizaciones(
-            this.ordenar.direccion,
-            this.ordenar.columna
+          this.autorizacionesMedicamentosService.calculosIniciales(
+          this.ordenar.direccion,
+          this.ordenar.columna,
+          ficha._id
           ).subscribe({
-            next: ({autorizaciones}) => {
+            next: (res) => {
+              const { medicos_externos, medicos_internos, medicamentos, autorizaciones } = res.resultados;
+              this.medicosExternos = medicos_externos;
+              this.medicosInternos = medicos_internos;
+              this.medicamentos = medicamentos;
               this.autorizaciones = autorizaciones;
-              console.log(autorizaciones);
               this.alertService.close();
             },
             error: ({error}) => this.alertService.errorApi(error.message)
@@ -98,16 +119,17 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
   abrirModal(estado: string, autorizacion: any = null): void {
     window.scrollTo(0,0);
     this.reiniciarFormulario();
-    this.apellido = '';
-    this.nombre = '';
-    this.dni = '';
     this.idAutorizacion = '';
     
+    this.autorizacionSeleccionada = autorizacion;
+
     if(estado === 'editar'){
-      this.autorizacionSeleccionada = autorizacion;
-      this.apellido = autorizacion.apellido;
-      this.nombre = autorizacion.nombre;
-      this.dni = autorizacion.dni;
+      this.profesional_tipo = autorizacion.profesional_tipo;
+      this.profesional_interno = autorizacion.profesional_interno._id;
+      this.profesional_externo = autorizacion.profesional_externo._id;
+      this.medicamento = autorizacion.medicamento._id;
+      this.cantidad = autorizacion.cantidad;
+      this.diagnostico = autorizacion.diagnostico;
     }
 
     this.showModalAutorizacion = true;
@@ -123,8 +145,8 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
       )
     .subscribe( ({ autorizaciones }) => {
       this.autorizaciones = autorizaciones;
-      console.log(autorizaciones);
       this.showModalAutorizacion = false;
+      this.reiniciarFormulario();
       this.alertService.close();
     }, (({error}) => {
       this.alertService.errorApi(error.msg);
@@ -133,19 +155,44 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
 
   // Nueva autorizacion
   nuevaAutorizacion(): void {
+    
+    // -- Verificaciones
+    
+    // Cantidad
+    if(this.cantidad <= 0){
+      this.alertService.info('Debe colocar una cantidad válida');
+      return;
+    }
 
-    // Verificacion: Descripción vacia
-    if(this.apellido.trim() === "" || this.nombre.trim() === ""){
-      this.alertService.info('Debes completar los datos obligatorios');
+    // Profesional interno
+    if(this.profesional_tipo === 'Interno' && this.profesional_interno === ''){
+      this.alertService.info('Debe seleccionar un médico interno');
+      return;
+    }
+
+    // Profesional externo
+    if(this.profesional_tipo === 'Externo' && this.profesional_externo === ''){
+      this.alertService.info('Debe seleccionar un médico externo');
+      return;
+    }
+
+    // Medicamento
+    if(this.medicamento === ''){
+      this.alertService.info('Debe seleccionar un medicamento');
       return;
     }
 
     this.alertService.loading();
 
+
     const data = {
-      apellido: this.apellido,
-      nombre: this.nombre,
-      dni: this.dni,
+      ficha: this.idFicha,
+      profesional_tipo: this.profesional_tipo,
+      profesional_externo: this.profesional_tipo === 'Externo' ? this.profesional_externo : '000000000000000000000000',
+      profesional_interno: this.profesional_tipo === 'Interno' ? this.profesional_interno : '000000000000000000000000',
+      cantidad: this.cantidad,
+      medicamento: this.medicamento,
+      diagnostico: this.diagnostico,
       creatorUser: this.authService.usuario.userId,
       updatorUser: this.authService.usuario.userId,
     }
@@ -161,18 +208,41 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
   // Actualizar autorizacion
   actualizarAutorizacion(): void {
 
-    // Verificacion: Descripción vacia
-    if(this.apellido.trim() === "" || this.nombre.trim() === ""){
-      this.alertService.info('Debes completar los campos obligatorios');
+    // Cantidad
+    if(this.cantidad <= 0){
+      this.alertService.info('Debe colocar una cantidad válida');
+      return;
+    }
+
+    // Profesional interno
+    if(this.profesional_tipo === 'Interno' && this.profesional_interno === ''){
+      this.alertService.info('Debe seleccionar un médico interno');
+      return;
+    }
+
+    // Profesional externo
+    if(this.profesional_tipo === 'Externo' && this.profesional_externo === ''){
+      this.alertService.info('Debe seleccionar un médico externo');
+      return;
+    }
+
+    // Medicamento
+    if(this.medicamento === ''){
+      this.alertService.info('Debe seleccionar un medicamento');
       return;
     }
 
     this.alertService.loading();
 
     const data = {
-      apellido: this.apellido,
-      nombre: this.nombre,
-      dni: this.dni,
+      ficha: this.idFicha,
+      profesional_tipo: this.profesional_tipo,
+      profesional_externo: this.profesional_tipo === 'Externo' ? this.profesional_externo : '000000000000000000000000',
+      profesional_interno: this.profesional_tipo === 'Interno' ? this.profesional_interno : '000000000000000000000000',
+      cantidad: this.cantidad,
+      medicamento: this.medicamento,
+      diagnostico: this.diagnostico,
+      creatorUser: this.authService.usuario.userId,
       updatorUser: this.authService.usuario.userId,
     }
 
@@ -204,11 +274,20 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
 
   }
 
+  // Reiniciar Internos/Externos
+  reiniciarInternosExternos(): void {
+    this.profesional_externo = '';
+    this.profesional_interno = '';
+  }
+
   // Reiniciando formulario
   reiniciarFormulario(): void {
-    this.apellido = '';
-    this.nombre = '';  
-    this.dni = '';  
+    this.profesional_tipo = 'Interno';
+    this.profesional_interno = '';
+    this.profesional_externo = '';
+    this.medicamento = '';
+    this.cantidad = null;
+    this.diagnostico = '';
   }
 
   // Filtrar Activo/Inactivo

@@ -10,6 +10,7 @@ import { FiltroTipoMedicoPipe } from './filtro-tipo-medico.pipe';
 import { FiltroTurnosPipe } from './filtro-turnos.pipe';
 import { FiltroMedicamentosPipe } from './filtro-medicamentos.pipe';
 import { FiltroMedicosExternosPipe } from './filtro-medicos-externos.pipe';
+import { FiltroAutorizacionesPipe } from './filtro-autorizaciones.pipe';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FiltroMedicosExternosPipe } from './filtro-medicos-externos.pipe';
     FiltroTurnosPipe,
     FiltroMedicamentosPipe,
     FiltroMedicosExternosPipe,
+    FiltroAutorizacionesPipe,
   ],
   imports: [
     CommonModule
@@ -37,7 +39,8 @@ import { FiltroMedicosExternosPipe } from './filtro-medicos-externos.pipe';
     FiltroTipoMedicoPipe,
     FiltroTurnosPipe,
     FiltroMedicamentosPipe,
-    FiltroMedicosExternosPipe
+    FiltroMedicosExternosPipe,
+    FiltroAutorizacionesPipe
   ]
 })
 export class PipesModule { }

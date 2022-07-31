@@ -52,4 +52,17 @@ export class AutorizacionesMedicamentosService {
     })
   }
 
+  // Calculos iniciales
+  calculosIniciales(direccion : number = -1, columna: string = 'createdAt', ficha: string = ''): Observable<any>{
+    return this.http.get(`${base_url}/autorizaciones-medicamentos/calculos-iniciales/${ficha}`, {
+      params: {
+        direccion: String(direccion),
+        columna
+      },
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }  
+    })
+  }
+
 }

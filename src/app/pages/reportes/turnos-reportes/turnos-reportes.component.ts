@@ -69,7 +69,7 @@ export class TurnosReportesComponent implements OnInit {
     this.usuarioService.listarUsuarios().subscribe({
       next: ({usuarios}) => {
         this.profesionales = usuarios.filter(usuario => usuario.role === 'DOCTOR_ROLE');
-        this.operadores = usuarios.filter(usuario => usuario.role !== 'DOCTOR_ROLE');
+        this.operadores = usuarios.filter(usuario => usuario.role !== 'DOCTOR_ROLE' && usuario._id !== '000000000000000000000000');
         this.alertService.close();
       },
       error: ({error}) => this.alertService.errorApi(error.message)

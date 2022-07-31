@@ -7,14 +7,18 @@
             <div *ngIf="authService.usuario.role === 'DOCTOR_ROLE'" class="bg-green-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-green-200">
                 <p class="text-3xl font-semibold text-green-800"> M </p>
             </div>
+            <div *ngIf="authService.usuario.role === 'MEDICAMENTOS_ROLE'" class="bg-yellow-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-yellow-200">
+                <p class="text-3xl font-semibold text-yellow-800"> Mr </p>
+            </div>
             <div *ngIf="authService.usuario.role === 'ADMINISTRATIVE_ROLE'" class="bg-orange-100 flex items-center justify-center w-14 h-14 rounded-full shadow border border-orange-200">
                 <p class="text-3xl font-semibold text-orange-800"> A </p>
             </div>
             <div class='ml-2 mt-2'>
-                <p class="capitalize text-sm font-semibold"> {{ authService.usuario.apellido.toLowerCase() + ' ' + authService.usuario.nombre.toLowerCase() }} </p>
+                <p class="text-sm font-semibold capitalize"> {{ authService.usuario.apellido.toLowerCase() + ' ' + authService.usuario.nombre.toLowerCase() }} </p>
                 <p *ngIf="authService.usuario.role === 'ADMIN_ROLE'" class="capitalize text-sm"> Root </p>
                 <p *ngIf="authService.usuario.role === 'ADMINISTRATIVE_ROLE'" class="capitalize text-sm"> Administrativo </p>
                 <p *ngIf="authService.usuario.role === 'DOCTOR_ROLE'" class="capitalize text-sm"> Médico </p>
+                <p *ngIf="authService.usuario.role === 'MEDICAMENTOS_ROLE'" class="text-sm"> Maestro de recetas </p>
             </div>
         </div>
         <button (click)="this.dataService.showMenu = false" class="p-2 lg:hidden focus:outline-none focus:bg-gray-600 rounded-md">

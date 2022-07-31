@@ -13,12 +13,17 @@
                 <div *ngIf="usuarioLogin?.role === 'DOCTOR_ROLE'" class="bg-green-100 mr-auto ml-auto rounded-full flex items-center justify-center w-24 h-24 shadow border border-green-200">
                     <p class="text-4xl font-semibold text-green-800"> M </p>
                 </div>
+                <div *ngIf="usuarioLogin?.role === 'MEDICAMENTOS_ROLE'" class="bg-yellow-100 mr-auto ml-auto rounded-full flex items-center justify-center w-24 h-24 shadow border border-yellow-200">
+                    <p class="text-4xl font-semibold text-yellow-800"> Mr </p>
+                </div>
                 <div *ngIf="usuarioLogin?.role === 'ADMINISTRATIVE_ROLE'" class="bg-orange-100 mr-auto ml-auto flex items-center justify-center w-24 h-24 rounded-full shadow border border-orange-200">
                     <p class="text-4xl font-semibold text-orange-800"> A </p>
                 </div>
                 <p *ngIf="usuarioLogin?.role === 'ADMIN_ROLE'" class="mt-1 text-sm text-blue-800"> Usuario root </p>
                 <p *ngIf="usuarioLogin?.role === 'DOCTOR_ROLE'" class="mt-1 text-sm text-green-800"> Usuario médico </p>
                 <p *ngIf="usuarioLogin?.role === 'ADMINISTRATIVE_ROLE'" class="mt-1 text-sm text-orange-800"> Usuario administrativo </p>
+                <p *ngIf="usuarioLogin?.role === 'MEDICAMENTOS_ROLE'" class="mt-1 text-sm text-yellow-800"> Usuario maestro de recetas </p>
+
             </div>
 
             <!-- Datos de usuario -->

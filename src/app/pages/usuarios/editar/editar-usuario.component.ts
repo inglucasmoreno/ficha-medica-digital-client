@@ -47,6 +47,7 @@ export class EditarUsuarioComponent implements OnInit {
     fichas: 'FICHAS_NOT_ACCESS',
     buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
     turnos: 'TURNOS_NOT_ACCESS',
+    medicamentos: 'MEDICAMENTOS_NOT_ACCESS',
     reportes: 'REPORTES_NOT_ACCESS',
   };
 
@@ -157,6 +158,9 @@ export class EditarUsuarioComponent implements OnInit {
 
       // Turnos
       (permiso === 'TURNOS_ALL' || permiso === "TURNOS_READ") ? this.permisos.turnos = permiso : null;
+
+      // Medicamentos
+      (permiso === 'MEDICAMENTOS_ALL' || permiso === "MEDICAMENTOS_READ") ? this.permisos.medicamentos = permiso : null;
 
       // Reportes
       (permiso === 'REPORTES_ALL' || permiso === "REPORTES_READ") ? this.permisos.reportes = permiso : null;
@@ -273,6 +277,12 @@ export class EditarUsuarioComponent implements OnInit {
       permisos.push(this.permisos.turnos);
     }
 
+    // Seccion medicamentos
+    if(this.permisos.medicamentos !== 'MEDICAMENTOS_NOT_ACCESS'){
+      permisos.push('MEDICAMENTOS_NAV');
+      permisos.push(this.permisos.medicamentos);
+    }
+
     // Seccion reportes
     if(this.permisos.reportes !== 'REPORTES_NOT_ACCESS'){
       permisos.push('REPORTES_NAV');
@@ -295,6 +305,7 @@ export class EditarUsuarioComponent implements OnInit {
         fichas: 'FICHAS_ALL',
         buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
         turnos: 'TURNOS_ALL',
+        medicamentos: 'MEDICAMENTOS_NOT_ACCESS',
         reportes: 'REPORTES_NOT_ACCESS'
       }
     }else if(role === 'DOCTOR_ROLE'){
@@ -304,6 +315,17 @@ export class EditarUsuarioComponent implements OnInit {
         fichas: 'FICHAS_READ',
         buscador_fichas: 'BUSCADOR_FICHAS_ALL',
         turnos: 'TURNOS_NOT_ACCESS',
+        medicamentos: 'MEDICAMENTOS_NOT_ACCESS',
+        reportes: 'REPORTES_NOT_ACCESS'
+      }
+    }else if(role === 'MEDICAMENTOS_ROLE'){
+      this.permisos = {
+        usuarios: 'USUARIOS_NOT_ACCESS',
+        tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
+        fichas: 'FICHAS_NOT_ACCESS',
+        buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
+        turnos: 'TURNOS_NOT_ACCESS',
+        medicamentos: 'MEDICAMENTOS_ALL',
         reportes: 'REPORTES_NOT_ACCESS'
       }
     }

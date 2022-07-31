@@ -26,6 +26,7 @@ import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { MedicamentosAutorizacionesComponent } from './medicamentos/medicamentos-autorizaciones.component';
 import { MedicamentosAutorizacionesDetallesComponent } from './medicamentos/medicamentos-autorizaciones-detalles.component';
 import { MedicosExternosComponent } from './medicos-externos/medicos-externos.component';
+import { AutorizacionesMedicamentosComponent } from './reportes/autorizaciones-medicamentos/autorizaciones-medicamentos.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { MedicosExternosComponent } from './medicos-externos/medicos-externos.co
     MedicamentosAutorizacionesComponent,
     MedicamentosAutorizacionesDetallesComponent,
     MedicosExternosComponent,
+    AutorizacionesMedicamentosComponent,
   ],
   imports: [
     CommonModule,
