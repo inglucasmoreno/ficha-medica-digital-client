@@ -6,6 +6,7 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { MedicosExternosService } from '../../../services/medicos-externos.service';
 import { MedicamentosService } from '../../../services/medicamentos.service';
 import { AutorizacionesMedicamentosService } from 'src/app/services/autorizaciones-medicamentos.service';
+import { FichasService } from 'src/app/services/fichas.service';
 
 @Component({
   selector: 'app-autorizaciones-medicamentos',
@@ -31,6 +32,7 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private alertService: AlertService,
+              private fichasService: FichasService,
               private usuariosService: UsuariosService,
               private medicosExternosService: MedicosExternosService,
               private medicamentosService: MedicamentosService,
@@ -42,6 +44,7 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
     this.calculosIniciales();
   }
 
+  // Calculos iniciales
   calculosIniciales(): void {
     this.alertService.loading();
     this.medicamentosService.listarMedicamentos(1, 'descripcion').subscribe({
@@ -63,6 +66,28 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
       },
       error: ({error}) => this.alertService.errorApi(error.message) 
     })
+  }
+
+  // buscar paciente
+  buscarPaciente(): void {
+    if(this.pacienteDNI !== ''){
+      this.alertService.loading();
+      this.fichasService.getFichaPorDNI(this.pacienteDNI).subscribe({
+        next: ({ficha}) => {
+          this.pacienteSeleccionado = ficha;
+          this.alertService.close();
+        },
+        error: ({error}) => this.alertService.errorApi(error.message)
+      });
+    }else{
+      this.alertService.info('Debe colocar el DNI del paciente');
+    }
+  }
+
+  // Eliminar seleccionado
+  eliminarPacienteSeleccionado(): void {
+    this.pacienteSeleccionado = null;
+    this.pacienteDNI = '';
   }
 
 }

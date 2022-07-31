@@ -141,7 +141,8 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
   listarAutorizaciones(): void {
     this.autorizacionesMedicamentosService.listarAutorizaciones( 
       this.ordenar.direccion,
-      this.ordenar.columna
+      this.ordenar.columna,
+      this.ficha = this.idFicha
       )
     .subscribe( ({ autorizaciones }) => {
       this.autorizaciones = autorizaciones;

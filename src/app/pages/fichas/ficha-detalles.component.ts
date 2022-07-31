@@ -6,6 +6,7 @@ import { AlergiasService } from 'src/app/services/alergias.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { AntecedentesService } from 'src/app/services/antecedentes.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { AutorizacionesMedicamentosService } from 'src/app/services/autorizaciones-medicamentos.service';
 import { CirugiasService } from 'src/app/services/cirugias.service';
 import { DataService } from 'src/app/services/data.service';
 import { EstudiosService } from 'src/app/services/estudios.service';
@@ -26,6 +27,10 @@ export class FichaDetallesComponent implements OnInit {
   
   // Edad del paciente
   public edad;
+
+  // Autorizaciones de medicamentos
+  public autorizaciones: any[] = [];
+  public showModalMedicamentos = false;
 
   // Modals - Creacion
   public showModalFicha = false;
@@ -117,12 +122,19 @@ export class FichaDetallesComponent implements OnInit {
 		columna: 'createdAt'
 	}
 
+  // Ordenar autorizaciones
+	public ordenarAutorizaciones = {
+		direccion: -1,  // Asc (1) | Desc (-1)
+		columna: 'createdAt'
+	}
+
   constructor(private activatedRoute: ActivatedRoute,
               public authService: AuthService,
               private dataService: DataService,
               private notasConsultaService: NotasConsultaService,
               private alergiasService: AlergiasService,
               private turnosService: TurnosService,
+              private autorizacionesMedicamentosService: AutorizacionesMedicamentosService,
               private antecedentesService: AntecedentesService,
               private cirugiasService: CirugiasService,
               private estudiosService: EstudiosService,
@@ -198,28 +210,28 @@ export class FichaDetallesComponent implements OnInit {
             this.ordenar.direccionAntecedentes,
             this.ordenar.columnaAntecedentes
             ).subscribe({
-              next: ({antecedentes}) => {
+              next: ({antecedentes}) => { // Antecedentes
               this.antecedentes = antecedentes;
               this.alergiasService.getAlergiasPorFicha(
                 this.idFicha, 
                 this.ordenar.direccionAntecedentes,
                 this.ordenar.columnaAntecedentes
                 ).subscribe({
-                next: ({alergias}) => {
+                next: ({alergias}) => {   // Alergias
                   this.alergias = alergias;
                   this.cirugiasService.getCirugiasPorFicha(
                     this.idFicha, 
                     this.ordenar.direccionAlergias,
                     this.ordenar.columnaAlergias
                     ).subscribe({
-                    next: ({cirugias}) => {
+                    next: ({cirugias}) => {   // Cirugias
                       this.cirugias = cirugias;
                       this.estudiosService.getEstudiosPorFicha(
                         this.idFicha, 
                         this.ordenar.direccionCirugias,
                         this.ordenar.columnaCirugias
                         ).subscribe({
-                        next: ({estudios}) => {
+                        next: ({estudios}) => {  // Estudios
                           this.estudios = estudios;
                           this.alertService.close();
                         },
@@ -687,6 +699,22 @@ export class FichaDetallesComponent implements OnInit {
     this.turnos = [];
     this.buscarTurnos();
   }
+
+  // Listar autorizaciones de medicamentos
+  abrirModalMedicamentos(): void {
+    this.alertService.loading();
+    this.autorizacionesMedicamentosService.listarAutorizaciones(
+      this.ordenarAutorizaciones.direccion,
+      this.ordenarAutorizaciones.columna,
+    ).subscribe({
+      next: ({autorizaciones}) => {
+        this.autorizaciones = autorizaciones;
+        this.showModalMedicamentos = true;
+        this.alertService.close();
+      },
+      error: ({error}) => this.alertService.errorApi(error.message)
+    })
+  }
   
 
   // Reiniciar formularios
@@ -746,6 +774,13 @@ export class FichaDetallesComponent implements OnInit {
     this.ordenarTurnos.columna = columna;
     this.ordenarTurnos.direccion = this.ordenarTurnos.direccion == 1 ? -1 : 1;
     this.buscarTurnos();
+  }
+
+  // Ordenar por columna autorizaciones
+  ordenarPorColumnaAutorizaciones(columna: string){
+    this.ordenarAutorizaciones.columna = columna;
+    this.ordenarAutorizaciones.direccion = this.ordenarAutorizaciones.direccion == 1 ? -1 : 1;
+    this.abrirModalMedicamentos();
   }
 
 }

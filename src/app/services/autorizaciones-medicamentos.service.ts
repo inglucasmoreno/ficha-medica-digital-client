@@ -26,7 +26,8 @@ export class AutorizacionesMedicamentosService {
     return this.http.get(`${base_url}/autorizaciones-medicamentos`, {
       params: {
         direccion: String(direccion),
-        columna
+        columna,
+        ficha
       },
       headers: {
         'Authorization': localStorage.getItem('token')
