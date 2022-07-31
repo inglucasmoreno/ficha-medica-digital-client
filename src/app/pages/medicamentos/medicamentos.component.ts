@@ -67,24 +67,14 @@ constructor(private medicamentosService: MedicamentosService,
     this.descripcion = '';
     this.idMedicamento = '';
     
-    if(estado === 'editar') this.getMedicamento(medicamento);
-    else this.showModalMedicamento = true;
+    if(estado === 'editar'){
+      this.medicamentoSeleccionado = medicamento;
+      this.descripcion = medicamento.descripcion;
+    }
+
+    this.showModalMedicamento = true;
 
     this.estadoFormulario = estado;  
-  }
-
-  // Traer datos de medicamento
-  getMedicamento(medicamento: any): void {
-    this.alertService.loading();
-    this.idMedicamento = medicamento._id;
-    this.medicamentoSeleccionado = medicamento;
-    this.medicamentosService.getMedicamento(medicamento._id).subscribe(({medicamento}) => {
-      this.descripcion = medicamento.descripcion;
-      this.alertService.close();
-      this.showModalMedicamento = true;
-    },({error})=>{
-      this.alertService.errorApi(error);
-    });
   }
 
   // Listar medicamento
@@ -143,7 +133,7 @@ constructor(private medicamentosService: MedicamentosService,
       updatorUser: this.authService.usuario.userId,
     }
 
-    this.medicamentosService.actualizarMedicamento(this.idMedicamento, data).subscribe(() => {
+    this.medicamentosService.actualizarMedicamento(this.medicamentoSeleccionado._id, data).subscribe(() => {
       this.listarMedicamentos();
     },({error})=>{
       this.alertService.errorApi(error.message);

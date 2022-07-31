@@ -23,6 +23,8 @@ import { DiasLaboralesComponent } from './reportes/dias-laborales/dias-laborales
 import { TurnosReportesComponent } from './reportes/turnos-reportes/turnos-reportes.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { MedicamentosAutorizacionesComponent } from './medicamentos/medicamentos-autorizaciones.component';
+import { MedicamentosAutorizacionesDetallesComponent } from './medicamentos/medicamentos-autorizaciones-detalles.component';
+import { MedicosExternosComponent } from './medicos-externos/medicos-externos.component';
 
 const routes: Routes = [
     {
@@ -55,9 +57,14 @@ const routes: Routes = [
             { path: 'turnos', data: { permisos: 'TURNOS_NAV' }, canActivate: [PermisosGuard], component: TurnosComponent },
             { path: 'turnos/detalles/:id', data: { permisos: 'TURNOS_NAV' }, canActivate: [PermisosGuard], component: TurnosDetallesComponent },
 
+            // Medicos externos
+            { path: 'medicos-externos', data: { permisos: 'MEDICOS_EXTERNOS_NAV' }, canActivate: [PermisosGuard], component: MedicosExternosComponent },
+
             // Medicamentos
             { path: 'medicamentos/listado', data: { permisos: 'MEDICAMENTOS_NAV' }, canActivate: [PermisosGuard], component: MedicamentosComponent },
             { path: 'medicamentos/autorizaciones', data: { permisos: 'MEDICAMENTOS_NAV' }, canActivate: [PermisosGuard], component: MedicamentosAutorizacionesComponent },
+            { path: 'medicamentos/autorizaciones/detalles/:id', data: { permisos: 'MEDICAMENTOS_NAV' }, canActivate: [PermisosGuard], component: MedicamentosAutorizacionesDetallesComponent },
+            { path: 'medicamentos/medicos-externos', data: { permisos: 'MEDICAMENTOS_NAV' }, canActivate: [PermisosGuard], component: MedicosExternosComponent },
 
             // Reportes
             { path: 'reportes/dias-laborales', data: { permisos: 'REPORTES_NAV' }, canActivate: [PermisosGuard], component: DiasLaboralesComponent },

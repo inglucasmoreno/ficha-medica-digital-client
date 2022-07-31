@@ -1,1 +1,10 @@
-<p>medicamentos-autorizaciones works!</p>
+<div class="flex gsap-contenido items-center justify-center">
+  <div class="p-5 w-full flex flex-col items-center pt-10 sap-contenido"> 
+    <h1 class="text-center text-3xl md:text-5xl"> Autorización de medicamentos </h1>
+    <div class="max-w-2xl flex flex-col items-center justify-center">
+      <input (keyup.enter)="buscarPaciente()" [(ngModel)]="dniPaciente" type="text" placeholder="DNI de paciente" class="px-2 py-3 border text-center border-gray-400 rounded shadow mt-10 focus:outline-none w-1/2 text-xl">
+      <button (click)="buscarPaciente()" class="mt-10 p-2 py-3  text-2xl w-1/2 focus:outline-none bg-secondaryColor rounded text-white"> Buscar </button>  
+      <img class="mt-10" class="w-1/2 mt-6" src="assets/img/autorizaciones-medicamentos/autorizaciones.svg" alt="buscar-ficha.img">  
+    </div>
+  </div> 
+</div>

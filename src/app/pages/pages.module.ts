@@ -24,6 +24,8 @@ import { DiasLaboralesComponent } from './reportes/dias-laborales/dias-laborales
 import { TurnosReportesComponent } from './reportes/turnos-reportes/turnos-reportes.component';
 import { MedicamentosComponent } from './medicamentos/medicamentos.component';
 import { MedicamentosAutorizacionesComponent } from './medicamentos/medicamentos-autorizaciones.component';
+import { MedicamentosAutorizacionesDetallesComponent } from './medicamentos/medicamentos-autorizaciones-detalles.component';
+import { MedicosExternosComponent } from './medicos-externos/medicos-externos.component';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { MedicamentosAutorizacionesComponent } from './medicamentos/medicamentos
     TurnosReportesComponent,
     MedicamentosComponent,
     MedicamentosAutorizacionesComponent,
+    MedicamentosAutorizacionesDetallesComponent,
+    MedicosExternosComponent,
   ],
   imports: [
     CommonModule,
