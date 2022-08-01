@@ -14,7 +14,7 @@
       
   <!-- Tabla de autorizaciones -->
   <div class="mb-5 rounded-t px-4 mt-4">
-    <input *ngIf="autorizaciones?.length > 0" placeholder="Buscar" [(ngModel)]="filtroAutorizacion.parametro" class="p-2 focus:outline-none rounded border border-gray-400 w-max"/>
+    <input *ngIf="autorizaciones?.length > 0" placeholder="Buscar" [(ngModel)]="filtroAutorizacion.parametro" class="p-2 text-sm focus:outline-none rounded border border-gray-400 w-max"/>
     <div *ngIf="autorizaciones?.length > 0" class="py-2 mt-2 overflow-x-auto">
         <div class="inline-block overflow-y-auto max-h-80 min-w-full overflow-hidden">
             <table class="min-w-full leading-normal">
