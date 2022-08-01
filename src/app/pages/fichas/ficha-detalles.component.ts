@@ -110,17 +110,22 @@ export class FichaDetallesComponent implements OnInit {
     columnaEstudios: 'createdAt'
 	}
 
-    // Filtrado de turnos
+  // Filtrado de turnos
 	public filtroTurnos = {
 		estado: '',
 		parametro: ''
 	}
 
-    // Ordenar turnos
+  // Ordenar turnos
 	public ordenarTurnos = {
 		direccion: -1,  // Asc (1) | Desc (-1)
 		columna: 'createdAt'
 	}
+
+  // Filtrado de autorizacion
+  public filtroAutorizacion = {
+    parametro: ''
+  }
 
   // Ordenar autorizaciones
 	public ordenarAutorizaciones = {
@@ -706,6 +711,7 @@ export class FichaDetallesComponent implements OnInit {
     this.autorizacionesMedicamentosService.listarAutorizaciones(
       this.ordenarAutorizaciones.direccion,
       this.ordenarAutorizaciones.columna,
+      this.idFicha
     ).subscribe({
       next: ({autorizaciones}) => {
         this.autorizaciones = autorizaciones;

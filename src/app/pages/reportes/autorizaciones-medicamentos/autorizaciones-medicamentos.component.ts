@@ -18,7 +18,9 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
 
   public pacienteSeleccionado = null;
   public pacienteDNI = '';
-  
+  public autorizaciones:any[] = [];
+  public showModalMedicamentos = false;
+
   // Formulario
   public profesional_tipo = '';
   public profesional_interno = '';
@@ -29,6 +31,17 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
   public medicamentos: any[] = [];
   public medicosExternos: any[] = [];
   public medicosInternos: any[] = [];
+
+  // Filtrado de autorizacion
+  public filtroAutorizacion = {
+    parametro: ''
+  }
+
+  // Ordenar autorizaciones
+	public ordenarAutorizaciones = {
+		direccion: -1,  // Asc (1) | Desc (-1)
+		columna: 'createdAt'
+	}
 
   constructor(private dataService: DataService,
               private alertService: AlertService,
@@ -84,10 +97,38 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
     }
   }
 
+  // Buscar autorizaciones
+  buscarAutorizaciones(): void {
+    this.alertService.loading();
+    this.autorizacionesMedicamentosService.listarAutorizaciones(
+      this.ordenarAutorizaciones.direccion,
+      this.ordenarAutorizaciones.columna,
+      this.pacienteSeleccionado ? this.pacienteSeleccionado._id : '',
+      this.medicamento,
+      this.profesional_tipo,
+      this.profesional_interno,
+      this.profesional_externo,
+    ).subscribe({
+      next: ({autorizaciones}) => {
+        this.autorizaciones = autorizaciones;
+        this.showModalMedicamentos = true;
+        this.alertService.close();
+      },
+      error: ({error}) => this.alertService.errorApi(error.message)
+    });
+  }
+
   // Eliminar seleccionado
   eliminarPacienteSeleccionado(): void {
     this.pacienteSeleccionado = null;
     this.pacienteDNI = '';
+  }
+
+  // Ordenar por columna autorizaciones
+  ordenarPorColumnaAutorizaciones(columna: string){
+    this.ordenarAutorizaciones.columna = columna;
+    this.ordenarAutorizaciones.direccion = this.ordenarAutorizaciones.direccion == 1 ? -1 : 1;
+    this.buscarAutorizaciones();
   }
 
 }

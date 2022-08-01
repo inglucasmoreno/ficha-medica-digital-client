@@ -22,12 +22,24 @@ export class AutorizacionesMedicamentosService {
   }
   
   // Listado de autorizaciones
-  listarAutorizaciones( direccion : number = -1, columna: string = 'createdAt', ficha: string = '' ): Observable<any>{
+  listarAutorizaciones( 
+    direccion : number = -1, 
+    columna: string = 'createdAt', 
+    ficha: string = '',
+    medicamento: string = '',
+    tipo_profesional: string = '',
+    profesional_interno = '',
+    profesional_externo = '',
+    ): Observable<any>{
     return this.http.get(`${base_url}/autorizaciones-medicamentos`, {
       params: {
         direccion: String(direccion),
         columna,
-        ficha
+        ficha,
+        medicamento,
+        tipo_profesional,
+        profesional_interno,
+        profesional_externo,
       },
       headers: {
         'Authorization': localStorage.getItem('token')

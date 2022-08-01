@@ -56,7 +56,7 @@
             <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
                 <p class="font-semibold text-sm"> Usuario creador </p>
                 <div class="border text-sm capitalize mt-2 border-gray-300 rounded p-2 bg-gray-100">
-                    {{ autorizacionSeleccionada.creatorUser.apellido.toLowerCase() }} {{ autorizacionSeleccionada.creatorUser.nombre.toLowerCase() }}
+                    {{ autorizacionSeleccionada?.creatorUser?.apellido.toLowerCase() }} {{ autorizacionSeleccionada?.creatorUser?.nombre.toLowerCase() }}
                 </div>
             </div>
         </div> 
@@ -70,7 +70,7 @@
             <div class="xl:ml-4 xl:w-1/2 mt-4 xl:mt-0">
                 <p class="font-semibold text-sm"> Usuario ultima actualización </p>
                 <div class="border text-sm capitalize mt-2 border-gray-300 rounded p-2 bg-gray-100">
-                    {{ autorizacionSeleccionada.updatorUser.apellido.toLowerCase() }} {{ autorizacionSeleccionada.updatorUser.nombre.toLowerCase() }}
+                    {{ autorizacionSeleccionada?.updatorUser?.apellido.toLowerCase() }} {{ autorizacionSeleccionada?.updatorUser?.nombre.toLowerCase() }}
                 </div>
             </div>
         </div>   
@@ -184,27 +184,27 @@
                               <tr class="animate__animated animate__fadeIn" *ngFor="let autorizacion of autorizaciones | filtroAutorizaciones:filtro.parametro | paginate: {itemsPerPage: cantidadItems, currentPage: paginaActual}">
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                       <p class="text-gray-900 w-max whitespace-no-wrap">
-                                          {{ autorizacion.createdAt | fecha }}
+                                          {{ autorizacion?.createdAt | fecha }}
                                       </p>
                                   </td>
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                     <p class="text-gray-900 w-max whitespace-no-wrap capitalize">
-                                        {{ autorizacion.profesional_tipo === 'Interno' ? autorizacion.profesional_interno.apellido.toLowerCase() + ' ' + autorizacion.profesional_interno.nombre.toLowerCase() : autorizacion.profesional_externo.apellido.toLowerCase() + ' ' + autorizacion.profesional_externo.nombre.toLowerCase() }}
+                                        {{ autorizacion?.profesional_tipo === 'Interno' ? autorizacion?.profesional_interno?.apellido.toLowerCase() + ' ' + autorizacion?.profesional_interno?.nombre.toLowerCase() : autorizacion?.profesional_externo?.apellido.toLowerCase() + ' ' + autorizacion?.profesional_externo?.nombre.toLowerCase() }}
                                     </p>
                                   </td>
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                     <p class="text-gray-900 w-max whitespace-no-wrap">
-                                        {{ autorizacion.profesional_tipo }}
+                                        {{ autorizacion?.profesional_tipo }}
                                     </p>
                                   </td>
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                       <p class="text-gray-900 whitespace-no-wrap">
-                                          {{ autorizacion.medicamento.descripcion }}
+                                          {{ autorizacion?.medicamento.descripcion }}
                                       </p>
                                   </td>
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                     <p class="text-gray-900 whitespace-no-wrap text-center">
-                                        {{ autorizacion.cantidad }}
+                                        {{ autorizacion?.cantidad }}
                                     </p>
                                 </td>
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs text-center">

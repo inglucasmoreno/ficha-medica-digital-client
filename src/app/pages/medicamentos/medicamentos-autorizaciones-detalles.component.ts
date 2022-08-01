@@ -142,7 +142,7 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
     this.autorizacionesMedicamentosService.listarAutorizaciones( 
       this.ordenar.direccion,
       this.ordenar.columna,
-      this.ficha = this.idFicha
+      this.idFicha
       )
     .subscribe( ({ autorizaciones }) => {
       this.autorizaciones = autorizaciones;

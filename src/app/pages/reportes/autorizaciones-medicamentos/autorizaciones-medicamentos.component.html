@@ -1,37 +1,146 @@
-<!-- Modal: Reportes de turno -->
 
+<!-- Modal: Autorizaciones de medicamentos -->
+<app-modal-medium [showModal]="showModalMedicamentos">
+
+  <!-- Titulo -->
+  <div class="bg-primary-800 px-3 py-2 rounded-t flex items-center justify-between">
+    <h1 class="text-white text-xl"> Autorizaciones de medicamentos </h1>
+    <button (click)="showModalMedicamentos = false" class="text-white focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>            
+    </button>    
+  </div>
+      
+  <!-- Tabla de autorizaciones -->
+  <div class="mb-5 rounded-t px-4 mt-4">
+    <input *ngIf="autorizaciones?.length > 0" placeholder="Buscar" [(ngModel)]="filtroAutorizacion.parametro" class="p-2 focus:outline-none rounded border border-gray-400 w-max"/>
+    <div *ngIf="autorizaciones?.length > 0" class="py-2 mt-2 overflow-x-auto">
+        <div class="inline-block overflow-y-auto max-h-80 min-w-full overflow-hidden">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr class="bg-gray-100 py-2 border">
+                        <th class="px-5 py-2 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                            <div (click)="ordenarPorColumnaAutorizaciones('createdAt')" class="cursor-pointer flex items-center focus:outline-none">
+                                <span> Fecha </span>
+                                <span class="ml-2 text-gray-600">    
+                                    <svg *ngIf="ordenarAutorizaciones.columna == 'createdAt' && ordenarAutorizaciones.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                    <svg *ngIf="ordenarAutorizaciones.columna == 'createdAt' && ordenarAutorizaciones.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                    <svg *ngIf="ordenarAutorizaciones.columna != 'createdAt'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                          <div (click)="ordenarPorColumnaAutorizaciones('profesional_tipo')" class="cursor-pointer w-max flex items-center focus:outline-none">
+                              <span> Tipo de profesional </span>
+                              <span [(ngModel)]="profesional_tipo" class="ml-2 text-gray-600">    
+                                  <svg *ngIf="ordenarAutorizaciones.columna == 'profesional_tipo' && ordenarAutorizaciones.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                  <svg *ngIf="ordenarAutorizaciones.columna == 'profesional_tipo' && ordenarAutorizaciones.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                  <svg *ngIf="ordenarAutorizaciones.columna != 'profesional_tipo'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                              </span>
+                          </div>
+                        </th>
+                        <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                            <div class="flex items-center focus:outline-none">
+                                <span> Profesional </span>
+                            </div>
+                        </th>
+                        <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                          <div (click)="ordenarPorColumnaAutorizaciones('medicamento.descripcion')" class="cursor-pointer flex items-center focus:outline-none">
+                              <span> Medicamento </span>
+                              <span class="ml-2 text-gray-600">    
+                                  <svg *ngIf="ordenarAutorizaciones.columna == 'medicamento.descripcion' && ordenarAutorizaciones.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                  <svg *ngIf="ordenarAutorizaciones.columna == 'medicamento.descripcion' && ordenarAutorizaciones.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                  <svg *ngIf="ordenarAutorizaciones.columna != 'medicamento.descripcion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                              </span>
+                          </div>
+                        </th>
+                        <th class="px-5 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-800 tracking-wider">
+                          <div (click)="ordenarPorColumnaAutorizaciones('cantidad')" class="cursor-pointer flex items-center justify-center focus:outline-none">
+                              <span> Cantidad </span>
+                              <span class="ml-2 text-gray-600">    
+                                  <svg *ngIf="ordenarAutorizaciones.columna == 'cantidad' && ordenarAutorizaciones.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                  <svg *ngIf="ordenarAutorizaciones.columna == 'cantidad' && ordenarAutorizaciones.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                  <svg *ngIf="ordenarAutorizaciones.columna != 'cantidad'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                              </span>
+                          </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="autorizaciones">
+                    <tr class="animate__animated animate__fadeIn" *ngFor="let autorizacion of autorizaciones |  filtroAutorizaciones:filtroAutorizacion.parametro">
+                        <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                          <p class="text-gray-900 whitespace-no-wrap">
+                              {{ autorizacion?.createdAt | fecha }}
+                          </p>
+                        </td>
+                        <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                          <p class="text-gray-900 whitespace-no-wrap">
+                              {{ autorizacion?.profesional_tipo }}
+                          </p>
+                        </td>
+                        <td class="px-5 border-b border-gray-200 text-xs">
+                          <p class="text-gray-900 whitespace-no-wrap capitalize w-max">
+                            {{ autorizacion?.profesional_tipo === 'Interno' ? autorizacion?.profesional_interno?.apellido.toLowerCase() + ' ' + autorizacion?.profesional_interno?.nombre.toLowerCase() : autorizacion?.profesional_externo?.apellido.toLowerCase() + ' ' + autorizacion?.profesional_externo?.nombre.toLowerCase() }}
+                          </p>
+                        </td>
+                        <td class="px-5 border-b border-gray-200 text-xs">
+                          <p class="text-gray-900 whitespace-no-wrap w-max capitalize">
+                            {{ autorizacion?.medicamento?.descripcion }}
+                          </p>
+                        </td>
+                        <td class="px-5 border-b border-gray-200 text-xs">
+                          <p class="text-gray-900 whitespace-no-wrap text-center capitalize">
+                            {{ autorizacion?.cantidad }}
+                          </p>
+                      </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="autorizaciones?.length === 0">
+        <p class="text-xl text-gray-900 mt-2 border p-2 bg-gray-100 border-gray-300"> No se encontraron autorizaciones </p>   
+    </div>
+  </div>
+</app-modal-medium>  
+  
+
+<!-- Pagina principal -->
 <div class="flex gsap-contenido justify-center w-full mt-10">
   
   <!-- Filtrado de autorizaciones -->
   <div class="border text-sm rounded-t h-full shadow w-1/3">
+
     <div class="bg-primary-800 p-2">
       <h1 class="text-white text-xl text-center"> Filtrado de autorizaciones </h1>
     </div>
+    
     <div class="p-2">
 
         <!-- Tipo de profesional -->
         <div class="mt-2">
         <p class="font-semibold"> Tipo de profesionales </p>
-        <select [(ngModel)]="profesional_tipo" class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
+        <select [(ngModel)]="profesional_tipo" name="profesional_tipo" ngDefaultControl class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
             <option value=""> Todos </option>
-            <option value="Internos"> Internos </option>
-            <option value="Externos"> Externos </option>
+            <option value="Interno"> Internos </option>
+            <option value="Externo"> Externos </option>
         </select>
         </div>
 
         <!-- Profesionales internos -->
-        <div *ngIf="profesional_tipo === 'Internos'" class="mt-2">
+        <div [ngClass]="{'hidden':profesional_tipo !== 'Interno'}" class="mt-2">
             <p class="font-semibold"> Profesionales internos </p>
-            <select [(ngModel)]="profesional_interno" class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
+            <select [(ngModel)]="profesional_interno" name="profesional_interno" ngDefaultControl class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
                 <option value=""> Todos los profesionales internos </option>
                 <option *ngFor="let interno of medicosInternos" [value]="interno._id"> {{ interno.apellido }} {{ interno.nombre }} </option>
             </select>
         </div>
 
         <!-- Profesionales externos -->
-        <div *ngIf="profesional_tipo === 'Externos'" class="mt-2">
+        <div [ngClass]="{'hidden':profesional_tipo !== 'Externo'}"  class="mt-2">
             <p class="font-semibold"> Profesionales externos </p>
-            <select [(ngModel)]="profesional_externo" class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
+            <select [(ngModel)]="profesional_externo" name="profesional_externo" ngDefaultControl name="profesional_tipo"  class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
                 <option value=""> Todos los profesionales externos </option>
                 <option *ngFor="let externo of medicosExternos" [value]="externo._id"> {{ externo.apellido }} {{ externo.nombre }} </option>
             </select>
@@ -40,17 +149,17 @@
         <!-- Medicamentos -->
         <div class="mt-2">
             <p class="font-semibold"> Medicamentos </p>
-            <select [(ngModel)]="medicamento" class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
+            <select [(ngModel)]="medicamento" name="medicamento" ngDefaultControl class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
                 <option value=""> Todos los medicamentos </option>
                 <option *ngFor="let medicamento of medicamentos" [value]="medicamento._id"> {{ medicamento.descripcion }} </option>
             </select>
         </div>
 
-              <!-- Paciente -->
+      <!-- Paciente -->
       <div  class="mt-4">
         <p class="font-semibold"> Paciente </p>
         <div *ngIf="!pacienteSeleccionado" class="flex items-center">
-          <input (keyup.enter)="buscarPaciente()" [(ngModel)]="pacienteDNI" class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded" type="text" placeholder="DNI de paciente">
+          <input (keyup.enter)="buscarPaciente()" name="ficha" ngDefaultControl [(ngModel)]="pacienteDNI" class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded" type="text" placeholder="DNI de paciente">
           <button (click)="buscarPaciente()"  title="Buscar paciente" class="border focus:outline-none border-gray-300 ml-2 mt-2 bg-gray-100 rounded p-2 hover:text-secondaryColor">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -67,7 +176,7 @@
           </div>
       </div>
       
-      <button class="bg-secondaryColor font-semibold text-white p-2 rounded w-full mt-4 mb-2 focus:outline-none shadow">
+      <button (click)="buscarAutorizaciones()" class="bg-secondaryColor font-semibold text-white p-2 rounded w-full mt-4 mb-2 focus:outline-none shadow">
         Generar reporte
       </button>
 
@@ -76,6 +185,5 @@
 
   <!-- Imagen de inicio -->
   <img src="assets/img/autorizaciones-medicamentos/autorizaciones.svg" class="w-1/4 ml-6 mt-10 h-full">
-
 
 </div>

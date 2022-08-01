@@ -11,7 +11,8 @@
       
   <!-- Tabla de autorizaciones -->
   <div class="mb-5 rounded-t px-4 mt-4">
-      <div *ngIf="autorizaciones?.length > 0" class="py-2 overflow-x-auto">
+      <input placeholder="Buscar" [(ngModel)]="filtroAutorizacion.parametro" class="p-2 focus:outline-none rounded border border-gray-400 w-max"/>
+      <div *ngIf="autorizaciones?.length > 0" class="py-2 mt-2 overflow-x-auto">
           <div class="inline-block overflow-y-auto max-h-80 min-w-full overflow-hidden">
               <table class="min-w-full leading-normal">
                   <thead>
@@ -64,7 +65,7 @@
                       </tr>
                   </thead>
                   <tbody *ngIf="autorizaciones">
-                      <tr class="animate__animated animate__fadeIn" *ngFor="let autorizacion of autorizaciones |  filtroAutorizaciones:''">
+                      <tr class="animate__animated animate__fadeIn" *ngFor="let autorizacion of autorizaciones |  filtroAutorizaciones:filtroAutorizacion.parametro">
                           <td class="px-5 py-2 border-b border-gray-200 text-xs">
                               <p class="text-gray-900 whitespace-no-wrap">
                                   {{ autorizacion?.createdAt | fecha }}
