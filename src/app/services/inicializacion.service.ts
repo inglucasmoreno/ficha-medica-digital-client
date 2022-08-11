@@ -24,5 +24,12 @@ export class InicializacionService {
     });
   }
 
+  // Actualizando base de medicamentos
+  importarMedicamentos(formData: any, usuario: string): Observable<any> {
+    return this.http.post(`${base_url}/inicializacion/medicamentos`, formData, {
+      params: { usuario }
+    });
+  }
+
 
 }

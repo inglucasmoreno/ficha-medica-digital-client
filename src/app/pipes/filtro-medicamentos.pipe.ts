@@ -30,7 +30,8 @@ export class FiltroMedicamentosPipe implements PipeTransform {
     
     if(parametro.length !== 0){
       return filtrados.filter( valor => { 
-        return valor.descripcion.toLocaleLowerCase().includes(parametro)
+        return valor.descripcion.toLocaleLowerCase().includes(parametro) ||
+               valor.nombre_comercial.toLocaleLowerCase().includes(parametro)
       });
     }else{
       return filtrados;

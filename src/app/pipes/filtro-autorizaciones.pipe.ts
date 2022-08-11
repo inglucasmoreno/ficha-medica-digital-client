@@ -12,7 +12,8 @@ export class FiltroAutorizacionesPipe implements PipeTransform {
     
     if(parametro.length !== 0){
       return valores.filter( valor => { 
-        return valor.medicamento.descripcion.toLocaleLowerCase().includes(parametro) ||
+        return valor.medicamento.nombre_comercial.toLocaleLowerCase().includes(parametro) ||
+               valor.medicamento.descripcion.toLocaleLowerCase().includes(parametro) ||
                valor.profesional_tipo.toLocaleLowerCase().includes(parametro) ||
                (valor.profesional_interno.apellido.toLocaleLowerCase() + ' ' + valor.profesional_interno.nombre.toLocaleLowerCase()).includes(parametro) ||
                (valor.profesional_interno.nombre.toLocaleLowerCase() + ' ' + valor.profesional_interno.apellido.toLocaleLowerCase()).includes(parametro) ||

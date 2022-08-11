@@ -34,7 +34,7 @@
                 <p class="font-semibold"> <span class="text-red-500"> * </span> Medicamento </p>
                 <select [(ngModel)]="medicamento" class="py-2 px-2 mt-1 border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor outline-none w-full text-gray-800">
                     <option value=""> Seleccionar medicamento </option>
-                    <option *ngFor="let medicamento of medicamentos" [value]="medicamento._id"> {{ medicamento.descripcion }} </option>
+                    <option *ngFor="let medicamento of medicamentos" [value]="medicamento._id"> {{ medicamento.descripcion }} - {{ medicamento.nombre_comercial }}</option>
                 </select>
             </div> 
             <div class="w-1/2 ml-4">
@@ -81,7 +81,7 @@
 </app-modal>
 
 <!-- Listado de autorizaciones -->
-<div class="md:max-w-5xl mx-auto">
+<div class="md:max-w-7xl mx-auto">
     <app-tarjeta-lista>
       <div class="container mx-auto">
           <div>
@@ -156,12 +156,12 @@
                                     </div>
                                   </th>
                                   <th class="px-5 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-900 tracking-wider">
-                                    <div (click)="ordenarPorColumna('medicamento.descripcion')" class="cursor-pointer flex items-center focus:outline-none">
+                                    <div (click)="ordenarPorColumna('medicamento.nombre_comercial')" class="cursor-pointer flex items-center focus:outline-none">
                                         <span> Medicamento </span>
                                         <span class="ml-2 text-gray-600">    
-                                            <svg *ngIf="ordenar.columna == 'medicamento.descripcion' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
-                                            <svg *ngIf="ordenar.columna == 'medicamento.descripcion' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                                            <svg *ngIf="ordenar.columna != 'medicamento.descripcion'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                            <svg *ngIf="ordenar.columna == 'medicamento.nombre_comercial' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                            <svg *ngIf="ordenar.columna == 'medicamento.nombre_comercial' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                            <svg *ngIf="ordenar.columna != 'medicamento.nombre_comercial'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                         </span>
                                     </div>
                                   </th>
@@ -199,7 +199,7 @@
                                   </td>
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                       <p class="text-gray-900 whitespace-no-wrap">
-                                          {{ autorizacion?.medicamento.descripcion }}
+                                        {{ autorizacion?.medicamento.nombre_comercial }} - {{ autorizacion?.medicamento.descripcion }}
                                       </p>
                                   </td>
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">

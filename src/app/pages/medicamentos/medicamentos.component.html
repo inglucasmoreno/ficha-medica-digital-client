@@ -1,3 +1,23 @@
+
+<!-- Modal: Importar medicamentos -->
+<app-modal [showModal]="showModalImportarMedicamentos">
+    <div class="bg-primary-800 px-3 py-2 rounded-t flex items-center justify-between">
+        <h1 class="text-white text-xl"> Importando medicamentos </h1>
+        <button (click)="showModalImportarMedicamentos = false" class="text-white focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>            
+        </button>    
+    </div>
+    <div class="p-2">
+        <p class="text-sm text-gray-500"> <span class="text-red-500"> * </span> El archivo seleccionado debe ser un excel </p>
+        <input [(ngModel)]="file" (change)="capturarArchivo($event)" type="file" class="mt-2 text-sm">
+        <button (click)="importarMedicamentos()" class="bg-secondaryColor focus:outline-none text-sm mt-3 text-white p-2 rounded w-full shadow">
+            Importar medicamentos
+        </button>
+    </div>
+</app-modal>
+
 <!-- Modal: Crear / Editar medicamento -->
 <app-modal [showModal]="showModalMedicamento">
   <div (keyup.enter)="estadoFormulario === 'crear' ? nuevoMedicamento() : actualizarMedicamento()">
@@ -6,8 +26,14 @@
           <svg (click)="showModalMedicamento = false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer feather feather-x text-white mr-2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </div>
       <div class="p-4 text-sm">
-          <p class="font-semibold"> <span class="text-red-500"> * </span> Descripción </p>
-          <input [(ngModel)]="descripcion" class="py-2 mt-1 border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. Paracetamol 500 mg" type="text">
+          <div>
+              <p class="font-semibold"> <span class="text-red-500"> * </span> Nombre comercial </p>
+              <input [(ngModel)]="nombre_comercial" class="py-2 mt-1 border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. ACTIMAX" type="text">
+          </div>
+          <div class="mt-4">
+            <p class="font-semibold"> <span class="text-red-500"> * </span> Descripción </p>
+            <input [(ngModel)]="descripcion" class="py-2 mt-1 border-b-2 border-gray-300 tranform duration-500 focus:border-secondaryColor appearance-none outline-none w-full text-gray-800" placeholder="Ej. alendronato - 70 mg comp.x 8" type="text">
+          </div>
           <div *ngIf="medicamentoSeleccionado && estadoFormulario === 'editar'" class="xl:flex items-center mt-4">
             <div class="xl:w-1/2">
                 <p class="font-semibold text-sm"> Fecha de alta </p>
@@ -43,7 +69,7 @@
 </app-modal>
 
 <!-- Listado de medicamento -->
-<div class="md:max-w-5xl mx-auto">
+<div class="md:max-w-7xl mx-auto">
     <app-tarjeta-lista>
       <div class="container mx-auto">
           <div>
@@ -55,6 +81,11 @@
                       <p> Total de medicamentos: {{ medicamentos.length }} </p>
                   </div>
                   <div *ngIf="permisos.all">
+                    <app-boton-generico *ngIf="authService.usuario.role === 'ADMIN_ROLE'" title="Importar medicamentos" (click)="abrirImportarMedicamentos()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                      </app-boton-generico>
                       <app-boton-generico title="Nuevo medicamento" (click)="abrirModal('crear')">
                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -102,6 +133,16 @@
                       <table class="min-w-full leading-normal">
                           <thead>
                               <tr class="border">
+                                <th class="px-5 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-900 tracking-wider">
+                                    <div (click)="ordenarPorColumna('nombre_comercial')" class="cursor-pointer flex items-center focus:outline-none">
+                                        <span> Nombre comercial </span>
+                                        <span class="ml-2 text-gray-600">    
+                                            <svg *ngIf="ordenar.columna == 'nombre_comercial' && ordenar.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
+                                            <svg *ngIf="ordenar.columna == 'nombre_comercial' && ordenar.direccion == -1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                            <svg *ngIf="ordenar.columna != 'nombre_comercial'" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        </span>
+                                    </div>
+                                </th>
                                   <th class="px-5 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-900 tracking-wider">
                                       <div (click)="ordenarPorColumna('descripcion')" class="cursor-pointer flex items-center focus:outline-none">
                                           <span> Descripción </span>
@@ -143,6 +184,11 @@
                           </thead>
                           <tbody *ngIf="medicamentos">
                               <tr class="animate__animated animate__fadeIn" *ngFor="let medicamento of medicamentos | filtroMedicamentos:filtro.parametro:filtro.activo | paginate: {itemsPerPage: cantidadItems, currentPage: paginaActual}">
+                                  <td class="px-5 py-2 border-b border-gray-200 text-xs">
+                                      <p class="text-gray-900 w-max whitespace-no-wrap">
+                                        {{ medicamento.nombre_comercial }}
+                                      </p>
+                                  </td>                                  
                                   <td class="px-5 py-2 border-b border-gray-200 text-xs">
                                       <p class="text-gray-900 w-max whitespace-no-wrap">
                                           {{ medicamento.descripcion }}

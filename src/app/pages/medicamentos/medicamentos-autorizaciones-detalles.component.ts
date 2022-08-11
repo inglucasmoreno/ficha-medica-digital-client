@@ -159,12 +159,6 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
     
     // -- Verificaciones
     
-    // Cantidad
-    if(this.cantidad <= 0){
-      this.alertService.info('Debe colocar una cantidad válida');
-      return;
-    }
-
     // Profesional interno
     if(this.profesional_tipo === 'Interno' && this.profesional_interno === ''){
       this.alertService.info('Debe seleccionar un médico interno');
@@ -180,6 +174,12 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
     // Medicamento
     if(this.medicamento === ''){
       this.alertService.info('Debe seleccionar un medicamento');
+      return;
+    }
+
+    // Cantidad
+    if(this.cantidad <= 0){
+      this.alertService.info('Debe colocar una cantidad válida');
       return;
     }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { InicializacionService } from 'src/app/services/inicializacion.service';
 import { MedicamentosService } from 'src/app/services/medicamentos.service';
 
 @Component({
@@ -15,8 +16,17 @@ export class MedicamentosComponent implements OnInit {
 // Permisos de usuarios login
 public permisos = { all: false };
 
+// Flag y mensaje de estado
+public flag_fichas_importadas = false;
+public mensaje = '';
+
+// Archivos para importacion
+public file: any;
+public archivoSubir: any;
+
 // Modal
 public showModalMedicamento = false;
+public showModalImportarMedicamentos = false;
 
 // Estado formulario 
 public estadoFormulario = 'crear';
@@ -26,6 +36,7 @@ public idMedicamento: string = '';
 public medicamentos: any = [];
 public medicamentoSeleccionado: any;
 public descripcion: string = '';
+public nombre_comercial: string = '';
 
 // Paginacion
 public paginaActual: number = 1;
@@ -40,11 +51,12 @@ public filtro = {
 // Ordenar
 public ordenar = {
   direccion: 1,  // Asc (1) | Desc (-1)
-  columna: 'descripcion'
+  columna: 'nombre_comercial'
 }
 
 constructor(private medicamentosService: MedicamentosService,
-            private authService: AuthService,
+            private inicializacionService: InicializacionService,
+            public authService: AuthService,
             private alertService: AlertService,
             private dataService: DataService) { }
 
@@ -65,10 +77,12 @@ constructor(private medicamentosService: MedicamentosService,
     window.scrollTo(0,0);
     this.reiniciarFormulario();
     this.descripcion = '';
+    this.nombre_comercial = '';
     this.idMedicamento = '';
     
     if(estado === 'editar'){
       this.medicamentoSeleccionado = medicamento;
+      this.nombre_comercial = medicamento.nombre_comercial;
       this.descripcion = medicamento.descripcion;
     }
 
@@ -96,6 +110,12 @@ constructor(private medicamentosService: MedicamentosService,
   nuevoMedicamento(): void {
 
     // Verificacion: Descripción vacia
+    if(this.nombre_comercial.trim() === ""){
+      this.alertService.info('Debes colocar un nombre comercial');
+      return;
+    }
+
+    // Verificacion: Descripción vacia
     if(this.descripcion.trim() === ""){
       this.alertService.info('Debes colocar una descripción');
       return;
@@ -105,6 +125,7 @@ constructor(private medicamentosService: MedicamentosService,
 
     const data = {
       descripcion: this.descripcion,
+      nombre_comercial: this.nombre_comercial,
       creatorUser: this.authService.usuario.userId,
       updatorUser: this.authService.usuario.userId,
     }
@@ -121,6 +142,12 @@ constructor(private medicamentosService: MedicamentosService,
   actualizarMedicamento(): void {
 
     // Verificacion: Descripción vacia
+    if(this.nombre_comercial.trim() === ""){
+      this.alertService.info('Debes colocar un nombre comercial');
+      return;
+    }
+
+    // Verificacion: Descripción vacia
     if(this.descripcion.trim() === ""){
       this.alertService.info('Debes colocar una descripción');
       return;
@@ -129,6 +156,7 @@ constructor(private medicamentosService: MedicamentosService,
     this.alertService.loading();
 
     const data = {
+      nombre_comercial: this.nombre_comercial,
       descripcion: this.descripcion,
       updatorUser: this.authService.usuario.userId,
     }
@@ -160,6 +188,53 @@ constructor(private medicamentosService: MedicamentosService,
         });
 
   }
+
+  // Capturando archivo de importacion
+  capturarArchivo(event: any): void {
+    if(event.target.files[0]){
+      // Se capatura el archivo
+      this.archivoSubir = event.target.files[0];
+  
+      // Se verifica el formato - Debe ser un excel
+      const formato = this.archivoSubir.type.split('/')[1];
+      const condicion = formato !== 'vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  
+      if(condicion){
+        this.file = null;
+        this.archivoSubir = null;
+        return this.alertService.info('Debes seleccionar un archivo de excel');      
+      }
+    }
+  }
+
+  // Abrir modal de importacion de fichas
+  abrirImportarMedicamentos(): void {
+    this.file = null;
+    this.showModalImportarMedicamentos = true;
+  }
+
+  // Importar medicamentos
+  importarMedicamentos(): void {
+
+    if(!this.file) return this.alertService.info('Debe seleccionar un archivo de excel');
+
+    this.alertService.loading();
+    const formData =  new FormData();
+    formData.append('file', this.archivoSubir); // FormData -> key = 'file' y value = Archivo
+
+    this.inicializacionService.importarMedicamentos(formData, this.authService.usuario.userId).subscribe({
+      next: ({msg}) => {
+        this.mensaje = msg;
+        this.flag_fichas_importadas = true;
+        this.listarMedicamentos();        
+      },
+      error: ({error}) => {
+        this.alertService.errorApi(error.message);
+      }
+    })
+
+  }
+
 
   // Reiniciando formulario
   reiniciarFormulario(): void {

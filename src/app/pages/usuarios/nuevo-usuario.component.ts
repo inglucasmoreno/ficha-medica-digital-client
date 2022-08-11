@@ -192,10 +192,10 @@ export class NuevoUsuarioComponent implements OnInit {
         usuarios: 'USUARIOS_NOT_ACCESS',
         tipo_medico: 'TIPO_MEDICO_NOT_ACCESS',
         fichas: 'FICHAS_ALL',
-        buscador_fichas: 'BUSCADOR_FICHAS_NOT_ACCESS',
+        buscador_fichas: 'BUSCADOR_FICHAS_ALL',
         turnos: 'TURNOS_ALL',
-        medicamentos: 'MEDICAMENTOS_NOT_ACCESS',
-        reportes: 'REPORTES_NOT_ACCESS'   
+        medicamentos: 'MEDICAMENTOS_ALL',
+        reportes: 'REPORTES_ALL'   
       }
     }else if(role === 'DOCTOR_ROLE'){
       this.permisos = {
