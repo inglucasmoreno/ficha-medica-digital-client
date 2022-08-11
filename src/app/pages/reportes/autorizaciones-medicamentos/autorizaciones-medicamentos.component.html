@@ -151,7 +151,7 @@
             <p class="font-semibold"> Medicamentos </p>
             <select [(ngModel)]="medicamento" name="medicamento" ngDefaultControl class="border border-gray-300 p-2 w-full mt-2 focus:outline-none rounded">
                 <option value=""> Todos los medicamentos </option>
-                <option *ngFor="let medicamento of medicamentos" [value]="medicamento._id"> {{ medicamento.descripcion }} </option>
+                <option *ngFor="let medicamento of medicamentos" [value]="medicamento._id"> {{ medicamento.descripcion }} - {{ medicamento.nombre_comercial }} </option>
             </select>
         </div>
 
