@@ -61,6 +61,8 @@ export class FichasComponent implements OnInit {
 	public descripcion: string = '';
 
 	// Paginacion
+  public totalItems: number;
+  public desde: number = 0;
 	public paginaActual: number = 1;
 	public cantidadItems: number = 10;
 
@@ -168,12 +170,16 @@ export class FichasComponent implements OnInit {
   listarFichas(): void {
   this.fichasService.listarFichas(
     this.ordenar.direccion,
-    this.ordenar.columna
+    this.ordenar.columna,
+    this.desde,
+    this.cantidadItems,
+    this.filtro.activo
   )
   .subscribe({
 
-      next: ({ fichas }) => {
+      next: ({ fichas, totalItems }) => {
         this.fichas = fichas;
+        this.totalItems = totalItems;
         this.showModalFicha = false;
 
         if(this.flag_fichas_importadas){
@@ -410,12 +416,6 @@ export class FichasComponent implements OnInit {
     })
   }
 
-  // Filtrar Activo/Inactivo
-  filtrarActivos(activo: any): void{
-    this.paginaActual = 1;
-    this.filtro.activo = activo;
-  }
-
   // Filtrar por Parametro
   filtrarParametro(parametro: string): void{
     this.paginaActual = 1;
@@ -435,6 +435,20 @@ export class FichasComponent implements OnInit {
     this.ordenarTurnos.columna = columna;
     this.ordenarTurnos.direccion = this.ordenarTurnos.direccion == 1 ? -1 : 1;
     this.buscarTurnos();
+  }
+
+  // Cambiar cantidad de items
+  cambiarCantidadItems(): void {
+    this.paginaActual = 1
+    this.cambiarPagina(1);
+  }
+
+  // Paginacion - Cambiar pagina
+  cambiarPagina(nroPagina): void {
+    this.paginaActual = nroPagina;
+    this.desde = (this.paginaActual - 1) * this.cantidadItems;
+    this.alertService.loading();
+    this.listarFichas();
   }
 
 }
