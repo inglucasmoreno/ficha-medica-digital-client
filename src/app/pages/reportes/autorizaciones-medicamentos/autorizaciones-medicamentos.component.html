@@ -41,7 +41,7 @@
                   <thead>
                       <tr class="border">
                           <th class="px-5 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-900 tracking-wider">
-                              <div (click)="ordenarPorColumna('descripcion')" class="cursor-pointer flex items-center focus:outline-none">
+                              <div (click)="ordenarPorColumnaMedicamentos('descripcion')" class="cursor-pointer flex items-center focus:outline-none">
                                   <span> Descripción </span>
                                   <span class="ml-2 text-gray-600">    
                                       <svg *ngIf="ordenarMedicamentos.columna == 'descripcion' && ordenarMedicamentos.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
@@ -51,7 +51,7 @@
                               </div>
                           </th>
                           <th class="px-5 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-900 tracking-wider">
-                              <div (click)="ordenarPorColumna('nombre_comercial')" class="cursor-pointer flex items-center focus:outline-none">
+                              <div (click)="ordenarPorColumnaMedicamentos('nombre_comercial')" class="cursor-pointer flex items-center focus:outline-none">
                                   <span> Nombre comercial </span>
                                   <span class="ml-2 text-gray-600">    
                                       <svg *ngIf="ordenarMedicamentos.columna == 'nombre_comercial' && ordenarMedicamentos.direccion == 1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>                                   
@@ -87,12 +87,12 @@
 
 
 <!-- Modal: Autorizaciones de medicamentos -->
-<app-modal-medium [showModal]="showModalMedicamentos">
+<app-modal-medium [showModal]="showModalAutorizaciones">
 
   <!-- Titulo -->
   <div class="bg-primary-800 px-3 py-2 rounded-t flex items-center justify-between">
     <h1 class="text-white text-xl"> Autorizaciones de medicamentos </h1>
-    <button (click)="showModalMedicamentos = false" class="text-white focus:outline-none">
+    <button (click)="showModalAutorizaciones = false" class="text-white focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>            
@@ -236,7 +236,15 @@
         <!-- Medicamentos -->
         <div class="mt-2">
             <p class="font-semibold"> Medicamentos </p>
-            <button class="mt-2 bg-secondaryColor focus:outline-none text-white shadow rounded w-full font-semibold p-2"> Buscar medicamento </button>
+            <button *ngIf="!medicamentoSeleccionado" (click)="abrirMedicamentos()" class="mt-2 bg-gray-100 hover:text-secondaryColor focus:outline-none border border-gray-300 shadow rounded w-full font-semibold p-2"> Buscar medicamento </button>
+            <div *ngIf="medicamentoSeleccionado" class="flex mt-2 items-center">
+                <div class="bg-green-700 shadow text-xs text-white rounded p-2 text-center"> {{ medicamentoSeleccionado?.nombre_comercial }} </div>
+                <button (click)="medicamentoSeleccionado = null" class="bg-red-500 shadow text-white p-2 font-semibold rounded ml-2 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
         </div>
 
       <!-- Paciente -->

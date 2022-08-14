@@ -20,6 +20,7 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
   public pacienteDNI = '';
   public autorizaciones:any[] = [];
   public showModalMedicamentos = false;
+  public showModalAutorizaciones= false;
 
   // Formulario
   public profesional_tipo = '';
@@ -145,7 +146,7 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
     ).subscribe({
       next: ({autorizaciones}) => {
         this.autorizaciones = autorizaciones;
-        this.showModalMedicamentos = true;
+        this.showModalAutorizaciones = true;
         this.alertService.close();
       },
       error: ({error}) => this.alertService.errorApi(error.message)
@@ -176,6 +177,7 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
   // Seleccionar medicamento
   seleccionarMedicamento(medicamento: any): void {
     this.medicamentoSeleccionado = medicamento;
+    this.medicamento = medicamento._id;
     this.showModalMedicamentos = false;
   }
 
@@ -190,6 +192,13 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
     this.ordenarAutorizaciones.columna = columna;
     this.ordenarAutorizaciones.direccion = this.ordenarAutorizaciones.direccion == 1 ? -1 : 1;
     this.buscarAutorizaciones();
+  }
+
+  // Ordenar por columna medicamentos
+  ordenarPorColumnaMedicamentos(columna: string){
+    this.ordenarMedicamentos.columna = columna;
+    this.ordenarMedicamentos.direccion = this.ordenarMedicamentos.direccion == 1 ? -1 : 1;
+    this.listarMedicamentos();
   }
 
   // Cambiar cantidad de items

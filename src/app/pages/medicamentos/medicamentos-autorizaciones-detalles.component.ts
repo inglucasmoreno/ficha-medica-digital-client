@@ -375,6 +375,14 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
     this.alertService.loading();
     this.listarAutorizaciones();
   }
+
+  // Ordenar por columna medicamentos
+  ordenarPorColumnaMedicamentos(columna: string){
+    this.ordenarMedicamentos.columna = columna;
+    this.ordenarMedicamentos.direccion = this.ordenarMedicamentos.direccion == 1 ? -1 : 1; 
+    this.alertService.loading();
+    this.listarMedicamentos();
+  }
   
   // Cambiar cantidad de items
   cambiarCantidadItems(): void {
