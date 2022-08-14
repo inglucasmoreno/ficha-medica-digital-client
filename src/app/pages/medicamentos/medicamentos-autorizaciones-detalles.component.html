@@ -118,7 +118,7 @@
           <div class="flex items-center mt-4 w-full">
             <div class="w-1/2">
                 <p class="font-semibold"> <span class="text-red-500"> * </span> Medicamento </p>
-                <button *ngIf="!medicamentoSeleccionado" (click)="abrirMedicamentos()" class="bg-indigo-500 mt-2 p-2 w-full rounded focus:outline-none shadow text-white"> Buscar medicamento </button>
+                <button *ngIf="!medicamentoSeleccionado" (click)="abrirMedicamentos()" class="bg-secondaryColor mt-2 p-2 w-full rounded focus:outline-none shadow text-white"> Buscar medicamento </button>
                 <div *ngIf="medicamentoSeleccionado" class="flex mt-2 items-center">
                     <div class="bg-green-700 text-xs text-white rounded p-2 text-center"> {{ medicamentoSeleccionado?.nombre_comercial }} </div>
                     <button (click)="medicamentoSeleccionado = null" class="bg-red-500 text-white p-2 font-semibold rounded ml-2 focus:outline-none">

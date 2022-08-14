@@ -378,7 +378,7 @@ export class MedicamentosAutorizacionesDetallesComponent implements OnInit {
   
   // Cambiar cantidad de items
   cambiarCantidadItems(): void {
-    this.paginaActual = 1
+    this.paginaActualMedicamentos = 1
     this.cambiarPagina(1);
   }
 

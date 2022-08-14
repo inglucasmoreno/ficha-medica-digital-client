@@ -26,6 +26,8 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
   public profesional_interno = '';
   public profesional_externo = '';
   public medicamento = '';
+  public medicamentoSeleccionado = null;
+
 
   // Listados
   public medicamentos: any[] = [];
@@ -37,11 +39,28 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
     parametro: ''
   }
 
+  // Paginacion - Medicamentos
+  public totalItems: number;
+  public desde: number = 0;
+  public paginaActualMedicamentos: number = 1;
+  public cantidadItemsMedicamentos: number = 10;
+
+  // Filtrado medicamentos
+  public filtroMedicamentos = {
+    parametro: ''
+  }
+
   // Ordenar autorizaciones
 	public ordenarAutorizaciones = {
 		direccion: -1,  // Asc (1) | Desc (-1)
 		columna: 'createdAt'
 	}
+
+  // Ordenar
+  public ordenarMedicamentos = {
+    direccion: 1,  // Asc (1) | Desc (-1)
+    columna: 'descripcion'
+  }
 
   constructor(private dataService: DataService,
               private alertService: AlertService,
@@ -55,6 +74,21 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
     this.dataService.ubicacionActual = 'Dashboard - Reporte de medicamentos';
     gsap.from('.gsap-contenido', { y:100, opacity: 0, duration: .2 });
     this.calculosIniciales();
+  }
+
+  // Abrir modal - Medicamentos
+  abrirMedicamentos(): void {
+    this.alertService.loading();
+    this.desde = 0;
+    this.paginaActualMedicamentos = 1;
+    this.cantidadItemsMedicamentos = 10;
+    this.filtroMedicamentos.parametro = '';
+    this.listarMedicamentos();
+  }
+
+  // Cerrar medicamentos
+  cerrarMedicamentos(): void {
+    this.showModalMedicamentos = false;
   }
 
   // Calculos iniciales
@@ -118,6 +152,33 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
     });
   }
 
+
+  // Listar medicamento
+  listarMedicamentos(): void {
+    this.medicamentosService.listarMedicamentos( 
+      this.ordenarMedicamentos.direccion,
+      this.ordenarMedicamentos.columna,
+      this.desde,
+      this.cantidadItemsMedicamentos,
+      'true',
+      this.filtroMedicamentos.parametro
+      )
+    .subscribe( ({ medicamentos, totalItems }) => {
+      this.totalItems = totalItems;
+      this.medicamentos = medicamentos;
+      this.showModalMedicamentos = true;
+      this.alertService.close();
+    }, (({error}) => {
+      this.alertService.errorApi(error.msg);
+    }));
+  }
+
+  // Seleccionar medicamento
+  seleccionarMedicamento(medicamento: any): void {
+    this.medicamentoSeleccionado = medicamento;
+    this.showModalMedicamentos = false;
+  }
+
   // Eliminar seleccionado
   eliminarPacienteSeleccionado(): void {
     this.pacienteSeleccionado = null;
@@ -129,6 +190,20 @@ export class AutorizacionesMedicamentosComponent implements OnInit {
     this.ordenarAutorizaciones.columna = columna;
     this.ordenarAutorizaciones.direccion = this.ordenarAutorizaciones.direccion == 1 ? -1 : 1;
     this.buscarAutorizaciones();
+  }
+
+  // Cambiar cantidad de items
+  cambiarCantidadItems(): void {
+    this.paginaActualMedicamentos = 1
+    this.cambiarPagina(1);
+  }
+
+  // Paginacion - Cambiar pagina
+  cambiarPagina(nroPagina): void {
+    this.paginaActualMedicamentos = nroPagina;
+    this.desde = (this.paginaActualMedicamentos - 1) * this.cantidadItemsMedicamentos;
+    this.alertService.loading();
+    this.listarMedicamentos();
   }
 
 }
