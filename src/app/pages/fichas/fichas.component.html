@@ -239,7 +239,7 @@
                   <h2 class="text-2xl leading-tight">
                       Listado de fichas
                   </h2>
-                  <p> Total de fichas: {{ fichas.length }} </p>
+                  <p> Total de fichas: {{ totalItems }} </p>
               </div>
               <div>
                 <app-boton-generico *ngIf="authService.usuario.role === 'ADMIN_ROLE'" (click)="abrirImportarFichas()" title="Importar fichas">
