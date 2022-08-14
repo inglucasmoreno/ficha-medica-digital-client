@@ -173,7 +173,8 @@ export class FichasComponent implements OnInit {
     this.ordenar.columna,
     this.desde,
     this.cantidadItems,
-    this.filtro.activo
+    this.filtro.activo,
+    this.filtro.parametro
   )
   .subscribe({
 

@@ -32,17 +32,19 @@ export class FichasService {
 
   // Listar fichas
   listarFichas( direccion : number = 1, 
-                columna: string = 'apellido',
+                columna: string = 'apellido_nombre',
                 desde: number = 1,
                 registerpp: number = 10,
-                activo: string = ''): Observable<any>{
+                activo: string = '',
+                parametro: string = ''): Observable<any>{
     return this.http.get(`${base_url}/fichas`, {
       params: {
         direccion: String(direccion),
         columna,
         desde,
         registerpp,
-        activo              
+        activo,
+        parametro              
       },
       headers: {
         'Authorization': localStorage.getItem('token')

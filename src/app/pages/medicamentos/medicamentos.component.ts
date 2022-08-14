@@ -39,6 +39,8 @@ public descripcion: string = '';
 public nombre_comercial: string = '';
 
 // Paginacion
+public totalItems: number;
+public desde: number = 0;
 public paginaActual: number = 1;
 public cantidadItems: number = 10;
 
@@ -95,9 +97,14 @@ constructor(private medicamentosService: MedicamentosService,
   listarMedicamentos(): void {
     this.medicamentosService.listarMedicamentos( 
       this.ordenar.direccion,
-      this.ordenar.columna
+      this.ordenar.columna,
+      this.desde,
+      this.cantidadItems,
+      this.filtro.activo,
+      this.filtro.parametro
       )
-    .subscribe( ({ medicamentos }) => {
+    .subscribe( ({ medicamentos, totalItems }) => {
+      this.totalItems = totalItems;
       this.medicamentos = medicamentos;
       this.showModalMedicamento = false;
       this.alertService.close();
@@ -257,6 +264,20 @@ constructor(private medicamentosService: MedicamentosService,
   ordenarPorColumna(columna: string){
     this.ordenar.columna = columna;
     this.ordenar.direccion = this.ordenar.direccion == 1 ? -1 : 1; 
+    this.alertService.loading();
+    this.listarMedicamentos();
+  }
+
+  // Cambiar cantidad de items
+  cambiarCantidadItems(): void {
+    this.paginaActual = 1
+    this.cambiarPagina(1);
+  }
+
+  // Paginacion - Cambiar pagina
+  cambiarPagina(nroPagina): void {
+    this.paginaActual = nroPagina;
+    this.desde = (this.paginaActual - 1) * this.cantidadItems;
     this.alertService.loading();
     this.listarMedicamentos();
   }

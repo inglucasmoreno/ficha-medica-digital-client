@@ -22,11 +22,22 @@ export class MedicamentosService {
   }
   
   // Listado de medicamentos
-  listarMedicamentos( direccion : number = -1, columna: string = 'createdAt' ): Observable<any>{
+  listarMedicamentos(
+    direccion : number = -1, 
+    columna: string = 'createdAt',
+    desde: number = 1,
+    registerpp: number = 10,
+    activo: string = '',
+    parametro: string = ''
+  ): Observable<any>{
     return this.http.get(`${base_url}/medicamentos`, {
       params: {
         direccion: String(direccion),
-        columna
+        columna,
+        desde,
+        registerpp,
+        activo,
+        parametro   
       },
       headers: {
         'Authorization': localStorage.getItem('token')
