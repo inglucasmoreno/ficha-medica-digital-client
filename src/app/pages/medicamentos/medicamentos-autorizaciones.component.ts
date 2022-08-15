@@ -33,6 +33,7 @@ export class MedicamentosAutorizacionesComponent implements OnInit {
       return;
     }
 
+    this.alertService.loading();
     this.fichasService.getFichaPorDNI(this.dniPaciente).subscribe({
       next: ({ficha}) => {
         this.router.navigateByUrl(`/dashboard/medicamentos/autorizaciones/detalles/${ficha._id}`);

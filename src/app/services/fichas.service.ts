@@ -33,7 +33,7 @@ export class FichasService {
   // Listar fichas
   listarFichas( direccion : number = 1, 
                 columna: string = 'apellido_nombre',
-                desde: number = 1,
+                desde: number = 0,
                 registerpp: number = 10,
                 activo: string = '',
                 parametro: string = ''): Observable<any>{

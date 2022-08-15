@@ -25,7 +25,7 @@ export class MedicamentosService {
   listarMedicamentos(
     direccion : number = -1, 
     columna: string = 'createdAt',
-    desde: number = 1,
+    desde: number = 0,
     registerpp: number = 10,
     activo: string = '',
     parametro: string = ''
