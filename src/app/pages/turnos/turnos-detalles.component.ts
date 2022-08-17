@@ -38,6 +38,7 @@ export class TurnosDetallesComponent implements OnInit {
 
   // Turnos
   public turnos: any;
+  public telefono: string = '';
   public turnoSeleccionado: any;
   public fecha_busqueda: any = format(new Date(), 'yyyy-MM-dd');
 
@@ -142,8 +143,10 @@ export class TurnosDetallesComponent implements OnInit {
     if(tipo === 'crear'){
       this.reiniciarFormulario();
     }else if(tipo === 'editar'){
+      console.log(turno);
       this.fecha = format(new Date(turno.fecha_turno),'yyyy-MM-dd');
       this.hora = format(new Date(turno.fecha_turno),'HH:mm');
+      this.telefono = !turno.telefono ? '' : turno.telefono;
       this.pacienteSeleccionado = turno.ficha;
     }
     this.showModal = true;
@@ -195,6 +198,7 @@ export class TurnosDetallesComponent implements OnInit {
 
     const data = {
       ficha: this.pacienteSeleccionado._id,
+      telefono: !this.telefono ? '' : this.telefono,
       fecha_turno: new Date(nuevaFecha),
       profesional: this.usuario._id,
       creatorUser: this.authService.usuario.userId,
@@ -218,6 +222,7 @@ export class TurnosDetallesComponent implements OnInit {
     this.fichasService.getFichaPorDNI(this.dni).subscribe({
       next: ({ficha}) => {
         this.alertService.close();
+        this.telefono = '';
         this.dni = '';
         this.pacienteSeleccionado = ficha;
       },
@@ -274,6 +279,7 @@ export class TurnosDetallesComponent implements OnInit {
 
     const data = {
       ficha: this.pacienteSeleccionado._id,
+      telefono: !this.telefono ? '' : this.telefono,
       fecha_turno: new Date(nuevaFecha),
       profesional: this.usuario._id,
       updatorUser: this.authService.usuario.userId
